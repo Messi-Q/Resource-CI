@@ -1,0 +1,23 @@
+.jumbotron {
+  background: linear-gradient(#81C7D4,white);
+  background-position: center;
+  background-size: 100% auto;
+  color: white;
+}
+.display-3 {
+  color: #2B5F75;
+  text-align: center;
+}
+
+.lead {
+  color: #2B5F75;
+  text-align: center;
+}
+
+.item{
+  font-size: 16px;
+}
+
+.top {
+  margin-bottom: 20px;
+}
