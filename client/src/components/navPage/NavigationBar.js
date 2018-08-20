@@ -29,6 +29,9 @@ class NavigationBar extends Component {
                 </ul>
                 <ul className="navbar-nav mt-md-0">
                     <li className="nav-item">
+                        <Link className="nav-link" to="/allWebResources/upload">AllNetUpLoad</Link>
+                    </li>
+                    <li className="nav-item">
                         <Link className="nav-link" to="/resources/upload">UpLoad</Link>
                     </li>
                     <li className="nav-item">
@@ -53,6 +56,9 @@ class NavigationBar extends Component {
                     </li>
                 </ul>
                 <ul className="navbar-nav mt-md-0">
+                    <li className="nav-item">
+                        <Link className="nav-link" to="/allWebResources/upload">AllNetUpLoad</Link>
+                    </li>
                     <li className="nav-item">
                         <Link className="nav-link" to="/resources/upload">UpLoad</Link>
                     </li>

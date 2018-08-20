@@ -7,6 +7,7 @@ export const uploadRequest = (file) => {
             method: "post",
             body: file,
         }).then(handleResponse)
+            .then()
     }
 };
 
@@ -19,7 +20,7 @@ export const setResources = (resources) => {
 
 export const fetchResources = () => {
     return dispatch => {
-        return fetch('/api/resources')
+        return fetch('/api/myResources')
             .then(res => res.json())
             .then(data => dispatch(setResources(data.resources)))
     }
@@ -34,7 +35,7 @@ const resourceFetched = (resource) => {
 
 export const fetchResource = (id) => {
     return dispatch => {
-        fetch(`/api/resources/${id.toString()}`)
+        return fetch(`/api/myResources/${id}`)
             .then(res => res.json())
             .then(data => dispatch(resourceFetched(data.resource)))
     }
@@ -60,7 +61,7 @@ const addResource = (resource) => {
 
 export const saveResource = (data) => {
     return dispatch => {
-        return fetch('/api/resources', {
+        return fetch('/api/myResources', {
             method: 'post',
             body: JSON.stringify(data),
             headers: {
@@ -80,7 +81,7 @@ export const resourceUpdated = (resource) => {
 
 export const updateResource = (data) => {
     return dispatch => {
-        return fetch(`/api/resources/${data.id.toString()}`, {
+        return fetch(`/api/myResources/${data.id}`, {
             method: 'put',
             body: JSON.stringify(data),
             headers: {
@@ -100,7 +101,7 @@ export const resourceDeleted = (resourceId) => {
 
 export const deleteResource = (id) => {
     return dispatch => {
-        return fetch(`/api/resources/${id}`, {
+        return fetch(`/api/myResources/${id}`, {
             method: 'delete',
             headers: {
                 "Content-Type": "application/json"

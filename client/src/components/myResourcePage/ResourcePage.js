@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import ResourceList from './ResourceList';
-import {fetchResources, deleteResource} from '../../actions/resourceActions';
+import {fetchResources, deleteResource} from '../../actions/myResourceActions';
 
 class ResourcePage extends Component {
     componentDidMount() {

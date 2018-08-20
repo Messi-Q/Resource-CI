@@ -2,10 +2,12 @@ import {combineReducers} from 'redux'
 
 import userLogin from './userLogin';
 import flashMessage from './flashMessage';
-import resources from './resources';
+import myResources from './myResources';
+import locationResources from './locationResources';
 
 export default combineReducers({
     userLogin,
     flashMessage,
-    resources
+    resources:myResources,
+    localResources:locationResources
 });

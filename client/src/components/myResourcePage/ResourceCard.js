@@ -6,7 +6,7 @@ const ResourceCard = ({resource, deleteResource}) => {
     return (
         <div className="ui card">
             <div className="ui image">
-                <img src={resource.fileImage} alt="resource Cover" x="0" y="0" width="100%" height="100%"/>
+                <img src={resource.fileImage} alt="resource fileImage" x="0" y="0" width="100%" height="100%"/>
             </div>
             <div className="content">
                 <Link className="header" to={`/resource/${resource.id}`}>{resource.fileTitle}</Link>
@@ -21,7 +21,7 @@ const ResourceCard = ({resource, deleteResource}) => {
             </div>
             <div className="extra content">
                 <div className="ui two buttons">
-                    <Link to={`/resource/${resource.id.toString()}`} className="ui basic button green">Edit</Link>
+                    <Link to={`/resource/${resource.id}`} className="ui basic button green">Edit</Link>
                     <div className="ui basic button red" onClick={() => deleteResource(resource.id)}>Delete</div>
                 </div>
             </div>

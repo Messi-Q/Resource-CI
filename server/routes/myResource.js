@@ -27,10 +27,29 @@ router.get('/', (req, res) => {
     }).catch(err => res.status(500).json({errors: {global: "something went wrong"}}));
 });
 
+router.post('/', (req, res) => {
+    const {errors, isValid} = validate(req.body);
+    if (isValid) {
+        const {fileTitle, fileImage, fileDescription, fileReadPrice, fileRightPrice} = req.body;
+
+        return File.forge({
+            fileTitle: fileTitle,
+            fileImage: fileImage,
+            fileDescription: fileDescription,
+            fileReadPrice: fileReadPrice,
+            fileRightPrice: fileRightPrice
+        }, {hasTimestamps: true}).save()
+            .then(resource => res.json({resource: resource}))
+            .catch(err => res.status(500).json({errors: {global: "something went wrong!"}}));
+    } else {
+        res.status(404).json({errors});
+    }
+});
+
 router.get('/:id', (req, res) => {
     File.forge()
         .where('id', '=', req.params.id)
-        .fetch().then(resource => res.json({resources: resource}))
+        .fetch().then(resource => res.json({resource: resource}))
         .catch(err => res.status(500).json({errors: {global: "something went wrong"}}));
 });
 
@@ -50,46 +69,6 @@ router.put('/:id', (req, res) => {
                 fileRightPrice: fileRightPrice
             }, {patch: true}).then(resource => res.json({resource: resource}))
             .catch(err => res.status(500).json({errors: {global: "something went wrong!!"}}));
-    } else {
-        res.status(404).json({errors});
-    }
-});
-
-router.post('/', (req, res) => {
-    console.log(req.body);
-    console.log("ok");
-
-    const form = new formidable.IncomingForm();
-    form.encoding = 'utf-8'; //设置编辑
-    form.uploadDir = 'FileUpload/'; //设置上传目录
-    form.keepExtensions = true; //保留后缀
-    form.multiples = true; //设置为多文件上传
-    form.maxFieldsSize = 10 * 1024 * 1024; //文件大小10mb
-
-    form.parse(req, (err, fields, files) => {
-         if (err) {
-             console.log(err.message);
-         }
-
-         console.log(files);
-         console.log(fields);
-
-         res.json({success: "OK"})
-     });
-
-    const {errors, isValid} = validate(req.body);
-    if (isValid) {
-        const {fileTitle, fileImage, fileDescription, fileReadPrice, fileRightPrice} = req.body;
-
-        return File.forge({
-            fileTitle: fileTitle,
-            fileImage: fileImage,
-            fileDescription: fileDescription,
-            fileReadPrice: fileReadPrice,
-            fileRightPrice: fileRightPrice
-        }, {hasTimestamps: true}).save()
-            .then(resource => res.json({resource: resource}))
-            .catch(err => res.status(500).json({errors: {global: "something went wrong!"}}));
     } else {
         res.status(404).json({errors});
     }

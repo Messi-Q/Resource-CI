@@ -1,6 +1,6 @@
 import {RESOURCE_FETCHED, ADD_RESOURCE, SET_RESOURCES, UPDATE_RESOURCE, DELETE_RESOURCE} from "../constants";
 
-const resources = (state = [], action = {}) => {
+const myResources = (state = [], action = {}) => {
     switch (action.type) {
         case SET_RESOURCES:
             return action.resources;
@@ -11,7 +11,10 @@ const resources = (state = [], action = {}) => {
             ];
         case RESOURCE_FETCHED:
             const index = state.findIndex(item => item.id === action.resource.id);  //传过来的id是否在数组中
-            if (index > -1) {
+            console.log(index);
+            console.log(action.resource);
+            if (index >= 0) {
+                console.log(index);
                 return state.map(item => {  //循环本地的state
                     if (item.id === action.resource.id) return action.resource;
                     return item;
@@ -34,4 +37,4 @@ const resources = (state = [], action = {}) => {
     }
 };
 
-export default resources;
+export default myResources;

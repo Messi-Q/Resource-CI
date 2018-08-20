@@ -9,7 +9,7 @@ const ResourceList = ({resources, deleteResource}) => {
     );
     //循环取出
     const resourceList = (
-        <div className="ui four cards">
+        <div className="ui three cards">
             {resources.map(resource =>
                 <ResourceCard
                     deleteResource={deleteResource}

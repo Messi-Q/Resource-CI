@@ -14,12 +14,19 @@ class Jumbotron extends Component {
             </div>
             <div className="ui container">
                 <div className="ui tabular menu">
-                    <NavLink exact activeClassName="active" to="/1" className="item">本站资源</NavLink>
+                    <NavLink exact activeClassName="active" to="/locationResources" className="item">本站资源</NavLink>
                     <NavLink exact activeClassName="active" to="/2" className="item">全网资源</NavLink>
                     <NavLink exact activeClassName="active" to="/resources" className="item">我的资源</NavLink>
-                    {/*<div className="right menu">*/}
-                        {/*<NavLink to="/4" className="ui item" exact activeClassName="active">Logout</NavLink>*/}
-                    {/*</div>*/}
+                    <div className="right menu">
+                        <form className="form-inline mt-2 mt-md-0">
+                            <input className="form-control mr-sm-2" type="text" placeholder="Search"
+                                   aria-label="Search"/>
+                            <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        </form>
+                        <form className="form-inline mt-2 mt-md-0">
+                            <button className="btn my-2 my-sm-0" type="submit">other websites</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
