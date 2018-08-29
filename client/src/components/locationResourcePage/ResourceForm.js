@@ -1,19 +1,19 @@
 import React, {Component} from 'react';
 // import classnames from 'classnames';
 import {connect} from 'react-redux';
-import {saveResource, fetchResource, updateResource, uploadRequest} from '../../actions/myResourceActions';
+import {fetchLocationResource} from '../../actions/locationResourceActions';
 import {Redirect} from "react-router-dom";
 // import './index.css';
 
 class ResourceForm extends Component {
     state = {
-        id: this.props.resource ? this.props.resource.id : '',
-        fileTitle: this.props.resource ? this.props.resource.fileTitle : '',
-        fileImage: this.props.resource ? this.props.resource.fileImage : '',
-        fileDescription: this.props.resource ? this.props.resource.fileDescription : '',
-        fileReadPrice: this.props.resource ? this.props.resource.fileReadPrice : '',
-        fileRightPrice: this.props.resource ? this.props.resource.fileRightPrice : '',
-        file: this.props.resource ? this.props.resource.file : '',
+        id: this.props.localResource ? this.props.localResource.id : '',
+        fileTitle: this.props.localResource ? this.props.localResource.fileTitle : '',
+        fileImage: this.props.localResource ? this.props.localResource.fileImage : '',
+        fileDescription: this.props.localResource ? this.props.localResource.fileDescription : '',
+        fileReadPrice: this.props.localResource ? this.props.localResource.fileReadPrice : '',
+        fileRightPrice: this.props.localResource ? this.props.localResource.fileRightPrice : '',
+        file: this.props.localResource ? this.props.localResource.file : '',
         errors: {},
         loading: false,
         done: false
@@ -22,19 +22,19 @@ class ResourceForm extends Component {
     componentDidMount() {
         const {match} = this.props;
         if (match.params.id) {  //所有路由的id参数
-            this.props.fetchResource(match.params.id);
+            this.props.fetchLocationResource(match.params.id);
         }
     }
 
     componentWillReceiveProps(nextProps) {
         this.setState({
-            id: nextProps.resource.id,
-            fileTitle: nextProps.resource.fileTitle,
-            fileImage: nextProps.resource.fileImage,
-            fileDescription: nextProps.resource.fileDescription,
-            fileReadPrice: nextProps.resource.fileReadPrice,
-            fileRightPrice: nextProps.resource.fileRightPrice,
-            file: nextProps.resource.file
+            id: nextProps.localResource.id,
+            fileTitle: nextProps.localResource.fileTitle,
+            fileImage: nextProps.localResource.fileImage,
+            fileDescription: nextProps.localResource.fileDescription,
+            fileReadPrice: nextProps.localResource.fileReadPrice,
+            fileRightPrice: nextProps.localResource.fileRightPrice,
+            file: nextProps.localResource.file
         })
     }
 
@@ -87,7 +87,7 @@ class ResourceForm extends Component {
 
         return (
             <div>
-                {this.state.done ? <Redirect to="/resources"/> : form}
+                {this.state.done ? <Redirect to="/locationResources"/> : form}
             </div>
         );
     }
@@ -97,11 +97,11 @@ const mapStateToProps = (state, props) => {
     const {match} = props;
     if (match.params.id) {
         return {
-            resource: state.resources.find(item => item.id.toString() === match.params.id.toString())
+            localResource: state.localResources.find(item => item.id.toString() === match.params.id.toString())
         };
     }
 
-    return {resource: null};
+    return {localResource: null};
 };
 
-export default connect(mapStateToProps, {saveResource, fetchResource, updateResource, uploadRequest})(ResourceForm);
+export default connect(mapStateToProps, {fetchLocationResource})(ResourceForm);

@@ -9,6 +9,7 @@ import LocationResourcePage from './components/locationResourcePage/ResourcePage
 import LocationResourceForm from './components/locationResourcePage/ResourceForm';
 import AllWebResourceForm from './components/allWebResourcePage/ResourceForm';
 import AllWebResourcePage from './components/allWebResourcePage/ResourcePage';
+import AllWebResourceTxPage from './components/allWebResourcePage/ResourceTxPage';
 import requireLogin from './utils/requireLogin';
 
 export default (
@@ -23,5 +24,6 @@ export default (
         <Route path="/locationResource/:id" component={requireLogin(LocationResourceForm)}/>
         <Route path="/allWebResources/upload" component={requireLogin(AllWebResourceForm)}/>
         <Route exact path="/allWebResources" component={requireLogin(AllWebResourcePage)}/>
+        <Route path="/allWebResource/:id" component={requireLogin(AllWebResourceTxPage)}/>
     </div>
 )

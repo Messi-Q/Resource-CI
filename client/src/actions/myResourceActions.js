@@ -39,7 +39,6 @@ export const fetchResource = (id) => {
             .then(res => res.json())
             .then(data => dispatch(resourceFetched(data.resource)))
     }
-
 };
 
 const handleResponse = (response) => {

@@ -9,7 +9,7 @@ const ResourceCard = ({allWebResource}) => {
                 <img src={imgSrc} alt="resource Cover"/>
             </div>
             <div className="content">
-                <Link className="header" to={`/resource/${allWebResource.resourceId}`}>{allWebResource.headline}</Link>
+                <Link className="header" to={`/allWebResource/${allWebResource.resourceId}`}>{allWebResource.headline}</Link>
                 <span className="right floated">
                     <i className="heart outline like icon">10</i>
                 </span>
@@ -21,7 +21,7 @@ const ResourceCard = ({allWebResource}) => {
             </div>
             <div className="extra content">
                 <div className="ui positive basic button">
-                    <Link to={`locationResource/${allWebResource.resourceId}`} className="">Check file</Link>
+                    <Link to={`/allWebResource/${allWebResource.resourceId}`} className="">Check file</Link>
                 </div>
             </div>
         </div>

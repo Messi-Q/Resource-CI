@@ -1,6 +1,25 @@
-import {SET_ALLWEB_RESOURCES} from '../constants';
+import {SET_ALLWEB_RESOURCES, ADD_ALLWEB_RESOURCE, ALL_RESOURCE_FETCHED} from '../constants';
 // import axios from "axios/index";
 import Config from '../utils/config';
+
+export const allResourceFetched = (allWebResource) => {
+    console.log(allWebResource);
+    return {
+        type: ALL_RESOURCE_FETCHED,
+        allWebResource
+    }
+};
+
+export const fetchAllWebResource = (id) => {
+    this.config = new Config();
+    let cURL = this.config.restServer.httpURL + '/Resource';
+    console.log(cURL);
+    return dispatch => {
+        return fetch(`http://localhost:3000/api/Resource/${id}`)
+            .then(res => res.json())
+            .then(data => dispatch(allResourceFetched(data)))
+    }
+};
 
 export const setAllResources = (allWebResources) => {
     console.log(allWebResources);
@@ -22,6 +41,14 @@ export const fetchAllWebResources = () => {
     }
 };
 
+export const addAllWebResource = (allWebResource) => {
+    console.log(allWebResource);
+    return {
+        type: ADD_ALLWEB_RESOURCE,
+        allWebResource
+    }
+};
+
 export const saveResource = (resourceData) => {
     // let resourceDetails = {};
     this.config = new Config();
@@ -34,6 +61,7 @@ export const saveResource = (resourceData) => {
                 "Content-Type": "application/json"
             }
         }).then(handleResponse)
+            .then(data => dispatch(addAllWebResource(data)))
     }
 };
 
