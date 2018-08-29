@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import ResourceList from './ResourceList';
-import {fetchAllResources} from '../../actions/locationResourcePage';
+import {fetchAllResources} from '../../actions/locationResourceActions';
 
 class ResourcePage extends Component {
     componentDidMount() {
@@ -10,7 +10,7 @@ class ResourcePage extends Component {
     }
 
     render() {
-        // console.log(this.props.myResources);
+        console.log(this.props.localResources);
         return (
             <div>
                 <div className="container mb-3">

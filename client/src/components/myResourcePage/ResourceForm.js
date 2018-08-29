@@ -20,15 +20,10 @@ class ResourceForm extends Component {
 
     componentDidMount() {
         const {match} = this.props;
-        console.log(match);
-        console.log(this.props);
-        console.log(match);
         if (match.params.id) {  //所有路由的id参数
             console.log("id", match.params.id);
             this.props.fetchResource(match.params.id);
         }
-        console.log(this.props);
-        console.log(this.state);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -41,8 +36,6 @@ class ResourceForm extends Component {
             fileRightPrice: nextProps.resource.fileRightPrice,
             file: nextProps.resource.file
         });
-        console.log(this.props);
-        console.log(this.state);
     }
 
 
@@ -236,11 +229,7 @@ class ResourceForm extends Component {
 
 const mapStateToProps = (state, props) => {
     const {match} = props;
-    console.log(props);
-    console.log("resources:", state.resources);
     if (match.params.id) {
-        console.log(match.params.id);
-        console.log("resources1:", state.resources);
         return {
             resource: state.resources.find(item => item.id.toString() === match.params.id.toString()) //这里有问题,返回值是undefined
         };

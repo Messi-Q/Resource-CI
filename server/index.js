@@ -6,6 +6,7 @@ import resources from './routes/locationResource';
 import download from './routes/download';
 import bodyParser from 'body-parser';
 import upload from './routes/upload';
+import allUpload from './routes/allUpload';
 import path from 'path';
 
 let app = express();
@@ -21,6 +22,7 @@ app.use('/api/login', login);
 app.use('/api/upload', upload);
 app.use('/api/myResources', resource);
 app.use('/api/locationResources', resources);
+app.use('/api/allUpload', allUpload);
 app.use('/api/download', download);
 
 app.listen(6060, () => console.log('Running on localhost:6060'));

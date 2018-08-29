@@ -1,6 +1,7 @@
 import {SET_ALL_RESOURCES} from '../constants';
 
 export const setAllResources = (localResources) => {
+    console.log(localResources);
     return{
         type:SET_ALL_RESOURCES,
         localResources

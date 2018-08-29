@@ -67,6 +67,7 @@ class ResourceForm extends Component {
     render() {
         const form = (
             <div className="container">
+                <h1>资源信息</h1>
                 <div className="item">
                     <div className="item-pic">
                         <img src={this.state.fileImage} alt="resource Cover" x="0" y="0" width="60%" height="60%"/>
