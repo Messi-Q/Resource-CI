@@ -19,6 +19,7 @@ class NavigationBar extends Component {
     render() {
         const {isAuthenticated, user} = this.props.userLogin;
         console.log(user);
+        console.log(user.id);
 
         const userLinks = (
             <div className="collapse navbar-collapse">

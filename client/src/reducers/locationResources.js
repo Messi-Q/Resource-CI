@@ -6,10 +6,7 @@ const locationResources = (state = [], action = {}) => {
             return action.localResources;
         case LOCATION_RESOURCE_FETCHED:
             const index = state.findIndex(item => item.id === action.localResource.id);  //传过来的id是否在数组中
-            console.log(index);
-            console.log(action.localResource);
             if (index >= 0) {
-                console.log(index);
                 return state.map(item => {  //循环本地的state
                     if (item.id === action.localResource.id) return action.localResource;
                     return item;

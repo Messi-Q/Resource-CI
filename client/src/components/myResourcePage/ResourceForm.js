@@ -7,6 +7,7 @@ import {Redirect} from "react-router-dom";
 class ResourceForm extends Component {
     state = {
         id: this.props.resource ? this.props.resource.id : null,
+        userId: this.props.userLogin.user.id,
         fileTitle: this.props.resource ? this.props.resource.fileTitle : '',
         fileImage: this.props.resource ? this.props.resource.fileImage : '',
         fileDescription: this.props.resource ? this.props.resource.fileDescription : '',
@@ -20,6 +21,7 @@ class ResourceForm extends Component {
 
     componentDidMount() {
         const {match} = this.props;
+        console.log('userId', this.state.userId);
         if (match.params.id) {  //所有路由的id参数
             console.log("id", match.params.id);
             this.props.fetchResource(match.params.id);
@@ -75,9 +77,10 @@ class ResourceForm extends Component {
         const isValid = Object.keys(errors).length === 0;  //Object.keys返回对象所有属性
 
         if (isValid) {
-            const {id, fileTitle, fileImage, fileDescription, fileReadPrice, fileRightPrice, file} = this.state;
+            const {id, userId, fileTitle, fileImage, fileDescription, fileReadPrice, fileRightPrice, file} = this.state;
             console.log(this.state);
             console.log(file);
+            console.log(userId);
 
             if (file) {
                 const formData = new FormData();
@@ -98,6 +101,7 @@ class ResourceForm extends Component {
             if (id) {
                 this.props.updateResource({
                     id,
+                    userId,
                     fileTitle,
                     fileImage,
                     fileDescription,
@@ -113,6 +117,7 @@ class ResourceForm extends Component {
                 )
             } else {
                 this.props.saveResource({
+                    userId,
                     fileTitle,
                     fileImage,
                     fileDescription,
@@ -231,11 +236,15 @@ const mapStateToProps = (state, props) => {
     const {match} = props;
     if (match.params.id) {
         return {
-            resource: state.resources.find(item => item.id.toString() === match.params.id.toString()) //这里有问题,返回值是undefined
+            userLogin: state.userLogin,
+            resource: state.resources.find(item => item.id.toString() === match.params.id.toString())
         };
     }
 
-    return {resource: null};
+    return {
+        userLogin: state.userLogin,
+        resource: null
+    };
 };
 
 export default connect(mapStateToProps, {saveResource, fetchResource, updateResource, uploadRequest})(ResourceForm);

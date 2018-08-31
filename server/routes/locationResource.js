@@ -1,5 +1,5 @@
 import express from 'express';
-import File from "../models/file";
+import File from "../models/file1";
 
 let router = express.Router();
 

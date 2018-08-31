@@ -1,6 +1,6 @@
 import express from 'express';
 import authenticate from '../middlewares/authenticate';
-import File from '../models/file';
+import File from '../models/file1';
 import formidable from "formidable";
 import path from "path";
 import fs from 'fs';
@@ -30,9 +30,11 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
     const {errors, isValid} = validate(req.body);
     if (isValid) {
-        const {fileTitle, fileImage, fileDescription, fileReadPrice, fileRightPrice} = req.body;
+        const {userId, fileTitle, fileImage, fileDescription, fileReadPrice, fileRightPrice} = req.body;
+        console.log(req.body);
 
         return File.forge({
+            userId: userId,
             fileTitle: fileTitle,
             fileImage: fileImage,
             fileDescription: fileDescription,
@@ -56,12 +58,13 @@ router.get('/:id', (req, res) => {
 router.put('/:id', (req, res) => {
     const {errors, isValid} = validate(req.body);
     if (isValid) {
-        const {fileTitle, fileImage, fileDescription, fileReadPrice, fileRightPrice} = req.body;
+        const {userId, fileTitle, fileImage, fileDescription, fileReadPrice, fileRightPrice} = req.body;
         console.log(req.body);
 
         File.forge()
             .where('id', '=', req.params.id)
             .save({
+                userId: userId,
                 fileTitle: fileTitle,
                 fileImage: fileImage,
                 fileDescription: fileDescription,

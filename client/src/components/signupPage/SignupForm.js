@@ -36,7 +36,7 @@ class SignupForm extends Component {
                     type:"success",
                     text:"You signed up successfully welcome"
                 });
-                this.props.history.push('/');
+                this.props.history.push('/login');
             },
             ({response}) => {
                 this.setState({errors: response.data, isLoading: false})

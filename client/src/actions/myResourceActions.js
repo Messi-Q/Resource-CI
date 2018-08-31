@@ -59,6 +59,7 @@ const addResource = (resource) => {
 };
 
 export const saveResource = (data) => {
+    console.log(data);
     return dispatch => {
         return fetch('/api/myResources', {
             method: 'post',

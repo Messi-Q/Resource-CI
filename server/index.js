@@ -8,6 +8,7 @@ import bodyParser from 'body-parser';
 import upload from './routes/upload';
 import allUpload from './routes/allUpload';
 import path from 'path';
+import test from './routes/test';
 
 let app = express();
 app.use(bodyParser.json());
@@ -24,5 +25,6 @@ app.use('/api/myResources', resource);
 app.use('/api/locationResources', resources);
 app.use('/api/allUpload', allUpload);
 app.use('/api/download', download);
+app.use('/api/tesResources', test);
 
 app.listen(6060, () => console.log('Running on localhost:6060'));
