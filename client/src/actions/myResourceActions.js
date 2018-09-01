@@ -18,9 +18,9 @@ export const setResources = (resources) => {
     }
 };
 
-export const fetchResources = () => {
+export const fetchResources = (userId) => {
     return dispatch => {
-        return fetch('/api/myResources')
+        return fetch(`/api/myResources/${userId}`)
             .then(res => res.json())
             .then(data => dispatch(setResources(data.resources)))
     }
@@ -35,7 +35,7 @@ const resourceFetched = (resource) => {
 
 export const fetchResource = (id) => {
     return dispatch => {
-        return fetch(`/api/myResources/${id}`)
+        return fetch(`/api/myResource/${id}`)
             .then(res => res.json())
             .then(data => dispatch(resourceFetched(data.resource)))
     }

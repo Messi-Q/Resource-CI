@@ -21,8 +21,11 @@ const validate = (data) => {
     return {errors, isValid}
 };
 
-router.get('/', (req, res) => {
-    File.forge().fetchAll().then(resource => {
+router.get('/:userId', (req, res) => {
+    console.log(req.params.userId);
+    File.forge()
+        .where('userId', '=', req.params.userId)
+        .fetchAll().then(resource => {
         res.json({resources: resource});
     }).catch(err => res.status(500).json({errors: {global: "something went wrong"}}));
 });

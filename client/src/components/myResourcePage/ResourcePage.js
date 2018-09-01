@@ -6,7 +6,8 @@ import {fetchResources, deleteResource} from '../../actions/myResourceActions';
 
 class ResourcePage extends Component {
     componentDidMount() {
-        this.props.fetchResources();
+        const {user} = this.props.userLogin;
+        this.props.fetchResources(user.id);
     }
 
     render() {
@@ -29,6 +30,7 @@ ResourcePage.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
+        userLogin: state.userLogin,
         resources: state.resources
     };
 };

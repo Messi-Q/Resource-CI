@@ -17,7 +17,7 @@ class Jumbotron extends Component {
                         <NavLink exact activeClassName="active" to="/locationResources" className="item">本站资源</NavLink>
                         <NavLink exact activeClassName="active" to="/allWebResources" className="item">全网资源</NavLink>
                         <NavLink exact activeClassName="active" to="/resources" className="item">我的资源</NavLink>
-                        <NavLink exact activeClassName="active" to="/testResources" className="item">资源</NavLink>
+                        {/*<NavLink exact activeClassName="active" to="/testResources" className="item">资源</NavLink>*/}
                         <div className="right menu">
                             <form className="form-inline mt-2 mt-md-0">
                                 <input className="form-control mr-sm-2" type="text" placeholder="Search"
