@@ -23,6 +23,10 @@ class NavigationBar extends Component {
 
         const userLinks = (
             <div className="collapse navbar-collapse">
+
+
+
+
                 <ul className="navbar-nav mr-auto">
                     <li className="nav-item">
                         <a className="nav-link">Welcome {user.username}</a>

@@ -46,7 +46,7 @@ class LoginForm extends Component {
         if (this.isValid()) {
             this.setState({errors: {}, isLoading: true});
             this.props.loginRequest(this.state).then(
-                (res) => this.context.router.history.push('/'),
+                (res) => this.context.router.history.push('/resources'),
                 (err) => this.setState({errors: err.response.data.errors, isLoading: false})
             );
         }
@@ -92,6 +92,11 @@ class LoginForm extends Component {
                     <button disabled={isLoading} className="btn btn-primary btn-lg">
                         Login
                     </button>
+                    <br/>
+                </div>
+
+                <div>
+                    New to us? <a href="http://localhost:3001/signup">Sign Up</a>
                 </div>
 
             </form>

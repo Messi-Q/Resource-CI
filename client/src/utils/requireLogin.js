@@ -19,7 +19,7 @@ export default function (ComposedComponent) {
         componentWillUpdate(nextProps){
             if(!nextProps.isAuthenticated){
                 console.log(nextProps.isAuthenticated);
-                this.context.router.history.push('/login');
+                this.context.router.history.push('/');
             }
         }
 
