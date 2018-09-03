@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {fetchAllWebResource} from '../../actions/allResourceActions';
 import {Redirect} from "react-router-dom";
-import imgSrc from '../../images/city-streets.jpeg';
+import imgSrc from '../../images/react.png';
 
 class ResourceTxPage extends Component {
     state = {

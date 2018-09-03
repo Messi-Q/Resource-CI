@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import imgSrc from '../../images/city-streets.jpeg';
+import imgSrc from '../../images/react.png';
 
 const ResourceCard = ({allWebResource}) => {
     return (
