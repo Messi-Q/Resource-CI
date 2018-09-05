@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import {connect} from 'react-redux';
 import {saveResource, fetchResource, updateResource, uploadRequest} from '../../actions/myResourceActions';
 import {Redirect} from "react-router-dom";
+import './ResourceForm.css';
 
 class ResourceForm extends Component {
     state = {
@@ -137,91 +138,117 @@ class ResourceForm extends Component {
 
     render() {
         const form = (
-            <div className="container">
+
+            <div className="container upload-container">
                 <form className={classnames('ui', 'form', {loading: this.state.loading})}
                       onSubmit={this.handleSubmit}>
-                    <h1>Add New Resource</h1>
+                    <h1 className="upload">Add New Resource(Location)</h1>
 
                     {!!this.state.errors.global &&
                     <div className="ui negative message">{this.state.errors.global}</div>}
 
-                    <div className={classnames('field', {error: !!this.state.errors.fileTitle})}>
-                        <label htmlFor="title">Title</label>
+                    <div className={classnames('form-group', {error: !!this.state.errors.fileTitle})}>
+                        <label htmlFor="title" className="control-label">Title</label>
                         <input
                             type="text"
                             name="fileTitle"
                             value={this.state.fileTitle}
                             onChange={this.handleChange}
+                            className="uploadinput"
+                            placeholder="Enter title"
                         />
                         <span>{this.state.errors.fileTitle}</span>
                     </div>
 
-                    <div className={classnames('field', {error: !!this.state.errors.fileImage})}>
-                        <label htmlFor="title">Cover url</label>
+                    <div className={classnames('form-group', {error: !!this.state.errors.fileImage})}>
+                        <label htmlFor="title" className="control-label">Cover url</label>
                         <input
                             type="text"
                             name="fileImage"
                             value={this.state.fileImage}
                             onChange={this.handleChange}
+                            className="uploadinput"
+                            placeholder="Enter url"
                         />
                         <span>{this.state.errors.fileImage}</span>
                     </div>
 
-                    <div className="field">
+                    <div className="form-group">
                         {this.state.fileImage !== '' &&
                         <img src={this.state.fileImage} alt="fileImage" className="ui small bordered image"/>}
                     </div>
 
-                    <div className={classnames('field', {error: !!this.state.errors.fileDescription})}>
-                        <label htmlFor="title">Description</label>
-                        <input
-                            type="text"
+                    <div className={classnames('form-group', {error: !!this.state.errors.fileDescription})}>
+                        <label htmlFor="title" className="control-label">Description</label>
+                        <textarea
+                            className="form-control uploadinput"
+                            rows="5"
                             name="fileDescription"
                             value={this.state.fileDescription}
                             onChange={this.handleChange}
+                            placeholder="No more than 100 words"
                         />
                         <span>{this.state.errors.fileDescription}</span>
                     </div>
 
-                    <div className={classnames('field', {error: !!this.state.errors.fileReadPrice})}>
-                        <label htmlFor="title">ReadPrice</label>
+                    <div className={classnames('form-group', {error: !!this.state.errors.fileReadPrice})}>
+                        <label htmlFor="title" className="control-label">ReadPrice</label>
                         <input
                             type="text"
                             name="fileReadPrice"
                             value={this.state.fileReadPrice}
                             onChange={this.handleChange}
+                            className="uploadinput"
+                            placeholder="Enter read-price"
                         />
                         <span>{this.state.errors.fileReadPrice}</span>
                     </div>
 
-                    <div className={classnames('field', {error: !!this.state.errors.fileRightPrice})}>
-                        <label htmlFor="title">RightPrice</label>
+                    <div className={classnames('form-group', {error: !!this.state.errors.fileRightPrice})}>
+                        <label htmlFor="title" className="control-label">RightPrice</label>
                         <input
                             type="text"
                             name="fileRightPrice"
                             value={this.state.fileRightPrice}
                             onChange={this.handleChange}
+                            className="uploadinput"
+                            placeholder="Enter right-price"
                         />
                         <span>{this.state.errors.fileRightPrice}</span>
                     </div>
 
-                    <div className="field">
-                        <label htmlFor="title">FileSelect</label>
+                    <div className="form-group">
+                        <label htmlFor="title" className="control-label">FileSelect</label>
+                        <br/>
+
+                        <span className="btn btn-primary fileinput-btn">
+                                选择文件
+                            <input
+                                type="file"
+                                ref="file"
+                                name="file"
+                                required
+                                onChange={this.changeFiles}
+                                className="fileinput"
+                            />
+                            </span>
                         <input
-                            type="file"
-                            ref="file"
-                            name="file"
-                            required
-                            onChange={this.changeFiles}
+                            type="text"
+                            name="fileName"
+                            value={this.state.file ? this.state.file.name : ""}
+                            onChange={this.handleChange}
+                            className="uploadinput"
                         />
+
                         <span>{this.state.errors.file}</span>
                     </div>
 
-                    <div className="field">
-                        <button className="ui primary button">Upload</button>
+                    <div className="form-group">
+                        <button className="btn btn-outline-primary btn-lg btn-block">Upload</button>
                     </div>
                 </form>
             </div>
+
         );
 
         return (

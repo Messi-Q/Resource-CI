@@ -4,6 +4,7 @@ import validateInput from '../../utils/validations/validateLogin';
 import {connect} from 'react-redux';
 import {loginRequest} from '../../actions/loginActions';
 import PropTypes from 'prop-types';
+import './LoginForm.css';
 
 class LoginForm extends Component {
     constructor(props) {
@@ -57,8 +58,8 @@ class LoginForm extends Component {
         // console.dir(this.state);
 
         return (
-            <form onSubmit={this.onSubmit}>
-                <h1>Login</h1>
+            <form onSubmit={this.onSubmit} className="loginform">
+                <h1 className="login">Login</h1>
 
                 {errors.form && <div className="alert alert-danger">{errors.form}</div>}
 
@@ -71,6 +72,7 @@ class LoginForm extends Component {
                         type="text"
                         name="identifier"
                         className={classnames('form-control', {'is-invalid': errors.identifier})}
+                        placeholder="Enter username/email"
                     />
                     {errors.identifier && <span className="form-text text-muted">{errors.identifier}</span>}
                 </div>
@@ -84,12 +86,13 @@ class LoginForm extends Component {
                         type="password"
                         name="password"
                         className={classnames('form-control', {'is-invalid': errors.password})}
+                        placeholder="Enter password"
                     />
                     {errors.password && <span className="form-text text-muted">{errors.password}</span>}
                 </div>
 
                 <div className="form-group">
-                    <button disabled={isLoading} className="btn btn-primary btn-lg">
+                    <button disabled={isLoading} className="btn btn-outline-primary btn-lg btn-block btnlogin">
                         Login
                     </button>
                     <br/>

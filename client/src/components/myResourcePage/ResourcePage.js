@@ -14,7 +14,7 @@ class ResourcePage extends Component {
         return (
             <div>
                 <div className="container mb-3">
-                    <h1>Resource</h1>
+                    <h1>My Resource</h1>
                     <ResourceList resources={this.props.resources} deleteResource={this.props.deleteResource}/>
                 </div>
             </div>

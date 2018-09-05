@@ -1,9 +1,33 @@
 .navbar-brand {
-  color: #333;
-  font-size: large;
+  color: #2B5F75;
+  font-size: 35px;
+}
+
+.navbar-brand:hover {
+  color: #2B5F75;
 }
 
 .nav-link {
-  font-size: large;
-  color: darkgrey;
+  font-size: 25px;
+  color: #2B5F75;
+
+}
+
+.nav-link:hover {
+  color: #91989F;
+}
+
+
+.nav-item {
+  font-size: 25px;
+  color: #2B5F75;
+
+}
+
+.nav-item:hover {
+  color: #91989F;
+}
+
+.dropdown-item {
+  font-size: 20px;
 }

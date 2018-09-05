@@ -1,4 +1,4 @@
-.item {
+/* .item {
     width: 300px;
     display: inline-block;
     margin-bottom: 30px;
@@ -30,4 +30,39 @@ ul {
 
 .text-danger {
     color: red;
+} */
+
+.header {
+
+    padding-bottom: 20px;
+}
+.resouceform-container {
+    padding-top: 20px;
+    padding-bottom: 70px;
+}
+
+.resource-image {
+    padding-left: 30px;
+}
+
+.body-content {
+    padding-left: 70px;
+}
+
+.description {
+    font-size: 20px;
+}
+.pricetag {
+    font-size: 25px;
+    color:black;
+}
+
+.filetitle {
+    font-size: 40px;
+    text-align: center;
+}
+
+.buy-button {
+    padding-right: 100px;
+    padding-bottom: 10px;
 }

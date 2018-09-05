@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import {withRouter} from 'react-router-dom';
+import './SignupForm.css';
 
 class SignupForm extends Component {
     constructor(props) {
@@ -66,8 +67,8 @@ class SignupForm extends Component {
     render() {
         const {errors} = this.state;
         return (
-            <form onSubmit={this.onSubmit}>
-                <h1>Sign up</h1>
+            <form onSubmit={this.onSubmit} className="signupform">
+                <h1 className="signup">Sign up</h1>
 
                 <div className="form-group">
                     <label className="control-label">Username</label>
@@ -79,6 +80,7 @@ class SignupForm extends Component {
                         name="username"
                         onBlur={this.checkUserExists}
                         className={classnames('form-control', {'is-invalid': errors.username})}
+                        placeholder="Enter username"
                     />
                     {errors.username && <span className="form-text text-muted">{errors.username}</span>}
                 </div>
@@ -93,6 +95,7 @@ class SignupForm extends Component {
                         name="email"
                         onBlur={this.checkUserExists}
                         className={classnames('form-control', {'is-invalid': errors.email})}
+                        placeholder="Enter email"
                     />
                     {errors.email && <span className="form-text text-muted">{errors.email}</span>}
                 </div>
@@ -106,6 +109,7 @@ class SignupForm extends Component {
                         type="password"
                         name="password"
                         className={classnames('form-control', {'is-invalid': errors.password})}
+                        placeholder="Enter password"
                     />
                     {errors.password && <span className="form-text text-muted">{errors.password}</span>}
                 </div>
@@ -119,14 +123,19 @@ class SignupForm extends Component {
                         type="password"
                         name="passwordConfirm"
                         className={classnames('form-control', {'is-invalid': errors.passwordConfirm})}
+                        placeholder="Confirm password"
                     />
                     {errors.passwordConfirm && <span className="form-text text-muted">{errors.passwordConfirm}</span>}
                 </div>
 
                 <div className="form-group">
-                    <button disabled={this.state.isLoading || this.state.invalid} className="btn btn-primary btn-lg">
+                    <button disabled={this.state.isLoading || this.state.invalid} className="btn btn-outline-primary btn-lg btn-block btnsignup">
                         Sign up
                     </button>
+                </div>
+
+                <div>
+                    <a href="http://localhost:3001/login">已有账号</a>
                 </div>
             </form>
         )

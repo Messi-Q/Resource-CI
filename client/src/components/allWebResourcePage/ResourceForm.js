@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import {connect} from 'react-redux';
 import {saveResource, uploadRequest} from '../../actions/allResourceActions';
 import {Redirect} from "react-router-dom";
+import './ResourceForm.css';
 
 class ResourceForm extends Component {
     state = {
@@ -92,94 +93,118 @@ class ResourceForm extends Component {
 
     render() {
         const form = (
-            <div className="container">
+            <div className="container upload-container">
                 <form className={classnames('ui', 'form', {loading: this.state.loading})}
                       onSubmit={this.handleSubmit}>
-                    <h1>Add New Resource</h1>
+                    <h1 className="upload">Add New Resource(All Web)</h1>
 
                     {!!this.state.errors.global &&
                     <div className="ui negative message">{this.state.errors.global}</div>}
 
-                    <div className={classnames('field', {error: !!this.state.errors.resourceId})}>
-                        <label htmlFor="title">resourceId</label>
+                    <div className={classnames('form-group', {error: !!this.state.errors.resourceId})}>
+                        <label htmlFor="title" className="control-label">resourceId</label>
                         <input
                             type="text"
                             name="resourceId"
                             value={this.state.resourceId}
                             onChange={this.handleChange}
+                            className="uploadinput"
+                            placeholder="Enter resource id"
                         />
                         <span>{this.state.errors.resourceId}</span>
                     </div>
 
-                    <div className={classnames('field', {error: !!this.state.errors.headline})}>
-                        <label htmlFor="title">headline</label>
+                    <div className={classnames('form-group', {error: !!this.state.errors.headline})}>
+                        <label htmlFor="title" className="control-label">headline</label>
                         <input
                             type="text"
                             name="headline"
                             value={this.state.headline}
                             onChange={this.handleChange}
+                            className="uploadinput"
+                            placeholder="Enter headline"
                         />
                         <span>{this.state.errors.headline}</span>
                     </div>
 
-                    <div className={classnames('field', {error: !!this.state.errors.readPrice})}>
-                        <label htmlFor="title">readPrice</label>
+                    <div className={classnames('form-group', {error: !!this.state.errors.readPrice})}>
+                        <label htmlFor="title" className="control-label">readPrice</label>
                         <input
                             type="text"
                             name="readPrice"
                             value={this.state.readPrice}
                             onChange={this.handleChange}
+                            className="uploadinput"
+                            placeholder="Enter read-price"
                         />
                         <span>{this.state.errors.readPrice}</span>
                     </div>
 
-                    <div className={classnames('field', {error: !!this.state.errors.ownershipPrice})}>
-                        <label htmlFor="title">ownershipPrice</label>
+                    <div className={classnames('form-group', {error: !!this.state.errors.ownershipPrice})}>
+                        <label htmlFor="title" className="control-label">ownershipPrice</label>
                         <input
                             type="text"
                             name="ownershipPrice"
                             value={this.state.ownershipPrice}
                             onChange={this.handleChange}
+                            className="uploadinput"
+                            placeholder="Enter ownership-price"
                         />
                         <span>{this.state.errors.ownershipPrice}</span>
                     </div>
 
-                    <div className={classnames('field', {error: !!this.state.errors.readCount})}>
-                        <label htmlFor="title">readCount</label>
+                    <div className={classnames('form-group', {error: !!this.state.errors.readCount})}>
+                        <label htmlFor="title" className="control-label">readCount</label>
                         <input
                             type="text"
                             name="readCount"
                             value={this.state.readCount}
                             onChange={this.handleChange}
+                            className="uploadinput"
+                            placeholder="Enter read-count"
                         />
                         <span>{this.state.errors.readCount}</span>
                     </div>
 
-                    <div className={classnames('field', {error: !!this.state.errors.liked})}>
-                        <label htmlFor="title">liked</label>
+                    <div className={classnames('form-group', {error: !!this.state.errors.liked})}>
+                        <label htmlFor="title" className="control-label">liked</label>
                         <input
                             type="text"
                             name="liked"
                             value={this.state.liked}
                             onChange={this.handleChange}
+                            className="uploadinput"
+                            placeholder="Enter liked-count"
                         />
                         <span>{this.state.errors.liked}</span>
                     </div>
 
-                    <div className="field">
-                        <label htmlFor="title">FileSelect</label>
+                    <div className="form-group">
+                        <label htmlFor="title" className="control-label">FileSelect</label>
+                        <br/>
+                        <span className="btn btn-primary fileinput-btn">
+                                选择文件
+                            <input
+                                type="file"
+                                ref="file"
+                                name="file"
+                                required
+                                onChange={this.changeFiles}
+                                className="fileinput"
+                            />
+                        </span>
                         <input
-                            type="file"
-                            ref="file"
-                            name="file"
-                            required
-                            onChange={this.changeFiles}
+                            type="text"
+                            name="fileName"
+                            value={this.state.file ? this.state.file.name : ""}
+                            onChange={this.handleChange}
+                            className="uploadinput"
                         />
                         <span>{this.state.errors.file}</span>
                     </div>
 
-                    <div className="field">
-                        <button className="ui primary button">Upload</button>
+                    <div className="form-group">
+                        <button className="btn btn-outline-primary btn-lg btn-block">Upload</button>
                     </div>
                 </form>
             </div>

@@ -1,0 +1,14 @@
+.resource-card {
+    padding-top: 20px;
+    padding-bottom: 50px;
+    /* color: black; */
+}
+
+.price {
+    font-size: 20px;
+    padding-bottom:10px;
+}
+
+.resource-title {
+    font-size: 30px;
+}

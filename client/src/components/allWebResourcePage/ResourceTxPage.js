@@ -67,20 +67,42 @@ class ResourceTxPage extends Component {
 
     render() {
         const form = (
-            <div className="container">
-                <h1>资源信息</h1>
-                <div className="item">
-                    <div className="item-pic">
-                        <img src={imgSrc} alt="resource Cover" x="0" y="0" width="60%" height="60%"/>
-                    </div>
-                    <div className="item-details">
-                        <ul>
-                            <li>Headline：<span className="text-danger">{this.state.headline}</span></li>
-                            <li>ReadPrice：<span className="text-danger">{this.state.readPrice}</span></li>
-                            <button onSubmit={this.handleSubmit}>Buy</button>
-                            <li>OwnerShipPrice：<span className="text-danger">{this.state.ownershipPrice}</span></li>
-                            <button onSubmit={this.handleSubmit}>Buy</button>
-                        </ul>
+            <div className="resouceform-container">
+                <div className="header">
+                    <h1 className="filetitle">{this.state.headline}</h1>
+                </div>
+
+                <div className="ui items">
+                    <div className="item">
+                        <div className="ui large image resource-image">
+                            <img src={imgSrc} alt="resource Cover"/>
+                        </div>
+                        <br/>
+                        <div className="content">
+                            <br/> <br/>
+                            <div className="body-content">
+                                <div className="description">
+                                    <h3>Description:This is the fileDescription</h3>
+                                </div>
+                                <br/> <br/>
+                                <div className="extra">
+                                <span className="pricetag">
+                                    ReadPrice：{this.state.readPrice}
+                                    <button onSubmit={this.handleSubmit}
+                                            className="ui teal right floated basic button buy-button"><i
+                                        className="shop icon"></i>Buy</button>
+                                </span>
+                                    <br/><br/>
+                                    <span className="pricetag">
+                                    RightPrice：{this.state.ownershipPrice}
+                                        <button onSubmit={this.handleSubmit}
+                                                className="ui teal right floated basic button buy-button"><i
+                                            className="shop icon"></i>Buy</button>
+                                </span>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
