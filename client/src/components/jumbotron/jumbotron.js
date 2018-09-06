@@ -3,6 +3,21 @@ import './Jumbotron.css';
 import {NavLink} from "react-router-dom";
 
 class Jumbotron extends Component {
+
+    state = {
+        fileTitle: ''
+    };
+
+    handleChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    };
+
+    handleSubmit = () => {
+
+    };
+
     render() {
         return (
             <div className="top">
@@ -18,23 +33,25 @@ class Jumbotron extends Component {
                         <NavLink exact activeClassName="active" to="/allWebResources" className="item">全网资源</NavLink>
                         <NavLink exact activeClassName="active" to="/resources" className="item">我的资源</NavLink>
                         {/*<NavLink exact activeClassName="active" to="/testResources" className="item">资源</NavLink>*/}
+
                         <div className="right menu">
-                            <form className="form-inline mt-2 mt-md-0">
+                            <form className="form-inline mt-2 mt-md-0" onSubmit={this.handleSubmit}>
                                 <input className="form-control mr-sm-2" type="text" placeholder="Search"
-                                       aria-label="Search"/>
-                                <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                                       value={this.state.fileTitle} aria-label="Search" onChange={this.handleChange}/>
+                                <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search
+                                </button>
                             </form>
                             <form className="form-inline mt-2 mt-md-0">
                                 <button className="btn my-2 my-sm-0" type="submit">other websites</button>
                             </form>
                         </div>
+
                     </div>
                 </div>
             </div>
         );
     }
 }
-
 
 
 export default Jumbotron;

@@ -17,7 +17,8 @@ router.post('/', (req, res) => {
             if (bcrypt.compareSync(password, user.get('password_digest'))) {
                 const token = jwt.sign({
                     id: user.get("id"),
-                    username: user.get("username")
+                    username: user.get("username"),
+                    balance: user.get("balance")
                 }, config.jwtSecret);  //生成一个密串
                 res.json({token});
             } else {

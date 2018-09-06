@@ -139,7 +139,7 @@ class ResourceForm extends Component {
     render() {
         const form = (
 
-            <div className="container upload-container">
+            <div className=" upload-container">
                 <form className={classnames('ui', 'form', {loading: this.state.loading})}
                       onSubmit={this.handleSubmit}>
                     <h1 className="upload">Add New Resource(Location)</h1>

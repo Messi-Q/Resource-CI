@@ -11,6 +11,8 @@ import AllWebResourceForm from './components/allWebResourcePage/ResourceForm';
 import AllWebResourcePage from './components/allWebResourcePage/ResourcePage';
 import AllWebResourceTxPage from './components/allWebResourcePage/ResourceTxPage';
 import UserResourcePage from './components/testResourcePage/ResourcePage';
+import MyWalletPage from './components/walletPage/MyWalletPage';
+import RechargePage from './components/walletPage/Recharge';
 import requireLogin from './utils/requireLogin';
 
 export default (
@@ -27,5 +29,7 @@ export default (
         <Route path="/allWebResources/upload" component={requireLogin(AllWebResourceForm)}/>
         <Route exact path="/allWebResources" component={requireLogin(AllWebResourcePage)}/>
         <Route path="/allWebResource/:id" component={requireLogin(AllWebResourceTxPage)}/>
+        <Route path="/myWallet" component={requireLogin(MyWalletPage)}/>
+        <Route path="/recharge" component={requireLogin(RechargePage)}/>
     </div>
 )

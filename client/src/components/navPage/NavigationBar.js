@@ -59,7 +59,7 @@ class NavigationBar extends Component {
 
                     </li> */}
                     <li className="nav-item">
-                        <Link className="nav-link" to="/">MyWallet</Link>
+                        <Link className="nav-link" to="/myWallet">MyWallet</Link>
                     </li>
 
                 </ul>
