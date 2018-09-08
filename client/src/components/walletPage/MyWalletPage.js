@@ -1,16 +1,18 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
+import {fetchBalance} from '../../actions/rechargeAction'
 
 class MyWalletPage extends Component {
     state = {
-        balance: this.props.userLogin ? this.props.userLogin.user.balance : ''
+        id: this.props.userLogin ? this.props.userLogin.id : '',
+        balance: this.props.user ? this.props.user.balance : '',
     };
 
     componentDidMount() {
         const {user} = this.props.userLogin;
-        console.log(user);
-        console.log("money", user.id);
+        console.log("userId", user);
+        console.log(this.props);
+        this.props.fetchBalance(user.id);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -22,14 +24,15 @@ class MyWalletPage extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         console.log('充值');
-        this.props.history.push('/recharge');
+        this.props.history.push('/user');
     };
 
     render() {
+        console.log(this.props.user);
         return (
             <div className="container" align="center">
                 <form onSubmit={this.handleSubmit}>
-                    <p>余额：{this.state.balance}$</p>
+                    <p>余额：{this.props.user.balance}$</p>
                     <button className="btn btn-primary">充值</button>
                 </form>
             </div>
@@ -40,8 +43,8 @@ class MyWalletPage extends Component {
 const mapStateToProps = (state) => {
     return {
         userLogin: state.userLogin,
-        testResources: state.testResources
+        user: state.user
     };
 };
 
-export default connect(mapStateToProps, {})(MyWalletPage);
+export default connect(mapStateToProps, {fetchBalance})(MyWalletPage);

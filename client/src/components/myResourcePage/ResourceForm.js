@@ -41,7 +41,6 @@ class ResourceForm extends Component {
         });
     }
 
-
     changeFiles = (e) => {
         const file = e.target.files[0];
         if (!file) {

@@ -10,6 +10,7 @@ class ResourceForm extends Component {
         $class: "org.demo.network.Resource",
         resourceId: '',
         headline: '',
+        coverUrl: '',
         readPrice: '',
         ownershipPrice: '',
         owner: "resource:org.demo.network.Customer#1",
@@ -48,6 +49,7 @@ class ResourceForm extends Component {
         let errors = {};
         if (this.state.resourceId === '') errors.resourceId = "Can't be empty";
         if (this.state.headline === '') errors.headline = "Can't be empty";
+        if (this.state.coverUrl === '') errors.coverUrl = "Can't be empty";
         if (this.state.readPrice === '') errors.readPrice = "Can't be empty";
         if (this.state.ownershipPrice === '') errors.ownershipPrice = "Can't be empty";
         if (this.state.readCount === '') errors.readCount = "Can't be empty";
@@ -57,7 +59,7 @@ class ResourceForm extends Component {
         const isValid = Object.keys(errors).length === 0;  //Object.keys返回对象所有属性
 
         if (isValid) {
-            const {$class, resourceId, headline, readPrice, ownershipPrice, owner, readCount, liked, file} = this.state;
+            const {$class, resourceId, headline, coverUrl, readPrice, ownershipPrice, owner, readCount, liked, file} = this.state;
             console.log(this.state);
             console.log(file);
 
@@ -79,7 +81,7 @@ class ResourceForm extends Component {
             this.setState({loading: true});
 
             this.props.saveResource({
-                $class, resourceId, headline, readPrice, ownershipPrice, owner, readCount, liked
+                $class, resourceId, headline, coverUrl, readPrice, ownershipPrice, owner, readCount, liked
             }).then(  //then接收两个函数参数，第一个是成功之后执行，第二个是错误之后执行
                 () => {
                     this.setState({done: true})
@@ -125,6 +127,19 @@ class ResourceForm extends Component {
                             placeholder="Enter headline"
                         />
                         <span>{this.state.errors.headline}</span>
+                    </div>
+
+                    <div className={classnames('form-group', {error: !!this.state.errors.coverUrl})}>
+                        <label htmlFor="title" className="control-label">coverUrl</label>
+                        <input
+                            type="text"
+                            name="coverUrl"
+                            value={this.state.coverUrl}
+                            onChange={this.handleChange}
+                            className="uploadinput"
+                            placeholder="Enter coverUrl"
+                        />
+                        <span>{this.state.errors.coverUrl}</span>
                     </div>
 
                     <div className={classnames('form-group', {error: !!this.state.errors.readPrice})}>

@@ -6,12 +6,14 @@ import myResources from './myResources';
 import locationResources from './locationResources';
 import allWebResources from './allWebResources';
 import testResources from './testResources';
+import user from './user';
 
 export default combineReducers({
     userLogin,
     flashMessage,
-    resources:myResources,
-    localResources:locationResources,
-    allWebResources:allWebResources,
-    testResources:testResources
+    user: user,
+    resources: myResources,
+    localResources: locationResources,
+    allWebResources: allWebResources,
+    testResources: testResources
 });

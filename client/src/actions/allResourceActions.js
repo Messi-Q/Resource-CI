@@ -3,7 +3,7 @@ import {SET_ALLWEB_RESOURCES, ADD_ALLWEB_RESOURCE, ALL_RESOURCE_FETCHED} from '.
 import Config from '../utils/config';
 
 export const allResourceFetched = (allWebResource) => {
-    console.log(allWebResource);
+    //console.log(allWebResource);
     return {
         type: ALL_RESOURCE_FETCHED,
         allWebResource
@@ -18,11 +18,12 @@ export const fetchAllWebResource = (id) => {
         return fetch(`http://localhost:3000/api/Resource/${id}`)
             .then(res => res.json())
             .then(data => dispatch(allResourceFetched(data)))
+            .catch(res => res.status(500).json({errors: {global: "something went wrong"}}));
     }
 };
 
 export const setAllResources = (allWebResources) => {
-    console.log(allWebResources);
+    //console.log(allWebResources);
     return {
         type: SET_ALLWEB_RESOURCES,
         allWebResources
@@ -38,6 +39,7 @@ export const fetchAllWebResources = () => {
         return fetch(cURL)
             .then(res => res.json())
             .then(data => dispatch(setAllResources(data)))
+            .catch(res => res.status(500).json({errors: {global: "something went wrong"}}));
     }
 };
 

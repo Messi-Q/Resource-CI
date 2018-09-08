@@ -4,11 +4,13 @@
   "homepage": "https://Messi-Q.github.io/React-redux-mysql",
   "private": true,
   "dependencies": {
+    "antd": "^3.9.1",
     "axios": "^0.18.0",
     "jwt-decode": "^2.2.0",
     "prop-types": "^15.6.2",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
+    "react-modal": "^3.5.1",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4",

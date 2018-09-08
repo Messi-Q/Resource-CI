@@ -1,6 +1,5 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import imgSrc from '../../images/react.png';
 import './ResourceCard.css';
 
 const ResourceCard = ({allWebResource}) => {
@@ -9,7 +8,7 @@ const ResourceCard = ({allWebResource}) => {
 
 
             <div className="ui image">
-                <img src={imgSrc} alt="resource Cover"/>
+                <img src={allWebResource.coverUrl} alt="resource Cover"/>
             </div>
             <div className="content">
                 <div className="large header resource-title">{allWebResource.headline}</div>

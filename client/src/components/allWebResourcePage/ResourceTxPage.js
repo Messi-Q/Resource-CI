@@ -3,12 +3,12 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {fetchAllWebResource} from '../../actions/allResourceActions';
 import {Redirect} from "react-router-dom";
-import imgSrc from '../../images/react.png';
 
 class ResourceTxPage extends Component {
     state = {
         resourceId: this.props.allWebResource ? this.props.allWebResource.resourceId : '',
         headline: this.props.allWebResource ? this.props.allWebResource.fileTitle : '',
+        coverUrl: this.props.allWebResource ? this.props.allWebResource.coverUrl : '',
         readPrice: this.props.allWebResource ? this.props.allWebResource.readPrice : '',
         ownershipPrice: this.props.allWebResource ? this.props.allWebResource.ownershipPrice : '',
         readCount: this.props.allWebResource ? this.props.allWebResource.readCount : '',
@@ -32,12 +32,14 @@ class ResourceTxPage extends Component {
         this.setState({
             resourceId: nextProps.allWebResource.resourceId,
             headline: nextProps.allWebResource.headline,
+            coverUrl: nextProps.allWebResource.coverUrl,
             readPrice: nextProps.allWebResource.readPrice,
             ownershipPrice: nextProps.allWebResource.ownershipPrice,
             readCount: nextProps.allWebResource.readCount,
             liked: nextProps.allWebResource.liked,
             file: nextProps.allWebResource.file
-        })
+        });
+        console.log(this.state);
     }
 
     changeFiles = (e) => {
@@ -63,6 +65,8 @@ class ResourceTxPage extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
+
+        console.log(this.state);
     };
 
     render() {
@@ -75,7 +79,7 @@ class ResourceTxPage extends Component {
                 <div className="ui items">
                     <div className="item">
                         <div className="ui large image resource-image">
-                            <img src={imgSrc} alt="resource Cover"/>
+                            <img src={this.state.coverUrl} alt="resource Cover"/>
                         </div>
                         <br/>
                         <div className="content">
