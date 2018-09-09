@@ -12,7 +12,7 @@ import AllWebResourcePage from './components/allWebResourcePage/ResourcePage';
 import AllWebResourceTxPage from './components/allWebResourcePage/ResourceTxPage';
 import UserResourcePage from './components/testResourcePage/ResourcePage';
 import MyWalletPage from './components/walletPage/MyWalletPage';
-import RechargePage from './components/walletPage/Recharge';
+import RechargePage from './components/walletPage/RechargeForm';
 import requireLogin from './utils/requireLogin';
 
 export default (

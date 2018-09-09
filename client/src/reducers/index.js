@@ -11,7 +11,7 @@ import user from './user';
 export default combineReducers({
     userLogin,
     flashMessage,
-    user: user,
+    user,
     resources: myResources,
     localResources: locationResources,
     allWebResources: allWebResources,

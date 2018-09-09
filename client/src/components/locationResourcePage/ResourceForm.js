@@ -62,48 +62,50 @@ class ResourceForm extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
+        console.log('Transction');
+        console.log(this.props.user.balance);
+
     };
 
     render() {
         const form = (
             <div className="resouceform-container">
-                <div className="header">
-                    <h1 className="filetitle">{this.state.fileTitle}</h1>
-                </div>
+                <form onSubmit={this.handleSubmit}>
+                    <div className="header">
+                        <h1 className="filetitle">{this.state.fileTitle}</h1>
+                    </div>
 
-                <div className="ui items">
-                    <div className="item">
-                        <div className="ui large image resource-image">
-                            <img src={this.state.fileImage} alt="resource Cover"/>
-                        </div>
-                        <br/>
-                        <div className="content">
-                            <br/> <br/>
-                            <div className="body-content">
-                                <div className="description">
-                                    <h3>Description:{this.state.fileDescription}</h3>
-                                </div>
+                    <div className="ui items">
+                        <div className="item">
+                            <div className="ui large image resource-image">
+                                <img src={this.state.fileImage} alt="resource Cover"/>
+                            </div>
+                            <br/>
+                            <div className="content">
                                 <br/> <br/>
-                                <div className="extra">
+                                <div className="body-content">
+                                    <div className="description">
+                                        <h3>Description:{this.state.fileDescription}</h3>
+                                    </div>
+                                    <br/> <br/>
+                                    <div className="extra">
                                 <span className="pricetag">
                                     ReadPrice：{this.state.fileReadPrice}
-                                    <button onSubmit={this.handleSubmit}
-                                            className="ui teal right floated basic button buy-button"><i
+                                    <button className="ui teal right floated basic button buy-button"><i
                                         className="shop icon"></i>Buy</button>
                                 </span>
-                                    <br/><br/>
-                                    <span className="pricetag">
+                                        <br/><br/>
+                                        <span className="pricetag">
                                     RightPrice：{this.state.fileRightPrice}
-                                        <button onSubmit={this.handleSubmit}
-                                                className="ui teal right floated basic button buy-button"><i
-                                            className="shop icon"></i>Buy</button>
+                                            <button className="ui teal right floated basic button buy-button"><i
+                                                className="shop icon"></i>Buy</button>
                                 </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
-                </div>
+                </form>
             </div>
         );
 
@@ -119,11 +121,15 @@ const mapStateToProps = (state, props) => {
     const {match} = props;
     if (match.params.id) {
         return {
+            user: state.user,
             localResource: state.localResources.find(item => item.id.toString() === match.params.id.toString())
         };
     }
 
-    return {localResource: null};
+    return {
+        user: state.user,
+        localResource: null
+    };
 };
 
 export default connect(mapStateToProps, {fetchLocationResource})(ResourceForm);

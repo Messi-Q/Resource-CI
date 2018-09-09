@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {userRecharge} from '../../actions/rechargeAction';
 import {Redirect} from "react-router-dom";
 
-class Recharge extends Component {
+class RechargeForm extends Component {
     state = {
         id: '',
         username: '',
@@ -18,6 +18,7 @@ class Recharge extends Component {
         const {user} = this.props.userLogin;
         console.log(user);
         console.log("userId", user.id);
+        console.log(this.props.user.balance);
     }
 
     handleChange = (e) => {
@@ -46,13 +47,17 @@ class Recharge extends Component {
         if (isValid) {
             const {username, balance} = this.state;
             console.log(this.state);
-            console.log(username, balance);
+            const restBalance = this.props.user.balance;
+            console.log(restBalance, balance);
+            const recharge = balance >> 0;
+            const totalBalance  = restBalance + recharge;
+            console.log(username, totalBalance);
 
             this.setState({loading: true});
 
             this.props.userRecharge({
                 username,
-                balance
+                totalBalance
             }).then(
                 () => {
                     this.setState({done: true})
@@ -66,6 +71,7 @@ class Recharge extends Component {
     };
 
     render() {
+        console.log(this.props.user.balance);
         const form = (
 
             <div className=" upload-container">
@@ -127,7 +133,8 @@ class Recharge extends Component {
 const mapStateToProps = (state) => {
     return {
         userLogin: state.userLogin,
+        user: state.user
     };
 };
 
-export default connect(mapStateToProps, {userRecharge})(Recharge);
+export default connect(mapStateToProps, {userRecharge})(RechargeForm);
