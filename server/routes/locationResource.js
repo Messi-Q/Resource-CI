@@ -16,6 +16,17 @@ router.get('/:id', (req, res) => {
         .catch(err => res.status(500).json({errors: {global: "something went wrong"}}));
 });
 
+router.put('/:id', (req, res) => {
+    const {id, userId, fileTitle, userBuyId} = req.body;
+    console.log(id, userId, fileTitle, userBuyId, req.params.id);
+    File.forge()
+        .where('id', '=', req.params.id)
+        .save({
+            userId:userBuyId
+        }, {patch: true}).then(resource => res.json({resource: resource}))
+        .catch(err => res.status(500).json({errors: {global: "something went wrong!!"}}));
+});
+
 router.use((req, res) => {
     res.status(404).json({
         errors: {
@@ -23,6 +34,5 @@ router.use((req, res) => {
         }
     })
 });
-
 
 export default router;

@@ -2,7 +2,13 @@ import React, {Component} from 'react';
 // import classnames from 'classnames';
 import {connect} from 'react-redux';
 import {fetchLocationResource} from '../../actions/locationResourceActions';
-import {fetchBalance, userAddBalance, userSubBalance, fetchOwnerBalance} from "../../actions/rechargeAction";
+import {
+    fetchBalance,
+    userAddBalance,
+    userSubBalance,
+    fetchOwnerBalance,
+    updateResourceInfo
+} from "../../actions/rechargeAction";
 import {Redirect} from "react-router-dom";
 import './index.css';
 
@@ -157,6 +163,15 @@ class ResourceForm extends Component {
                 this.props.userAddBalance({
                     userId,
                     totalBalance
+                });
+
+                //修改资源所属id
+                const {id, fileTitle} = this.state;
+                this.props.updateResourceInfo({
+                    id,
+                    userId,
+                    fileTitle,
+                    userBuyId
                 })
 
             } else {
@@ -245,5 +260,6 @@ export default connect(mapStateToProps, {
     fetchBalance,
     userSubBalance,
     userAddBalance,
-    fetchOwnerBalance
+    fetchOwnerBalance,
+    updateResourceInfo
 })(ResourceForm);

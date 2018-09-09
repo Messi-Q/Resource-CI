@@ -81,3 +81,15 @@ export const fetchOwnerBalance = (id) => {
             .then(data => dispatch(OwnerBalanceFetched(data.owner)))
     }
 };
+
+export const updateResourceInfo = (data) => {
+    return dispatch => {
+        return fetch(`/api/locationResources/${data.id}`,{
+            method: 'put',
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(handleResponse)
+    }
+};
