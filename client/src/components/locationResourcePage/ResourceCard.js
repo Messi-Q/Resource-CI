@@ -23,9 +23,7 @@ const ResourceCard = ({resource}) => {
                 </span>
                 <br/>
                 <span className="price">所有价：{resource.fileRightPrice}$</span>
-
             </div>
-
         </Link>
     )
 };

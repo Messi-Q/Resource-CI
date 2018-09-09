@@ -98,6 +98,7 @@ class ResourceForm extends Component {
             }
 
             this.setState({loading: true});
+
             if (id) {
                 this.props.updateResource({
                     id,

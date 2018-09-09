@@ -10,6 +10,7 @@ import upload from './routes/upload';
 import allUpload from './routes/allUpload';
 import recharge from './routes/recharge';
 import users from './routes/users';
+import owner from './routes/owner';
 import path from 'path';
 import test from './routes/test';
 
@@ -33,5 +34,6 @@ app.use('/api/download', download);
 app.use('/api/tesResources', test);
 app.use('/api/user', recharge);
 app.use('/api/users', users);
+app.use('/api/owner', owner);
 
 app.listen(6060, () => console.log('Running on localhost:6060'));
