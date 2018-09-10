@@ -63,7 +63,13 @@ class ResourceTxPage extends Component {
         }
     };
 
-    handleSubmit = (e) => {
+    handleSubmit_1 = (e) => {
+        e.preventDefault();
+
+        console.log(this.state);
+    };
+
+    handleSubmit_2 = (e) => {
         e.preventDefault();
 
         console.log(this.state);
@@ -92,14 +98,14 @@ class ResourceTxPage extends Component {
                                 <div className="extra">
                                 <span className="pricetag">
                                     ReadPrice：{this.state.readPrice}
-                                    <button onSubmit={this.handleSubmit}
+                                    <button onClick={this.handleSubmit_1}
                                             className="ui teal right floated basic button buy-button"><i
                                         className="shop icon"></i>Buy</button>
                                 </span>
                                     <br/><br/>
                                     <span className="pricetag">
                                     RightPrice：{this.state.ownershipPrice}
-                                        <button onSubmit={this.handleSubmit}
+                                        <button onClick={this.handleSubmit_2}
                                                 className="ui teal right floated basic button buy-button"><i
                                             className="shop icon"></i>Buy</button>
                                 </span>

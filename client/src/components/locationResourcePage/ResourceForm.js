@@ -38,7 +38,7 @@ class ResourceForm extends Component {
         //获取购买者的余额
         this.props.fetchBalance(user.id);
         //获取资源所有者的余额
-        this.props.fetchOwnerBalance(this.props.localResource.userId);
+        this.props.fetchOwnerBalance(localResource.userId);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -112,14 +112,14 @@ class ResourceForm extends Component {
                 this.props.userAddBalance({
                     userId,
                     totalBalance
-                })
+                });
+
+                this.props.history.push('/resources')
 
             } else {
                 window.alert("账户余额不足，请充值！");
                 this.props.history.push('/myWallet');
             }
-
-            this.props.history.push('/resources')
 
         } else {
             window.alert("这是您自己上传的资源，无需购买！");
@@ -172,14 +172,15 @@ class ResourceForm extends Component {
                     userId,
                     fileTitle,
                     userBuyId
-                })
+                });
+
+                this.props.history.push('/resources')
 
             } else {
                 window.alert("账户余额不足，请充值！");
                 this.props.history.push('/myWallet');
             }
 
-            this.props.history.push('/resources')
 
         } else {
             window.alert("这是您自己上传的资源，无需购买！");
