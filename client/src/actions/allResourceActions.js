@@ -52,7 +52,6 @@ export const addAllWebResource = (allWebResource) => {
 };
 
 export const saveResource = (resourceData) => {
-    // let resourceDetails = {};
     this.config = new Config();
     let cURL = this.config.restServer.httpURL + '/Resource';
     return dispatch => {

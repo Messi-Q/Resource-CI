@@ -9,13 +9,17 @@ class SignupForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            $class: "org.demo.network.Customer",
+            website: 'A',  //获取网站名
+            token: 0,
+            userId: '100',   //注册的时候这个用户id如何进行输入?
             username: '',
             email: '',
             password: '',
             passwordConfirm: '',
             errors: {},
             isLoading: false,
-            invalid:false
+            invalid: false
         }
     }
 
@@ -30,12 +34,13 @@ class SignupForm extends Component {
         console.log(this.state);
         this.setState({errors: {}, isLoading: true});
         //axios.post('/api/users',{user:this.state});
+        //将用户信息注册在本站数据库中
         this.props.userSignupRequest(this.state).then(
             () => {
                 console.log(this.props);
                 this.props.addFlashMessage({
-                    type:"success",
-                    text:"You signed up successfully welcome"
+                    type: "success",
+                    text: "You signed up successfully welcome"
                 });
                 this.props.history.push('/login');
             },
@@ -43,23 +48,35 @@ class SignupForm extends Component {
                 this.setState({errors: response.data, isLoading: false})
             }
         );
+
+        const {$class, website, token, userId} = this.state;
+        //将用户信息注册在区块链中
+        this.props.userSignupBlockchain({
+            $class, website, token, userId
+        }).then(
+            () => {
+            },
+            ({response}) => {
+                this.setState({errors: response.data, isLoading: false})
+            }
+        )
     };
 
-    checkUserExists =(e) => {
+    checkUserExists = (e) => {
         const field = e.target.name;
         const val = e.target.value;
-        if(val !== ''){
+        if (val !== '') {
             this.props.isUserExists(val).then(res => {
                 let errors = this.state.errors;
                 let invalid;
-                if(res.data.user){
+                if (res.data.user) {
                     errors[field] = "There is user with such " + field;
                     invalid = true;
                 } else {
                     errors[field] = '';
                     invalid = false;
                 }
-                this.setState({ errors, invalid });
+                this.setState({errors, invalid});
             })
         }
     };
@@ -129,7 +146,8 @@ class SignupForm extends Component {
                 </div>
 
                 <div className="form-group">
-                    <button disabled={this.state.isLoading || this.state.invalid} className="btn btn-outline-primary btn-lg btn-block btnsignup">
+                    <button disabled={this.state.isLoading || this.state.invalid}
+                            className="btn btn-outline-primary btn-lg btn-block btnsignup">
                         Sign up
                     </button>
                 </div>
@@ -144,8 +162,9 @@ class SignupForm extends Component {
 
 SignupForm.propTypes = {
     userSignupRequest: PropTypes.func.isRequired,
-    addFlashMessage:PropTypes.func.isRequired,
-    isUserExists:PropTypes.func.isRequired
+    userSignupBlockchain: PropTypes.func.isRequired,
+    addFlashMessage: PropTypes.func.isRequired,
+    isUserExists: PropTypes.func.isRequired
 };
 
 
