@@ -9,10 +9,6 @@ class SignupForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            $class: "org.demo.network.Customer",
-            website: 'A',  //获取网站名
-            token: 0,
-            userId: '100',   //注册的时候这个用户id如何进行输入?
             username: '',
             email: '',
             password: '',
@@ -48,18 +44,6 @@ class SignupForm extends Component {
                 this.setState({errors: response.data, isLoading: false})
             }
         );
-
-        const {$class, website, token, userId} = this.state;
-        //将用户信息注册在区块链中
-        this.props.userSignupBlockchain({
-            $class, website, token, userId
-        }).then(
-            () => {
-            },
-            ({response}) => {
-                this.setState({errors: response.data, isLoading: false})
-            }
-        )
     };
 
     checkUserExists = (e) => {

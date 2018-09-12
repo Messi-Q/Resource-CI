@@ -16,6 +16,7 @@
     "body-parser": "^1.18.3",
     "bookshelf": "^0.13.3",
     "classnames": "^2.2.6",
+    "composer-client": "^0.19.12",
     "crypto": "^1.0.1",
     "express": "^4.16.3",
     "formidable": "^1.2.1",
@@ -28,7 +29,8 @@
     "mysql": "^2.16.0",
     "path": "^0.12.7",
     "shortid": "^2.2.12",
-    "validator": "^10.5.0"
+    "validator": "^10.5.0",
+    "winston": "^3.1.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

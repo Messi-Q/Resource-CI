@@ -8,12 +8,14 @@ import allWebResources from './allWebResources';
 import testResources from './testResources';
 import user from './user';
 import owner from './owner';
+import userSignup from './userSignup';
 
 export default combineReducers({
     userLogin,
     flashMessage,
     user: user,
     owner: owner,
+    Customer: userSignup,
     resources: myResources,
     localResources: locationResources,
     allWebResources: allWebResources,

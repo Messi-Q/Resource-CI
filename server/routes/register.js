@@ -85,7 +85,7 @@ router.post('/', (req, res) => {
             User.forge({
                 username, password_digest, email
             }, {hasTimestamps: true}).save()
-                .then(user => res.json({success: true}))
+                .then(Customer => res.json({Customer: Customer}))
                 .catch(err => res.status(500).json({errors: err}));
         } else {
             res.status(400).json(errors);

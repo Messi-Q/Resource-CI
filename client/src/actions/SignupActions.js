@@ -1,10 +1,27 @@
 import axios from 'axios';
 import Config from '../utils/config';
+import {SET_USER} from "../constants";
+
+export const setUser = (Customer) => {
+    console.log(Customer);
+    return {
+        type: SET_USER,
+        Customer
+    }
+};
 
 export const userSignupRequest = (userData) => {
     console.log(userData);
     return dispatch => {
-        return axios.post('/api/register', userData);
+        return fetch('/api/register', {
+            method: 'post',
+            body: JSON.stringify(userData),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+            .then(res => res.json())
+            .then(data => dispatch(setUser(data.Customer)));
     }
 };
 
