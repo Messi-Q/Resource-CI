@@ -14,7 +14,6 @@ class LoginForm extends Component {
             $class: "org.demo.network.Customer",
             website: 'A',  //获取网站名(未解决，如何获取站名)
             token: 0,
-            // userId: '100',   //注册的时候这个用户id如何进行输入? 已解决
             identifier: '',
             password: '',
             errors: {},
@@ -23,11 +22,11 @@ class LoginForm extends Component {
     }
 
     componentDidMount() {
-        const {id} = this.props.Customer;
-        console.log(id);
-        const userId = id;
         const {$class, website, token} = this.state;
+        const userName = this.props.Customer.username;
+        const userId = website + '-' + userName;
         console.log(userId, $class, website, token);
+        console.log(this.props);
         this.props.userSignupBlockchain({
             $class, website, token, userId
         })

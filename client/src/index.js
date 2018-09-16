@@ -34,7 +34,7 @@ ReactDOM.render(
     <Provider store={ store }>
         <Router routes={ routes }>
             <div>
-                <NavigationBar/>
+                {/*<NavigationBar/>*/}
                 <Jumbotron title="Welcome Here!" subtitle="please contact me for messi.qp711@gmail.com"/>
                 <FlashMessageFlash/>
                 {routes}

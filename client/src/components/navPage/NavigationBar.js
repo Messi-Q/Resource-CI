@@ -41,7 +41,7 @@ class NavigationBar extends Component {
                         <ul className="dropdown-menu">
                             <li>
                                 <Link className="nav-link dropdown-item"
-                                      to="/allWebResources/upload">AllNetUpLoad</Link>
+                                      to="/allWebResources/upload">AllWebUpLoad</Link>
                             </li>
                             <li className="divider"></li>
                             <li>

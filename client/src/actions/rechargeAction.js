@@ -1,4 +1,5 @@
 import {BALANCE_FETCHED, OWNER_BALANCE_FETCHED} from '../constants';
+import Config from '../utils/config';
 
 const handleResponse = (response) => {
     if (response.ok) {
@@ -62,6 +63,20 @@ export const userAddBalance = (data) => {
                 "Content-Type": "application/json"
             }
         }).then(handleResponse)
+    }
+};
+
+export const rechargeBlockchain = (data) => {
+    this.config = new Config();
+    let cURL = this.config.restServer.httpURL + '/RechargeTransaction';
+    return dispatch => {
+        return fetch(cURL, {
+            method: 'post',
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
     }
 };
 

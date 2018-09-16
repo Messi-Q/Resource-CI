@@ -63,6 +63,7 @@ export const saveResource = (resourceData) => {
             }
         }).then(handleResponse)
             .then(data => dispatch(addAllWebResource(data)))
+            .catch(res => res.status(500).json({errors: {global: "something went wrong"}}));
     }
 };
 
