@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import classnames from 'classnames';
 import {connect} from 'react-redux';
-import {saveResource, uploadRequest} from '../../actions/allResourceActions';
+import {saveResource, uploadRequest, saveResourceToMysql} from '../../actions/allResourceActions';
 import {Redirect} from "react-router-dom";
 import './ResourceForm.css';
 
@@ -11,6 +11,7 @@ class ResourceForm extends Component {
         website: 'A',
         headline: '',
         coverUrl: '',
+        fileDescription: '',
         readPrice: '',
         ownershipPrice: '',
         file: '',
@@ -46,6 +47,7 @@ class ResourceForm extends Component {
         let errors = {};
         if (this.state.headline === '') errors.headline = "Can't be empty";
         if (this.state.coverUrl === '') errors.coverUrl = "Can't be empty";
+        if (this.state.fileDescription === '') errors.fileDescription = "Can't be empty";
         if (this.state.readPrice === '') errors.readPrice = "Can't be empty";
         if (this.state.ownershipPrice === '') errors.ownershipPrice = "Can't be empty";
         this.setState({errors});
@@ -53,13 +55,20 @@ class ResourceForm extends Component {
         const isValid = Object.keys(errors).length === 0;  //Object.keys返回对象所有属性
 
         if (isValid) {
-            const {$class, headline, coverUrl, readPrice, ownershipPrice, file, website} = this.state;
+            const {$class, headline, coverUrl, fileDescription, readPrice, ownershipPrice, file, website} = this.state;
             // owner/resourceId/readCount/liked is automatically added
             const userName = this.props.userLogin.user.username;
+            const userId = this.props.userLogin.user.id;
             const owner = "resource:org.demo.network.Customer#" + website + '-' + userName;
             const readCount = 0;
             const liked = 0;
+
+            const fileTitle = headline;
+            const fileImage = coverUrl;
+            const fileReadPrice = readPrice;
+            const fileRightPrice = ownershipPrice;
             const resourceId = website + '-' + headline; //应改为站名+站内定位符
+            const allWeb = 1;
             console.log('this is my test:',this.props.userLogin.user.username);
 
             if (file) {
@@ -79,6 +88,17 @@ class ResourceForm extends Component {
 
             this.setState({loading: true});
 
+            //save to local mysql, return fileId
+            this.props.saveResourceToMysql({
+                userId,
+                fileTitle,
+                fileImage,
+                fileDescription,
+                fileReadPrice,
+                fileRightPrice
+            });
+
+            //save to blockchain
             this.props.saveResource({
                 $class, resourceId, headline, coverUrl, readPrice, ownershipPrice, owner, readCount, liked
             }).then(  //then接收两个函数参数，第一个是成功之后执行，第二个是错误之后执行
@@ -132,6 +152,19 @@ class ResourceForm extends Component {
                     <div className="form-group">
                         {this.state.coverUrl !== '' &&
                         <img src={this.state.coverUrl} alt="coverUrl" className="ui small bordered image"/>}
+                    </div>
+
+                    <div className={classnames('form-group', {error: !!this.state.errors.fileDescription})}>
+                        <label htmlFor="title" className="control-label">Description</label>
+                        <textarea
+                            className="form-control uploadinput"
+                            rows="5"
+                            name="fileDescription"
+                            value={this.state.fileDescription}
+                            onChange={this.handleChange}
+                            placeholder="No more than 100 words"
+                        />
+                        <span>{this.state.errors.fileDescription}</span>
                     </div>
 
                     <div className={classnames('form-group', {error: !!this.state.errors.readPrice})}>
@@ -206,4 +239,4 @@ const mapStateToProps = (state) => {
         user: state.user
     };
 };
-export default connect(mapStateToProps, {saveResource, uploadRequest})(ResourceForm);
+export default connect(mapStateToProps, {saveResource, uploadRequest, saveResourceToMysql})(ResourceForm);

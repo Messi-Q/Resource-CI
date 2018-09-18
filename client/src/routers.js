@@ -10,7 +10,8 @@ import LocationResourceForm from './components/locationResourcePage/ResourceForm
 import AllWebResourceForm from './components/allWebResourcePage/ResourceForm';
 import AllWebResourcePage from './components/allWebResourcePage/ResourcePage';
 import AllWebResourceTxPage from './components/allWebResourcePage/ResourceTxPage';
-import UserResourcePage from './components/testResourcePage/ResourcePage';
+import TestResourcePage from './components/testResourcePage/ResourcePage';
+import TestResource from './components/testResourcePage/ResourceForm';
 import MyWalletPage from './components/walletPage/MyWalletPage';
 import RechargePage from './components/walletPage/RechargeForm';
 import requireLogin from './utils/requireLogin';
@@ -20,7 +21,8 @@ export default (
         <Route exact path="/" component={HomePage}/>
         <Route exact path="/signup" component={SignPage} />
         <Route exact path="/login" component={LoginPage} />
-        <Route exact path="/testResources" component={requireLogin(UserResourcePage)}/>
+        <Route exact path="/testResources" component={requireLogin(TestResourcePage)}/>
+        <Route exact path="/testResources/:id" component={requireLogin(TestResource)}/>
         <Route exact path="/resources" component={requireLogin(MyResourcePage)}/>
         <Route path="/resources/upload" component={requireLogin(MyResourceForm)}/>
         <Route path="/resource/:id" component={requireLogin(MyResourceForm)}/>

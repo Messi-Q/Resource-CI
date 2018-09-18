@@ -8,6 +8,8 @@ exports.up = function(knex, Promise) {
         table.string('fileDescription').notNullable();
         table.string('fileReadPrice').notNullable();
         table.string('fileRightPrice').notNullable();
+        table.boolean('allWeb').notNullable();
+        table.integer('readCount').defaultTo(0)
         table.timestamps();
         table.foreign('userId').references('id').inTable('users');
     });

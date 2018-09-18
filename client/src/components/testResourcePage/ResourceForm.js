@@ -14,14 +14,14 @@ import './ResourceForm.css';
 
 class ResourceForm extends Component {
     state = {
-        id: this.props.localResource ? this.props.localResource.id : '',
-        userId: this.props.localResource ? this.props.localResource.userId : '',
-        fileTitle: this.props.localResource ? this.props.localResource.fileTitle : '',
-        fileImage: this.props.localResource ? this.props.localResource.fileImage : '',
-        fileDescription: this.props.localResource ? this.props.localResource.fileDescription : '',
-        fileReadPrice: this.props.localResource ? this.props.localResource.fileReadPrice : '',
-        fileRightPrice: this.props.localResource ? this.props.localResource.fileRightPrice : '',
-        file: this.props.localResource ? this.props.localResource.file : '',
+        id: this.props.testResources ? this.props.testResources.id : '',
+        userId: this.props.testResources ? this.props.testResources.userId : '',
+        fileTitle: this.props.testResources ? this.props.testResources.fileTitle : '',
+        fileImage: this.props.testResources ? this.props.testResources.fileImage : '',
+        fileDescription: this.props.testResources ? this.props.testResources.fileDescription : '',
+        fileReadPrice: this.props.testResources ? this.props.testResources.fileReadPrice : '',
+        fileRightPrice: this.props.testResources ? this.props.testResources.fileRightPrice : '',
+        file: this.props.testResources ? this.props.testResources.file : '',
         balance: this.props.user ? this.props.user.balance : '',
         errors: {},
         loading: false,
@@ -29,7 +29,7 @@ class ResourceForm extends Component {
     };
 
     componentDidMount() {
-        const {match, localResource} = this.props;
+        const {match, testResources} = this.props;
         if (match.params.id) {  //所有路由的id参数
             this.props.fetchLocationResource(match.params.id);
         }
@@ -38,19 +38,19 @@ class ResourceForm extends Component {
         //获取购买者的余额
         this.props.fetchBalance(user.id);
         //获取资源所有者的余额
-        this.props.fetchOwnerBalance(localResource.userId);
+        this.props.fetchOwnerBalance(testResources.userId);
     }
 
     componentWillReceiveProps(nextProps) {
         this.setState({
-            id: nextProps.localResource.id,
-            userId: nextProps.localResource.userId,
-            fileTitle: nextProps.localResource.fileTitle,
-            fileImage: nextProps.localResource.fileImage,
-            fileDescription: nextProps.localResource.fileDescription,
-            fileReadPrice: nextProps.localResource.fileReadPrice,
-            fileRightPrice: nextProps.localResource.fileRightPrice,
-            file: nextProps.localResource.file,
+            id: nextProps.testResources.id,
+            userId: nextProps.testResources.userId,
+            fileTitle: nextProps.testResources.fileTitle,
+            fileImage: nextProps.testResources.fileImage,
+            fileDescription: nextProps.testResources.fileDescription,
+            fileReadPrice: nextProps.testResources.fileReadPrice,
+            fileRightPrice: nextProps.testResources.fileRightPrice,
+            file: nextProps.testResources.file,
             balance: nextProps.balance
         })
     }
@@ -231,7 +231,7 @@ class ResourceForm extends Component {
 
         return (
             <div>
-                {this.state.done ? <Redirect to="/locationResources"/> : form}
+                {this.state.done ? <Redirect to="/testResources"/> : form}
             </div>
         );
     }
@@ -244,7 +244,7 @@ const mapStateToProps = (state, props) => {
             user: state.user,
             owner: state.owner,
             userLogin: state.userLogin,
-            localResource: state.localResources.find(item => item.id.toString() === match.params.id.toString())
+            testResources: state.testResources.find(item => item.id.toString() === match.params.id.toString())
         };
     }
 
@@ -252,7 +252,7 @@ const mapStateToProps = (state, props) => {
         user: state.user,
         owner: state.owner,
         userLogin: state.userLogin,
-        localResource: null
+        testResources: null
     };
 };
 

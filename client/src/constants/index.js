@@ -20,3 +20,5 @@ export const TEST = 'TEST';
 export const BALANCE_FETCHED = 'BALANCE_FETCHED';
 export const OWNER_BALANCE_FETCHED = 'OWNER_BALANCE_FETCHED';
 export const SET_USER = 'SET_USER';
+
+export const ADD_RESOURCE_To_MYSQL = 'ADD_RESOURCE_To_MYSQL';

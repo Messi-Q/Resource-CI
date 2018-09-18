@@ -78,6 +78,7 @@ class ResourceForm extends Component {
 
         if (isValid) {
             const {id, userId, fileTitle, fileImage, fileDescription, fileReadPrice, fileRightPrice, file} = this.state;
+            const allWeb = 0;
             console.log(this.state);
             console.log(file);
             console.log(userId);

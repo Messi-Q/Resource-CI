@@ -33,10 +33,14 @@ class Jumbotron extends Component {
                 </div>
                 <div className="ui container ui-container">
                     <div className="ui secondary pointing menu">
-                        <NavLink exact activeClassName="active" to="/locationResources" className="link item">本站资源</NavLink>
-                        <NavLink exact activeClassName="active" to="/allWebResources" className="link item">全网资源</NavLink>
-                        <NavLink exact activeClassName="active" to="/resources" className="link item">我的资源</NavLink>
-                        {/*<NavLink exact activeClassName="active" to="/testResources" className="item">资源</NavLink>*/}
+                        <NavLink exact activeClassName="active" to="/locationResources"
+                                 className="link item">本站资源</NavLink>
+                        <NavLink exact activeClassName="active" to="/allWebResources"
+                                 className="link item">全网资源</NavLink>
+                        <NavLink exact activeClassName="active" to="/resources"
+                                 className="link item">我的资源</NavLink>
+                        <NavLink exact activeClassName="active" to="/testResources"
+                                 className="link item">可阅读资源</NavLink>
 
                         <div className="right menu">
                             <form className="form-inline mt-2 mt-md-0">
