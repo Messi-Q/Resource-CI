@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ResourceCard from './ResourceCard';
 
-const ResourceList = ({testResources, deleteResource}) => {
+const ResourceList = ({testResources}) => {
     const emptyMessage = (
         <h2 align="center">There is no resources</h2>
     );
@@ -12,7 +12,6 @@ const ResourceList = ({testResources, deleteResource}) => {
         <div className="ui three cards">
             {testResources.map(resource =>
                 <ResourceCard
-                    deleteResource={deleteResource}
                     resource={resource}
                     key={resource.id}
                 />)
@@ -29,7 +28,6 @@ const ResourceList = ({testResources, deleteResource}) => {
 
 ResourceList.propTypes = {
     testResources: PropTypes.array.isRequired,
-    deleteResource: PropTypes.func.isRequired
 };
 
 export default ResourceList;

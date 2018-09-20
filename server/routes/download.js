@@ -4,7 +4,8 @@ import path from 'path';
 let router = express.Router();
 
 router.get('/:id', (req, res) => {
-    const filepath = path.join(__dirname, "/download/" + req.file.name); // 文件存储的路径
+    const filepath = path.join(__dirname, "/download/"); // 文件存储的路径
+    console.log(filepath);
     res.download(filepath);
 });
 

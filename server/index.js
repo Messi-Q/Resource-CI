@@ -13,6 +13,7 @@ import users from './routes/users';
 import owner from './routes/owner';
 import path from 'path';
 import test from './routes/test';
+import test1 from './routes/test1';
 
 
 let app = express();
@@ -31,7 +32,8 @@ app.use('/api/myResource', myResource);
 app.use('/api/locationResources', resources);
 app.use('/api/allUpload', allUpload);
 app.use('/api/download', download);
-app.use('/api/tesResources', test);
+app.use('/api/testResources', test);
+app.use('/api/testResource', test1);
 app.use('/api/user', recharge);
 app.use('/api/users', users);
 app.use('/api/owner', owner);

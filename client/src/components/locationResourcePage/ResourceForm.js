@@ -23,6 +23,7 @@ class ResourceForm extends Component {
         fileRightPrice: this.props.localResource ? this.props.localResource.fileRightPrice : '',
         file: this.props.localResource ? this.props.localResource.file : '',
         balance: this.props.user ? this.props.user.balance : '',
+        ownerBalance: false,
         errors: {},
         loading: false,
         done: false
@@ -30,13 +31,21 @@ class ResourceForm extends Component {
 
     componentDidMount() {
         const {match, localResource} = this.props;
+        console.log(this.props);
         if (match.params.id) {  //所有路由的id参数
             this.props.fetchLocationResource(match.params.id);
         }
         const {user} = this.props.userLogin;
         console.log("userId", user);
         //获取购买者的余额
-        this.props.fetchBalance(user.id);
+        this.props.fetchBalance(user.id)
+            .then(
+                () => {
+                    this.setState({ownerBalance: true})
+                },
+                () => {
+                }
+            );
         //获取资源所有者的余额
         this.props.fetchOwnerBalance(localResource.userId);
     }
@@ -85,6 +94,8 @@ class ResourceForm extends Component {
         const readPrice = this.state.fileReadPrice >> 0;
         const userBuyId = this.props.userLogin.user.id;
         const userId = this.state.userId;
+
+        console.log(this.state.ownerBalance);
 
         if (userBuyId !== userId) {
             if (userBalance > readPrice) {

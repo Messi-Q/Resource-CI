@@ -92,6 +92,19 @@ export const updateResource = (data) => {
     }
 };
 
+export const updateAllWebResource = (data) => {
+    return dispatch => {
+        return fetch(`http://localhost:3000/api/Resource/${data.resourceId}`, {
+            method: 'put',
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(handleResponse)
+            .then();
+    }
+};
+
 export const resourceDeleted = (resourceId) => {
     return {
         type: DELETE_RESOURCE,

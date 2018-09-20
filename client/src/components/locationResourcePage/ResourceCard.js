@@ -5,7 +5,6 @@ import './ResourceCard.css';
 
 const ResourceCard = ({resource}) => {
     return (
-        //  <Link className="resource-card" to={`locationResource/${resource.id}`}>
         <Link className="ui card resource-card" to={`locationResource/${resource.id}`}>
 
             <div className="ui image">

@@ -1,6 +1,7 @@
 import {SET_ALLWEB_RESOURCES, ADD_ALLWEB_RESOURCE, ALL_RESOURCE_FETCHED, ADD_RESOURCE_To_MYSQL} from '../constants';
 // import axios from "axios/index";
 import Config from '../utils/config';
+import {resourceDeleted} from "./myResourceActions";
 
 export const allResourceFetched = (allWebResource) => {
     //console.log(allWebResource);
@@ -106,5 +107,17 @@ const handleResponse = (response) => {
         let error = new Error(response.statusText);
         error.response = response;
         throw error;
+    }
+};
+
+export const deleteResource = (id) => {
+    console.log(id);
+    return dispatch => {
+        return fetch(`http://localhost:3000/api/Resource/${id}`, {
+            method: 'delete',
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(handleResponse)
     }
 };

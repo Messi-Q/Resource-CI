@@ -39,7 +39,6 @@ class ResourceTxPage extends Component {
             liked: nextProps.allWebResource.liked,
             file: nextProps.allWebResource.file
         });
-        console.log(this.state);
     }
 
     changeFiles = (e) => {

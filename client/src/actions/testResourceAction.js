@@ -1,36 +1,18 @@
-import {DELETE_RESOURCE, TEST} from "../constants";
+import {DELETE_RESOURCE, SET_TEST_RESOURCES, Test_RESOURCE_FETCHED} from "../constants";
 
-export const setResources = (testResources) => {
+export const setTestResources = (testResources) => {
+    console.log('test', testResources);
     return {
-        type: TEST,
+        type: SET_TEST_RESOURCES,
         testResources
     }
 };
 
 export const fetchResources = (userId) => {
     return dispatch => {
-        return fetch(`/api/tesResources/${userId}`)
+        return fetch(`/api/testResources/${userId}`)
             .then(res => res.json())
-            .then(data => dispatch(setResources(data.testResources)))
-    }
-};
-
-export const resourceDeleted = (resourceId) => {
-    return {
-        type: DELETE_RESOURCE,
-        resourceId
-    }
-};
-
-export const deleteResource = (id) => {
-    return dispatch => {
-        return fetch(`/api/myResources/${id}`, {
-            method: 'delete',
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }).then(handleResponse)
-            .then(data => dispatch(resourceDeleted(id)));
+            .then(data => dispatch(setTestResources(data.resources)))
     }
 };
 
@@ -41,5 +23,30 @@ const handleResponse = (response) => {
         let error = new Error(response.statusText);
         error.response = response;
         throw error;
+    }
+};
+
+export const fileDownloads = (id) => {
+    return dispatch => {
+        return fetch(`/api/download/${id}`, {
+            method: "get",
+        }).then(handleResponse)
+            .then()
+    }
+};
+
+export const testResourceFetched = (testResource) => {
+    console.log(testResource);
+    return{
+        type:Test_RESOURCE_FETCHED,
+        testResource
+    }
+};
+
+export const fetchTestResources = (id) => {
+    return dispatch => {
+        return fetch(`/api/testResource/${id}`)
+            .then(res => res.json())
+            .then(data => dispatch(testResourceFetched(data.resource)))
     }
 };

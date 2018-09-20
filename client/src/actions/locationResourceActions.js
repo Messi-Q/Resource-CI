@@ -17,7 +17,7 @@ export const fetchAllResources = () => {
 };
 
 export const locationResourceFetched = (localResource) => {
-    console.log(localResource);
+    console.log('local', localResource);
     return{
         type:LOCATION_RESOURCE_FETCHED,
         localResource

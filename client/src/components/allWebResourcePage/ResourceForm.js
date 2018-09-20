@@ -76,6 +76,7 @@ class ResourceForm extends Component {
                 formData.append('file', file);
                 this.props.uploadRequest(formData).then(  //then接收两个函数参数，第一个是成功之后执行，第二个是错误之后执行
                     () => {
+                        console.log('上传成功');
                     },
                     (err) => err.response.json().then(({errors}) => {
                         this.setState({errors, loading: false})

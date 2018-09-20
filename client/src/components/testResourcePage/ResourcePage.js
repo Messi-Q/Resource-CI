@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import ResourceList from './ResourceList';
-import {fetchResources, deleteResource} from '../../actions/testResourceAction';
+import {fetchResources} from '../../actions/testResourceAction';
 
 class ResourcePage extends Component {
     componentDidMount() {
@@ -15,7 +15,7 @@ class ResourcePage extends Component {
             <div>
                 <div className="container mb-3">
                     <h1>Test Resource</h1>
-                    <ResourceList testResources={this.props.testResources} deleteResource={this.props.deleteResource}/>
+                    <ResourceList testResources={this.props.testResources} />
                 </div>
             </div>
         );
@@ -24,8 +24,7 @@ class ResourcePage extends Component {
 
 ResourcePage.propTypes = {
     testResources: PropTypes.array.isRequired,
-    fetchResources: PropTypes.func.isRequired,
-    deleteResource:PropTypes.func.isRequired
+    fetchResources: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => {
@@ -35,4 +34,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, {fetchResources, deleteResource})(ResourcePage);
+export default connect(mapStateToProps, {fetchResources})(ResourcePage);

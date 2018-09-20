@@ -1,27 +1,21 @@
 import React, {Component} from 'react';
 // import classnames from 'classnames';
 import {connect} from 'react-redux';
-import {fetchLocationResource} from '../../actions/locationResourceActions';
-import {
-    fetchBalance,
-    userAddBalance,
-    userSubBalance,
-    fetchOwnerBalance,
-    updateResourceInfo
-} from "../../actions/rechargeAction";
+import {fetchTestResources} from '../../actions/testResourceAction';
+import {fileDownloads} from '../../actions/testResourceAction';
 import {Redirect} from "react-router-dom";
 import './ResourceForm.css';
 
 class ResourceForm extends Component {
     state = {
-        id: this.props.testResources ? this.props.testResources.id : '',
-        userId: this.props.testResources ? this.props.testResources.userId : '',
-        fileTitle: this.props.testResources ? this.props.testResources.fileTitle : '',
-        fileImage: this.props.testResources ? this.props.testResources.fileImage : '',
-        fileDescription: this.props.testResources ? this.props.testResources.fileDescription : '',
-        fileReadPrice: this.props.testResources ? this.props.testResources.fileReadPrice : '',
-        fileRightPrice: this.props.testResources ? this.props.testResources.fileRightPrice : '',
-        file: this.props.testResources ? this.props.testResources.file : '',
+        id: this.props.testResource ? this.props.testResource.id : '',
+        userId: this.props.testResource ? this.props.testResource.userId : '',
+        fileTitle: this.props.testResource ? this.props.testResource.fileTitle : '',
+        fileImage: this.props.testResource ? this.props.testResource.fileImage : '',
+        fileDescription: this.props.testResource ? this.props.testResource.fileDescription : '',
+        fileReadPrice: this.props.testResource ? this.props.testResource.fileReadPrice : '',
+        fileRightPrice: this.props.testResource ? this.props.testResource.fileRightPrice : '',
+        file: this.props.testResource ? this.props.testResource.file : '',
         balance: this.props.user ? this.props.user.balance : '',
         errors: {},
         loading: false,
@@ -29,28 +23,28 @@ class ResourceForm extends Component {
     };
 
     componentDidMount() {
-        const {match, testResources} = this.props;
+        const {match, testResource} = this.props;
         if (match.params.id) {  //所有路由的id参数
-            this.props.fetchLocationResource(match.params.id);
+            this.props.fetchTestResources(match.params.id);
         }
         const {user} = this.props.userLogin;
         console.log("userId", user);
         //获取购买者的余额
-        this.props.fetchBalance(user.id);
+        //this.props.fetchBalance(user.id);
         //获取资源所有者的余额
-        this.props.fetchOwnerBalance(testResources.userId);
+        //this.props.fetchOwnerBalance(testResources.userId);
     }
 
     componentWillReceiveProps(nextProps) {
         this.setState({
-            id: nextProps.testResources.id,
-            userId: nextProps.testResources.userId,
-            fileTitle: nextProps.testResources.fileTitle,
-            fileImage: nextProps.testResources.fileImage,
-            fileDescription: nextProps.testResources.fileDescription,
-            fileReadPrice: nextProps.testResources.fileReadPrice,
-            fileRightPrice: nextProps.testResources.fileRightPrice,
-            file: nextProps.testResources.file,
+            id: nextProps.testResource.id,
+            userId: nextProps.testResource.userId,
+            fileTitle: nextProps.testResource.fileTitle,
+            fileImage: nextProps.testResource.fileImage,
+            fileDescription: nextProps.testResource.fileDescription,
+            fileReadPrice: nextProps.testResource.fileReadPrice,
+            fileRightPrice: nextProps.testResource.fileRightPrice,
+            file: nextProps.testResource.file,
             balance: nextProps.balance
         })
     }
@@ -77,7 +71,7 @@ class ResourceForm extends Component {
     };
 
     //阅读权的交易
-    handleSubmit_1 = (e) => {
+    handleSubmit = (e) => {
         e.preventDefault();
 
         console.log('Transaction_1');
@@ -85,106 +79,11 @@ class ResourceForm extends Component {
         const readPrice = this.state.fileReadPrice >> 0;
         const userBuyId = this.props.userLogin.user.id;
         const userId = this.state.userId;
+        const {match, testResource} = this.props;
+        console.log(testResource);
 
-        if (userBuyId !== userId) {
-            if (userBalance > readPrice) {
-                console.log("账户余额充足");
-                const restBalance = userBalance - readPrice;
-                console.log(restBalance, userBuyId, userId);
+        this.props.fileDownloads(testResource.id);
 
-                //购买用户减去相应的金额
-                this.props.userSubBalance({
-                    userBuyId,
-                    restBalance
-                }).then(
-                    () => {
-                    },
-                    (err) => err.response.json().then(({errors}) => {
-                        this.setState({errors, loading: false})
-                    })
-                );
-
-                const ownerBalance = this.props.owner.balance;
-                console.log(userBalance, readPrice, ownerBalance);
-                const totalBalance = ownerBalance + readPrice;
-                console.log(totalBalance);
-                //资源拥有者增加相应的金额
-                this.props.userAddBalance({
-                    userId,
-                    totalBalance
-                });
-
-                this.props.history.push('/resources')
-
-            } else {
-                window.alert("账户余额不足，请充值！");
-                this.props.history.push('/myWallet');
-            }
-
-        } else {
-            window.alert("这是您自己上传的资源，无需购买！");
-        }
-
-    };
-
-    //所有权交易
-    handleSubmit_2 = (e) => {
-        e.preventDefault();
-
-        console.log('Transaction_2');
-        const userBalance = this.props.user.balance;
-        const ownerPrice = this.state.fileRightPrice >> 0;
-        const userBuyId = this.props.userLogin.user.id;
-        const userId = this.state.userId;
-
-        if (userBuyId !== userId) {
-            if (userBalance > ownerPrice) {
-                console.log("账户余额充足");
-                const restBalance = userBalance - ownerPrice;
-                console.log(restBalance, userBuyId, userId);
-
-                //购买用户减去相应的金额
-                this.props.userSubBalance({
-                    userBuyId,
-                    restBalance
-                }).then(
-                    () => {
-                    },
-                    (err) => err.response.json().then(({errors}) => {
-                        this.setState({errors, loading: false})
-                    })
-                );
-
-                const ownerBalance = this.props.owner.balance;
-                console.log(userBalance, ownerPrice, ownerBalance);
-                const totalBalance = ownerBalance + ownerPrice;
-                console.log(totalBalance);
-                //资源拥有者增加相应的金额
-                this.props.userAddBalance({
-                    userId,
-                    totalBalance
-                });
-
-                //修改资源所属id
-                const {id, fileTitle} = this.state;
-                this.props.updateResourceInfo({
-                    id,
-                    userId,
-                    fileTitle,
-                    userBuyId
-                });
-
-                this.props.history.push('/resources')
-
-            } else {
-                window.alert("账户余额不足，请充值！");
-                this.props.history.push('/myWallet');
-            }
-
-
-        } else {
-            window.alert("这是您自己上传的资源，无需购买！");
-        }
     };
 
     render() {
@@ -211,16 +110,10 @@ class ResourceForm extends Component {
                                         <span className="pricetag">
                                             ReadPrice：{this.state.fileReadPrice}
                                             <button className="ui teal right floated basic button buy-button"
-                                                    onClick={this.handleSubmit_1}>
-                                                <i className="shop icon"></i>Buy</button>
+                                                    onClick={this.handleSubmit}>
+                                                <i className="shop icon"></i>Downloads</button>
                                         </span>
                                     <br/><br/>
-                                    <span className="pricetag">
-                                            RightPrice：{this.state.fileRightPrice}
-                                        <button className="ui teal right floated basic button buy-button"
-                                                onClick={this.handleSubmit_2}>
-                                                <i className="shop icon"></i>Buy</button>
-                                        </span>
                                 </div>
                             </div>
                         </div>
@@ -244,7 +137,7 @@ const mapStateToProps = (state, props) => {
             user: state.user,
             owner: state.owner,
             userLogin: state.userLogin,
-            testResources: state.testResources.find(item => item.id.toString() === match.params.id.toString())
+            testResource: state.testResources.find(item => item.id.toString() === match.params.id.toString())
         };
     }
 
@@ -252,15 +145,10 @@ const mapStateToProps = (state, props) => {
         user: state.user,
         owner: state.owner,
         userLogin: state.userLogin,
-        testResources: null
+        testResource: null
     };
 };
 
 export default connect(mapStateToProps, {
-    fetchLocationResource,
-    fetchBalance,
-    userSubBalance,
-    userAddBalance,
-    fetchOwnerBalance,
-    updateResourceInfo
+    fetchTestResources, fileDownloads
 })(ResourceForm);

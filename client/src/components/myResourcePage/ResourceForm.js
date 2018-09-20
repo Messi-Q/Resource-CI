@@ -1,12 +1,20 @@
 import React, {Component} from 'react';
 import classnames from 'classnames';
 import {connect} from 'react-redux';
-import {saveResource, fetchResource, updateResource, uploadRequest} from '../../actions/myResourceActions';
+import {
+    saveResource,
+    fetchResource,
+    updateResource,
+    uploadRequest,
+    updateAllWebResource
+} from '../../actions/myResourceActions';
 import {Redirect} from "react-router-dom";
 import './ResourceForm.css';
 
 class ResourceForm extends Component {
     state = {
+        $class: "org.demo.network.Resource",
+        website: "A",
         id: this.props.resource ? this.props.resource.id : null,
         userId: this.props.userLogin.user.id,
         fileTitle: this.props.resource ? this.props.resource.fileTitle : '',
@@ -77,7 +85,16 @@ class ResourceForm extends Component {
         const isValid = Object.keys(errors).length === 0;  //Object.keys返回对象所有属性
 
         if (isValid) {
-            const {id, userId, fileTitle, fileImage, fileDescription, fileReadPrice, fileRightPrice, file} = this.state;
+            const {$class, id, userId, fileTitle, fileImage, fileDescription, fileReadPrice, fileRightPrice, file, website} = this.state;
+            const userName = this.props.userLogin.user.username;
+            const resourceId = website + '-' + fileTitle; //应改为站名+站内定位符
+            const headline = fileTitle;
+            const coverUrl = fileImage;
+            const owner = "resource:org.demo.network.Customer#" + website + '-' + userName;
+            const readPrice = fileReadPrice;
+            const ownershipPrice = fileRightPrice;
+            const readCount = 0;
+            const liked = 0;
             const allWeb = 0;
             console.log(this.state);
             console.log(file);
@@ -88,6 +105,7 @@ class ResourceForm extends Component {
                 formData.append('file', file);
                 this.props.uploadRequest(formData).then(  //then接收两个函数参数，第一个是成功之后执行，第二个是错误之后执行
                     () => {
+                        console.log('上传成功');
                     },
                     (err) => err.response.json().then(({errors}) => {
                         this.setState({errors, loading: false})
@@ -116,7 +134,13 @@ class ResourceForm extends Component {
                     (err) => err.response.json().then(({errors}) => {
                         this.setState({errors, loading: false})
                     })
-                )
+                );
+
+                //同步修改区块链上的内容
+                this.props.updateAllWebResource({
+                    $class, resourceId, headline, coverUrl, readPrice, ownershipPrice, owner, readCount, liked
+                })
+
             } else {
                 this.props.saveResource({
                     userId,
@@ -133,6 +157,7 @@ class ResourceForm extends Component {
                         this.setState({errors, loading: false})
                     })
                 )
+
             }
         }
     };
@@ -275,4 +300,10 @@ const mapStateToProps = (state, props) => {
     };
 };
 
-export default connect(mapStateToProps, {saveResource, fetchResource, updateResource, uploadRequest})(ResourceForm);
+export default connect(mapStateToProps, {
+    saveResource,
+    fetchResource,
+    updateResource,
+    uploadRequest,
+    updateAllWebResource
+})(ResourceForm);

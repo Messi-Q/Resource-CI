@@ -6,7 +6,6 @@ const ResourceCard = ({allWebResource}) => {
     return (
         <Link className="ui card resource-card" to={`/allWebResource/${allWebResource.resourceId}`}>
 
-
             <div className="ui image">
                 <img src={allWebResource.coverUrl} alt="resource Cover"/>
             </div>
@@ -22,9 +21,7 @@ const ResourceCard = ({allWebResource}) => {
                 </span>
                 <br/>
                 <span className="price">所有价：{allWebResource.ownershipPrice}$</span>
-
             </div>
-
         </Link>
     );
 };
