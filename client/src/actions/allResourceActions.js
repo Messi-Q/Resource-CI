@@ -95,7 +95,6 @@ export const uploadRequest = (file) => {
             method: "post",
             body: file,
         }).then(handleResponse)
-            .then()
     }
 };
 
@@ -109,14 +108,15 @@ const handleResponse = (response) => {
     }
 };
 
-export const deleteResource = (id) => {
-    console.log(id);
+export const deleteWebResource = (resource) => {
+    const resourceId = 'A' + '-' + resource.fileTitle; //应改为站名+站内定位符
+    console.log('resourceId', resourceId);
     return dispatch => {
-        return fetch(`http://localhost:3000/api/Resource/${id}`, {
+        return fetch(`http://localhost:3000/api/Resource/${resourceId}`, {
             method: 'delete',
             headers: {
                 "Content-Type": "application/json"
             }
-        }).then(handleResponse)
+        })
     }
 };

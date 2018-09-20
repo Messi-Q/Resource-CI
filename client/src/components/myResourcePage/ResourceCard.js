@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 
-const ResourceCard = ({resource, deleteResource}) => {
+const ResourceCard = ({resource, deleteResource, deleteWebResource}) => {
     console.log(resource);
     return (
         <div className="ui card">
@@ -23,7 +23,9 @@ const ResourceCard = ({resource, deleteResource}) => {
             <div className="extra content">
                 <div className="ui two buttons">
                     <Link to={`/resource/${resource.id}`} className="ui basic button green">Edit</Link>
-                    <div className="ui basic button red" onClick={() => deleteResource(resource.id)}>Delete</div>
+                    <div className="ui basic button red"
+                         onClick={() => deleteResource(resource) && deleteWebResource(resource)}>Delete
+                    </div>
                 </div>
             </div>
         </div>
@@ -32,7 +34,8 @@ const ResourceCard = ({resource, deleteResource}) => {
 
 ResourceCard.propTypes = {
     resource: PropTypes.object.isRequired,
-    deleteResource: PropTypes.func.isRequired
+    deleteResource: PropTypes.func.isRequired,
+    deleteWebResource: PropTypes.func.isRequired
 };
 
 export default ResourceCard;

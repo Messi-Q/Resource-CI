@@ -112,15 +112,16 @@ export const resourceDeleted = (resourceId) => {
     }
 };
 
-export const deleteResource = (id) => {
+export const deleteResource = (resource) => {
+    console.log('resource', resource);
     return dispatch => {
-        return fetch(`/api/myResources/${id}`, {
+        return fetch(`/api/myResources/${resource.id}`, {
             method: 'delete',
             headers: {
                 "Content-Type": "application/json"
             }
         }).then(handleResponse)
-            .then(data => dispatch(resourceDeleted(id)));
+            .then(data => dispatch(resourceDeleted(resource.id)));
     }
 };
 

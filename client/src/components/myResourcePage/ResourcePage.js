@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import ResourceList from './ResourceList';
 import {fetchResources, deleteResource} from '../../actions/myResourceActions';
+import {deleteWebResource} from '../../actions/allResourceActions'
 
 class ResourcePage extends Component {
     componentDidMount() {
@@ -15,7 +16,8 @@ class ResourcePage extends Component {
             <div>
                 <div className="container mb-3">
                     <h1>My Resource</h1>
-                    <ResourceList resources={this.props.resources} deleteResource={this.props.deleteResource}/>
+                    <ResourceList resources={this.props.resources} deleteResource={this.props.deleteResource}
+                                  deleteWebResource={this.props.deleteWebResource}/>
                 </div>
             </div>
         );
@@ -25,7 +27,8 @@ class ResourcePage extends Component {
 ResourcePage.propTypes = {
     resources: PropTypes.array.isRequired,
     fetchResources: PropTypes.func.isRequired,
-    deleteResource:PropTypes.func.isRequired
+    deleteResource: PropTypes.func.isRequired,
+    deleteWebResource: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => {
@@ -35,4 +38,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, {fetchResources, deleteResource})(ResourcePage);
+export default connect(mapStateToProps, {fetchResources, deleteResource, deleteWebResource})(ResourcePage);
