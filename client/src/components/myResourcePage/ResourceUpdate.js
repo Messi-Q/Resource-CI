@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import classnames from 'classnames';
 import {connect} from 'react-redux';
-import {saveResource, fetchResource, uploadRequest} from '../../actions/myResourceActions';
+import {fetchResource, updateResource, uploadRequest, updateAllWebResource} from '../../actions/myResourceActions';
 import {Redirect} from "react-router-dom";
 import './ResourceForm.css';
 
 class ResourceForm extends Component {
     state = {
+        $class: "org.demo.network.Resource",
+        website: "A",
         id: this.props.resource ? this.props.resource.id : null,
         userId: this.props.userLogin.user.id,
         fileTitle: this.props.resource ? this.props.resource.fileTitle : '',
@@ -14,7 +16,6 @@ class ResourceForm extends Component {
         fileDescription: this.props.resource ? this.props.resource.fileDescription : '',
         fileReadPrice: this.props.resource ? this.props.resource.fileReadPrice : '',
         fileRightPrice: this.props.resource ? this.props.resource.fileRightPrice : '',
-        file: this.props.resource ? this.props.resource.file : '',
         errors: {},
         loading: false,
         done: false
@@ -37,17 +38,8 @@ class ResourceForm extends Component {
             fileDescription: nextProps.resource.fileDescription,
             fileReadPrice: nextProps.resource.fileReadPrice,
             fileRightPrice: nextProps.resource.fileRightPrice,
-            file: nextProps.resource.file
         });
     }
-
-    changeFiles = (e) => {
-        const file = e.target.files[0];
-        if (!file) {
-            return;
-        }
-        this.setState({file: file})
-    };
 
     handleChange = (e) => {
         if (!!this.state.errors[e.target.name]) {
@@ -71,48 +63,49 @@ class ResourceForm extends Component {
         if (this.state.fileDescription === '') errors.fileDescription = "Can't be empty";
         if (this.state.fileReadPrice === '') errors.fileReadPrice = "Can't be empty";
         if (this.state.fileRightPrice === '') errors.fileRightPrice = "Can't be empty";
-        //if (this.state.file === '') errors.file = "Can't be empty";
         this.setState({errors});
 
         const isValid = Object.keys(errors).length === 0;  //Object.keys返回对象所有属性
 
         if (isValid) {
-            const {id, userId, fileTitle, fileImage, fileDescription, fileReadPrice, fileRightPrice, file} = this.state;
+            const {$class, id, userId, fileTitle, fileImage, fileDescription, fileReadPrice, fileRightPrice, website} = this.state;
+            const userName = this.props.userLogin.user.username;
+            const resourceId = website + '-' + fileTitle; //应改为站名+站内定位符
+            const headline = fileTitle;
+            const coverUrl = fileImage;
+            const owner = "resource:org.demo.network.Customer#" + website + '-' + userName;
+            const readPrice = fileReadPrice;
+            const ownershipPrice = fileRightPrice;
+            const readCount = 0;
+            const liked = 0;
             const allWeb = 0;
 
-            if (file) {
-                const formData = new FormData();
-                formData.append('file', file);
-                this.props.uploadRequest(formData).then(  //then接收两个函数参数，第一个是成功之后执行，第二个是错误之后执行
+            this.setState({loading: true});
+
+            if (id) {
+                this.props.updateResource({
+                    id,
+                    userId,
+                    fileTitle,
+                    fileImage,
+                    fileDescription,
+                    fileReadPrice,
+                    fileRightPrice,
+                }).then(  //then接收两个函数参数，第一个是成功之后执行，第二个是错误之后执行
                     () => {
-                        console.log('上传成功');
+                        this.setState({done: true})
                     },
                     (err) => err.response.json().then(({errors}) => {
                         this.setState({errors, loading: false})
                     })
                 );
-            } else {
-                console.log('No files fetched');
-                return
-            }
 
-            this.setState({loading: true});
-
-            this.props.saveResource({
-                userId,
-                fileTitle,
-                fileImage,
-                fileDescription,
-                fileReadPrice,
-                fileRightPrice,
-            }).then(  //then接收两个函数参数，第一个是成功之后执行，第二个是错误之后执行
-                () => {
-                    this.setState({done: true})
-                },
-                (err) => err.response.json().then(({errors}) => {
-                    this.setState({errors, loading: false})
+                //同步修改区块链上的内容
+                this.props.updateAllWebResource({
+                    $class, resourceId, headline, coverUrl, readPrice, ownershipPrice, owner, readCount, liked
                 })
-            )
+
+            }
         }
     };
 
@@ -198,32 +191,6 @@ class ResourceForm extends Component {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="title" className="control-label">FileSelect</label>
-                        <br/>
-
-                        <span className="btn btn-primary fileinput-btn">
-                                选择文件
-                            <input
-                                type="file"
-                                ref="file"
-                                name="file"
-                                required
-                                onChange={this.changeFiles}
-                                className="fileinput"
-                            />
-                            </span>
-                        <input
-                            type="text"
-                            name="fileName"
-                            value={this.state.file ? this.state.file.name : ""}
-                            onChange={this.handleChange}
-                            className="uploadinput"
-                        />
-
-                        <span>{this.state.errors.file}</span>
-                    </div>
-
-                    <div className="form-group">
                         <button className="btn btn-outline-primary btn-lg btn-block">Upload</button>
                     </div>
                 </form>
@@ -254,4 +221,4 @@ const mapStateToProps = (state, props) => {
     };
 };
 
-export default connect(mapStateToProps, {saveResource, fetchResource, uploadRequest})(ResourceForm);
+export default connect(mapStateToProps, {fetchResource, updateResource, uploadRequest, updateAllWebResource})(ResourceForm);

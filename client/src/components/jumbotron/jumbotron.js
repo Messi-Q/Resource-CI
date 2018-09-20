@@ -16,7 +16,7 @@ class Jumbotron extends Component {
     };
 
     handleSubmit = () => {
-
+        this.props.history.push('/')
     };
 
     render() {
@@ -49,7 +49,7 @@ class Jumbotron extends Component {
                                 <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                             </form>
                             <form className="form-inline mt-2 mt-md-0">
-                                <button className="btn my-2 my-sm-0" type="submit">other websites</button>
+                                <button className="btn my-2 my-sm-0" type="submit" onClick={this.handleSubmit}>other websites</button>
                             </form>
                         </div>
                     </div>

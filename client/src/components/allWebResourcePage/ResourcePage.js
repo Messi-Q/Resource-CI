@@ -1,10 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-// import PropTypes from 'prop-types';
-// import ResourceCard from './ResourceCard';
 import {fetchAllWebResources} from '../../actions/allResourceActions';
-import axios from 'axios';
-// import Config from '../../utils/config';
 import PropTypes from "prop-types";
 import ResourceList from './ResourceList';
 

@@ -1,7 +1,6 @@
 import {SET_ALLWEB_RESOURCES, ADD_ALLWEB_RESOURCE, ALL_RESOURCE_FETCHED, ADD_RESOURCE_To_MYSQL} from '../constants';
 // import axios from "axios/index";
 import Config from '../utils/config';
-import {resourceDeleted} from "./myResourceActions";
 
 export const allResourceFetched = (allWebResource) => {
     //console.log(allWebResource);

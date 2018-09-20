@@ -1,4 +1,4 @@
-import {DELETE_RESOURCE, SET_TEST_RESOURCES, Test_RESOURCE_FETCHED} from "../constants";
+import {SET_TEST_RESOURCES, Test_RESOURCE_FETCHED} from "../constants";
 
 export const setTestResources = (testResources) => {
     console.log('test', testResources);

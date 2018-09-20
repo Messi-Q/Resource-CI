@@ -23,7 +23,7 @@ class ResourceForm extends Component {
     };
 
     componentDidMount() {
-        const {match, testResource} = this.props;
+        const {match} = this.props;
         if (match.params.id) {  //所有路由的id参数
             this.props.fetchTestResources(match.params.id);
         }
@@ -75,11 +75,11 @@ class ResourceForm extends Component {
         e.preventDefault();
 
         console.log('Transaction_1');
-        const userBalance = this.props.user.balance;
-        const readPrice = this.state.fileReadPrice >> 0;
-        const userBuyId = this.props.userLogin.user.id;
-        const userId = this.state.userId;
-        const {match, testResource} = this.props;
+        // const userBalance = this.props.user.balance;
+        // const readPrice = this.state.fileReadPrice >> 0;
+        // const userBuyId = this.props.userLogin.user.id;
+        // const userId = this.state.userId;
+        const {testResource} = this.props;
         console.log(testResource);
 
         this.props.fileDownloads(testResource.id);
