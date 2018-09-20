@@ -1,11 +1,14 @@
-# React-redux-mysql
-    
-    
-   准备实现一个资源上传和交易网站，后期继续完善。
-   使用react+redux实现前端的页面和逻辑；后台用到express框架，数据库使用的是mysql，之前有用过mongodb的，都是可以的；
-   其中还有登录的浏览器存储，这里使用的不是cookie和session，而是用的JWT（json web token）。
+# Educational Resource Confirmation Project Based on Blockchain
+Introduction
+   
+   To implement a resource uploading and trading website, users can upload and download files and purchase rights and read rights of the resources in the website; the ownership of the file can confirm the file and confirm the right to use the method of adding watermark.
+   
+   The website uses react+redux to implement the front page and logic, the background uses the nodejs+express framework, the database uses mysql (mongodb is also possible); the JWT (json web token) tool is used to store the browser after the user logs in.
+   
+   The highlight of the site is based on blockchain technology, using hyperleger composer (a coalition chain) to write smart contracts, execute the composer-rest-sever command, provide access to the composer api interface, and the foreground uses the fetch tool to call the rest-api interface. Implement interaction with blockchain data
    
    TODO:
    1. Download the file from server
    2. finish the transaction with the contratcts written by hyperledger composer
+   
    
