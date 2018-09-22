@@ -129,6 +129,7 @@ class RechargeForm extends Component {
                     <div className="form-group">
                         <button className="btn btn-outline-primary btn-lg btn-block">Recharge</button>
                     </div>
+
                 </form>
             </div>
         );

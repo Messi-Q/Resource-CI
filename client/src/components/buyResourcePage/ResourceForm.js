@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 // import classnames from 'classnames';
 import {connect} from 'react-redux';
-import {fetchTestResources} from '../../actions/buyResourceAction';
+import {fetchBuyResources} from '../../actions/buyResourceAction';
 import {fileDownloads} from '../../actions/buyResourceAction';
 import {Redirect} from "react-router-dom";
 import './ResourceForm.css';
@@ -25,7 +25,7 @@ class ResourceForm extends Component {
     componentDidMount() {
         const {match} = this.props;
         if (match.params.id) {  //所有路由的id参数
-            this.props.fetchTestResources(match.params.id);
+            this.props.fetchBuyResources(match.params.id);
         }
         const {user} = this.props.userLogin;
         console.log("userId", user);
@@ -124,7 +124,7 @@ class ResourceForm extends Component {
 
         return (
             <div>
-                {this.state.done ? <Redirect to="/testResources"/> : form}
+                {this.state.done ? <Redirect to="/buyResources"/> : form}
             </div>
         );
     }
@@ -149,6 +149,4 @@ const mapStateToProps = (state, props) => {
     };
 };
 
-export default connect(mapStateToProps, {
-    fetchTestResources, fileDownloads
-})(ResourceForm);
+export default connect(mapStateToProps, {fetchBuyResources, fileDownloads})(ResourceForm);

@@ -35,7 +35,7 @@ export const fileDownloads = (id) => {
     }
 };
 
-export const testResourceFetched = (buyResource) => {
+export const buyResourceFetched = (buyResource) => {
     console.log(buyResource);
     return{
         type:BUY_RESOURCE_FETCHED,
@@ -43,11 +43,12 @@ export const testResourceFetched = (buyResource) => {
     }
 };
 
-export const fetchTestResources = (id) => {
+export const fetchBuyResources = (id) => {
+    console.log(id);
     return dispatch => {
         return fetch(`/api/buyResource/${id}`)
             .then(res => res.json())
-            .then(data => dispatch(testResourceFetched(data.resource)))
+            .then(data => dispatch(buyResourceFetched(data.resource)))
     }
 };
 
