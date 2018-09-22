@@ -1,5 +1,6 @@
 import express from 'express';
 import File from '../models/file1';
+import Buyer from '../models/Buy';
 
 let router = express.Router();
 
@@ -11,9 +12,9 @@ router.get('/', (req, res) => {
 
 router.get('/:userId', (req, res) => {
     console.log(req.params.userId);
-    File.forge()
-        .where('userId', '=', req.params.userId)
-        .fetchAll().then(resource => res.json({resources: resource}))
+    Buyer.forge()
+        .where('buyerId', '=', req.params.userId)
+        .fetchAll().then(buyResource => res.json({buyResources: buyResource}))
         .catch(err => res.status(500).json({errors: {global: "something went wrong"}}));
 });
 

@@ -5,7 +5,7 @@ import flashMessage from './flashMessage';
 import myResources from './myResources';
 import locationResources from './locationResources';
 import allWebResources from './allWebResources';
-import testResources from './testResources';
+import buyResources from './buyResources';
 import user from './user';
 import owner from './owner';
 import userSignup from './userSignup';
@@ -17,7 +17,7 @@ export default combineReducers({
     owner: owner,
     Customer: userSignup,
     resources: myResources,
+    buyResources: buyResources,
     localResources: locationResources,
     allWebResources: allWebResources,
-    testResources: testResources
 });

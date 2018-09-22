@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import ResourceList from './ResourceList';
 import {fetchResources, deleteResource} from '../../actions/myResourceActions';
 import {deleteWebResource} from '../../actions/allResourceActions'
+import {NavLink} from "react-router-dom";
 
 class ResourcePage extends Component {
     componentDidMount() {
@@ -14,8 +15,14 @@ class ResourcePage extends Component {
     render() {
         return (
             <div>
+                <div className="ui secondary menu">
+                    <NavLink exact activeClassName="active" to="/resources"
+                             className="link active item">所有权下资源</NavLink>
+                    <NavLink exact activeClassName="active" to="/buyResources"
+                             className="link item">阅读权下资源</NavLink>
+                </div>
                 <div className="container mb-3">
-                    <h1>My Resource</h1>
+                    <h1>Personal Resources</h1>
                     <ResourceList resources={this.props.resources} deleteResource={this.props.deleteResource}
                                   deleteWebResource={this.props.deleteWebResource}/>
                 </div>

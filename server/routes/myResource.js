@@ -1,9 +1,6 @@
 import express from 'express';
 import authenticate from '../middlewares/authenticate';
 import File from '../models/file1';
-import formidable from "formidable";
-import path from "path";
-import fs from 'fs';
 
 let router = express.Router();
 
@@ -22,7 +19,6 @@ const validate = (data) => {
 };
 
 router.get('/:userId', (req, res) => {
-    console.log(req.params.userId);
     File.forge()
         .where('userId', '=', req.params.userId)
         .fetchAll().then(resource => {

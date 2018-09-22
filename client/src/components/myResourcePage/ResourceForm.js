@@ -77,8 +77,8 @@ class ResourceForm extends Component {
         const isValid = Object.keys(errors).length === 0;  //Object.keys返回对象所有属性
 
         if (isValid) {
-            const {id, userId, fileTitle, fileImage, fileDescription, fileReadPrice, fileRightPrice, file} = this.state;
-            const allWeb = 0;
+            const {userId, fileTitle, fileImage, fileDescription, fileReadPrice, fileRightPrice, file} = this.state;
+            const allWeb = 0;  //非全网可见
 
             if (file) {
                 const formData = new FormData();

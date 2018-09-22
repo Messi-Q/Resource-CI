@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-// import classnames from 'classnames';
 import {connect} from 'react-redux';
 import {fetchLocationResource} from '../../actions/locationResourceActions';
+import {updateBuyer} from '../../actions/buyResourceAction';
 import {
     fetchBalance,
     userAddBalance,
@@ -13,6 +13,7 @@ import {Redirect} from "react-router-dom";
 import './ResourceForm.css';
 
 class ResourceForm extends Component {
+    succeed = false;
     state = {
         id: this.props.localResource ? this.props.localResource.id : '',
         userId: this.props.localResource ? this.props.localResource.userId : '',
@@ -23,13 +24,15 @@ class ResourceForm extends Component {
         fileRightPrice: this.props.localResource ? this.props.localResource.fileRightPrice : '',
         file: this.props.localResource ? this.props.localResource.file : '',
         balance: this.props.user ? this.props.user.balance : '',
-        ownerBalance: false,
+        succeed_1: false,
+        succeed_2: false,
         errors: {},
         loading: false,
         done: false
     };
 
     componentDidMount() {
+        this.succeed = true;
         const {match, localResource} = this.props;
         console.log(this.props);
         if (match.params.id) {  //所有路由的id参数
@@ -38,14 +41,15 @@ class ResourceForm extends Component {
         const {user} = this.props.userLogin;
         console.log("userId", user);
         //获取购买者的余额
-        this.props.fetchBalance(user.id)
-            .then(
-                () => {
-                    this.setState({ownerBalance: true})
-                },
-                () => {
-                }
-            );
+        this.props.fetchBalance(user.id);
+        //     .then(
+        //     () => {
+        //         this.setState({ownerBalance: true})
+        //     },
+        //     (err) => err.response.json().then(({errors}) => {
+        //         this.setState({errors, loading: false})
+        //     })
+        // );
         //获取资源所有者的余额
         this.props.fetchOwnerBalance(localResource.userId);
     }
@@ -94,8 +98,12 @@ class ResourceForm extends Component {
         const readPrice = this.state.fileReadPrice >> 0;
         const userBuyId = this.props.userLogin.user.id;
         const userId = this.state.userId;
+        const {user} = this.props.userLogin;
+        console.log("userId", user.id);
+        const buyerId = user.id;
+        const {id, fileTitle, fileImage, fileDescription, fileReadPrice, fileRightPrice} = this.state;
 
-        console.log(this.state.ownerBalance);
+        // console.log(this.state.ownerBalance);
 
         if (userBuyId !== userId) {
             if (userBalance > readPrice) {
@@ -109,6 +117,9 @@ class ResourceForm extends Component {
                     restBalance
                 }).then(
                     () => {
+                        if (this.succeed) {
+                            this.setState({succeed_1: true})
+                        }
                     },
                     (err) => err.response.json().then(({errors}) => {
                         this.setState({errors, loading: false})
@@ -123,9 +134,37 @@ class ResourceForm extends Component {
                 this.props.userAddBalance({
                     userId,
                     totalBalance
-                });
+                }).then(
+                    () => {
+                        if (this.succeed) {
+                            this.setState({succeed_2: true})
+                        }
+                    },
+                    (err) => err.response.json().then(({errors}) => {
+                        this.setState({errors, loading: false})
+                    })
+                );
 
-                this.props.history.push('/resources')
+                setTimeout(() => {
+                    if (this.state.succeed_1 && this.state.succeed_2) {
+                        this.props.updateBuyer({
+                            buyerId,
+                            id,
+                            fileTitle,
+                            fileImage,
+                            fileDescription,
+                            fileReadPrice,
+                            fileRightPrice
+                        }).then(
+                            () => {
+                                this.props.history.push('/resources')
+                            },
+                            (err) => err.response.json().then(({errors}) => {
+                                this.setState({errors, loading: false})
+                            })
+                        )
+                    }
+                }, 1000);
 
             } else {
                 window.alert("账户余额不足，请充值！");
@@ -273,5 +312,6 @@ export default connect(mapStateToProps, {
     userSubBalance,
     userAddBalance,
     fetchOwnerBalance,
-    updateResourceInfo
+    updateResourceInfo,
+    updateBuyer
 })(ResourceForm);

@@ -68,7 +68,7 @@ class ResourceForm extends Component {
             const fileReadPrice = readPrice;
             const fileRightPrice = ownershipPrice;
             const resourceId = website + '-' + headline; //应改为站名+站内定位符
-            const allWeb = 1;
+            const allWeb = 1;  //全网可见
             console.log('this is my test:',this.props.userLogin.user.username);
 
             if (file) {

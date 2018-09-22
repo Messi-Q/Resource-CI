@@ -52,6 +52,7 @@ const handleResponse = (response) => {
 };
 
 const addResource = (resource) => {
+    console.log('resource',resource);
     return {
         type: ADD_RESOURCE,
         resource

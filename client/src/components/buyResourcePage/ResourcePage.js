@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import ResourceList from './ResourceList';
-import {fetchResources} from '../../actions/testResourceAction';
+import {fetchResources} from '../../actions/buyResourceAction';
+import {NavLink} from "react-router-dom";
 
 class ResourcePage extends Component {
     componentDidMount() {
@@ -13,9 +14,15 @@ class ResourcePage extends Component {
     render() {
         return (
             <div>
+                <div className="ui secondary menu">
+                    <NavLink exact activeClassName="active" to="/resources"
+                             className="link item">所有权下资源</NavLink>
+                    <NavLink exact activeClassName="active" to="/buyResources"
+                             className="link active item">阅读权下资源</NavLink>
+                </div>
                 <div className="container mb-3">
-                    <h1>Test Resource</h1>
-                    <ResourceList testResources={this.props.testResources} />
+                    <h1>Readable Resources</h1>
+                    <ResourceList buyResources={this.props.buyResources}/>
                 </div>
             </div>
         );
@@ -23,14 +30,14 @@ class ResourcePage extends Component {
 }
 
 ResourcePage.propTypes = {
-    testResources: PropTypes.array.isRequired,
+    buyResources: PropTypes.array.isRequired,
     fetchResources: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => {
     return {
         userLogin: state.userLogin,
-        testResources: state.testResources
+        buyResources: state.buyResources
     };
 };
 

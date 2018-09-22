@@ -1,21 +1,21 @@
 import React, {Component} from 'react';
 // import classnames from 'classnames';
 import {connect} from 'react-redux';
-import {fetchTestResources} from '../../actions/testResourceAction';
-import {fileDownloads} from '../../actions/testResourceAction';
+import {fetchTestResources} from '../../actions/buyResourceAction';
+import {fileDownloads} from '../../actions/buyResourceAction';
 import {Redirect} from "react-router-dom";
 import './ResourceForm.css';
 
 class ResourceForm extends Component {
     state = {
-        id: this.props.testResource ? this.props.testResource.id : '',
-        userId: this.props.testResource ? this.props.testResource.userId : '',
-        fileTitle: this.props.testResource ? this.props.testResource.fileTitle : '',
-        fileImage: this.props.testResource ? this.props.testResource.fileImage : '',
-        fileDescription: this.props.testResource ? this.props.testResource.fileDescription : '',
-        fileReadPrice: this.props.testResource ? this.props.testResource.fileReadPrice : '',
-        fileRightPrice: this.props.testResource ? this.props.testResource.fileRightPrice : '',
-        file: this.props.testResource ? this.props.testResource.file : '',
+        id: this.props.buyResource ? this.props.buyResource.id : '',
+        userId: this.props.buyResource ? this.props.buyResource.userId : '',
+        fileTitle: this.props.buyResource ? this.props.buyResource.fileTitle : '',
+        fileImage: this.props.buyResource ? this.props.buyResource.fileImage : '',
+        fileDescription: this.props.buyResource ? this.props.buyResource.fileDescription : '',
+        fileReadPrice: this.props.buyResource ? this.props.buyResource.fileReadPrice : '',
+        fileRightPrice: this.props.buyResource ? this.props.buyResource.fileRightPrice : '',
+        file: this.props.buyResource ? this.props.buyResource.file : '',
         balance: this.props.user ? this.props.user.balance : '',
         errors: {},
         loading: false,
@@ -37,14 +37,14 @@ class ResourceForm extends Component {
 
     componentWillReceiveProps(nextProps) {
         this.setState({
-            id: nextProps.testResource.id,
-            userId: nextProps.testResource.userId,
-            fileTitle: nextProps.testResource.fileTitle,
-            fileImage: nextProps.testResource.fileImage,
-            fileDescription: nextProps.testResource.fileDescription,
-            fileReadPrice: nextProps.testResource.fileReadPrice,
-            fileRightPrice: nextProps.testResource.fileRightPrice,
-            file: nextProps.testResource.file,
+            id: nextProps.buyResource.id,
+            userId: nextProps.buyResource.userId,
+            fileTitle: nextProps.buyResource.fileTitle,
+            fileImage: nextProps.buyResource.fileImage,
+            fileDescription: nextProps.buyResource.fileDescription,
+            fileReadPrice: nextProps.buyResource.fileReadPrice,
+            fileRightPrice: nextProps.buyResource.fileRightPrice,
+            file: nextProps.buyResource.file,
             balance: nextProps.balance
         })
     }
@@ -79,10 +79,10 @@ class ResourceForm extends Component {
         // const readPrice = this.state.fileReadPrice >> 0;
         // const userBuyId = this.props.userLogin.user.id;
         // const userId = this.state.userId;
-        const {testResource} = this.props;
-        console.log(testResource);
+        const {buyResource} = this.props;
+        console.log(buyResource);
 
-        this.props.fileDownloads(testResource.id);
+        this.props.fileDownloads(buyResource.id);
 
     };
 
@@ -137,7 +137,7 @@ const mapStateToProps = (state, props) => {
             user: state.user,
             owner: state.owner,
             userLogin: state.userLogin,
-            testResource: state.testResources.find(item => item.id.toString() === match.params.id.toString())
+            buyResource: state.buyResources.find(item => item.id.toString() === match.params.id.toString())
         };
     }
 
@@ -145,7 +145,7 @@ const mapStateToProps = (state, props) => {
         user: state.user,
         owner: state.owner,
         userLogin: state.userLogin,
-        testResource: null
+        buyResource: null
     };
 };
 

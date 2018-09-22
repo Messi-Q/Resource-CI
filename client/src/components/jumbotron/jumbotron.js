@@ -39,8 +39,8 @@ class Jumbotron extends Component {
                                  className="link item">全网资源</NavLink>
                         <NavLink exact activeClassName="active" to="/resources"
                                  className="link item">我的资源</NavLink>
-                        <NavLink exact activeClassName="active" to="/testResources"
-                                 className="link item">可阅读资源</NavLink>
+                        {/*<NavLink exact activeClassName="active" to="/testResources"*/}
+                                 {/*className="link item">可阅读资源</NavLink>*/}
 
                         <div className="right menu">
                             <form className="form-inline mt-2 mt-md-0">
@@ -48,9 +48,9 @@ class Jumbotron extends Component {
                                        aria-label="Search"/>
                                 <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                             </form>
-                            <form className="form-inline mt-2 mt-md-0">
-                                <button className="btn my-2 my-sm-0" type="submit" onClick={this.handleSubmit}>other websites</button>
-                            </form>
+                            {/*<form className="form-inline mt-2 mt-md-0">*/}
+                                {/*<button className="btn my-2 my-sm-0" type="submit" onClick={this.handleSubmit}>other websites</button>*/}
+                            {/*</form>*/}
                         </div>
                     </div>
                 </div>
