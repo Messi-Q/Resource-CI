@@ -94,7 +94,7 @@ export const uploadRequest = (file) => {
         return fetch('/api/allUpload', {
             method: "post",
             body: file,
-        }).then(handleResponse)
+        })
     }
 };
 
