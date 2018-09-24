@@ -78,14 +78,14 @@ export const addResourceToMysql = (resource) => {
 export const saveResourceToMysql = (data) => {
     console.log(data);
     return dispatch => {
-        return fetch('/api/myResources', {
+        return fetch('/api/myResource', {
             method: 'post',
             body: JSON.stringify(data),
             headers: {
                 "Content-Type": "application/json"
             }
-        }).then(handleResponse)
-            .then(data => dispatch(addResourceToMysql(data.resource)));
+        }).then(data => dispatch(addResourceToMysql(data.resource)))
+            .then(handleResponse)
     }
 };
 

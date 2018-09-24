@@ -13,8 +13,9 @@ import users from './routes/users';
 import owner from './routes/owner';
 import updateBuyer from './routes/updateBuyer';
 import path from 'path';
+import buy from './routes/buy';
+import buy1 from './routes/buy1';
 import buyer from './routes/buyer';
-import buyer1 from './routes/buyer1';
 
 
 let app = express();
@@ -33,8 +34,9 @@ app.use('/api/myResource', myResource);
 app.use('/api/locationResources', resources);
 app.use('/api/allUpload', allUpload);
 app.use('/api/download', download);
-app.use('/api/buyResources', buyer);
-app.use('/api/buyResource', buyer1);
+app.use('/api/buyResources', buy);
+app.use('/api/buyResource', buy1);
+app.use('/api/buyerResource', buyer);
 app.use('/api/user', recharge);
 app.use('/api/users', users);
 app.use('/api/owner', owner);

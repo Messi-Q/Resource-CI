@@ -6,6 +6,7 @@ import myResources from './myResources';
 import locationResources from './locationResources';
 import allWebResources from './allWebResources';
 import buyResources from './buyResources';
+import buyerResources from './buyerResources';
 import user from './user';
 import owner from './owner';
 import userSignup from './userSignup';
@@ -18,6 +19,7 @@ export default combineReducers({
     Customer: userSignup,
     resources: myResources,
     buyResources: buyResources,
+    buyerResources: buyerResources,
     localResources: locationResources,
     allWebResources: allWebResources,
 });

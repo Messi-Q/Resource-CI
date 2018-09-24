@@ -1,4 +1,4 @@
-import {SET_BUY_RESOURCES, BUY_RESOURCE_FETCHED, ADD_BUY_RESOURCE} from "../constants";
+import {SET_BUY_RESOURCES, BUY_RESOURCE_FETCHED, ADD_BUY_RESOURCE, SET_BUYER_RESOURCES} from "../constants";
 
 export const setBuyResources = (buyResources) => {
     console.log('test', buyResources);
@@ -72,4 +72,20 @@ export const updateBuyer = (data) => {
         }).then(res => res.json())
             .then(data => dispatch(addBuyResource(data.buyResource)))
     }
+};
+
+export const setBuyerResources = (buyerResources) => {
+    console.log('buyerResource', buyerResources);
+    return{
+        type: SET_BUYER_RESOURCES,
+        buyerResources
+    }
+};
+
+export const fetchBuyerResource = (id) => {
+  return dispatch => {
+      return fetch(`/api/buyerResource/${id}`)
+          .then(res => res.json())
+          .then(data => dispatch(setBuyerResources(data.buyerResources)))
+  }
 };

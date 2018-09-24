@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {fetchLocationResource} from '../../actions/locationResourceActions';
-import {updateBuyer} from '../../actions/buyResourceAction';
+import {updateBuyer, fetchBuyerResource} from '../../actions/buyResourceAction';
 import {
     fetchBalance,
     userAddBalance,
@@ -41,17 +41,18 @@ class ResourceForm extends Component {
         const {user} = this.props.userLogin;
         console.log("userId", user);
         //获取购买者的余额
-        this.props.fetchBalance(user.id);
-        //     .then(
-        //     () => {
-        //         this.setState({ownerBalance: true})
-        //     },
-        //     (err) => err.response.json().then(({errors}) => {
-        //         this.setState({errors, loading: false})
-        //     })
-        // );
+        this.props.fetchBalance(user.id)
+            .then(
+                () => {
+                },
+                (err) => err.response.json().then(({errors}) => {
+                    this.setState({errors, loading: false})
+                })
+            );
         //获取资源所有者的余额
-        this.props.fetchOwnerBalance(localResource.userId);
+        // this.props.fetchOwnerBalance(localResource.userId);
+        //获取购买者已购买的资源
+        this.props.fetchBuyerResource(user.id);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -99,80 +100,96 @@ class ResourceForm extends Component {
         const userBuyId = this.props.userLogin.user.id;
         const userId = this.state.userId;
         const {user} = this.props.userLogin;
-        console.log("userId", user.id);
         const buyerId = user.id;
         const {id, fileTitle, fileImage, fileDescription, fileReadPrice, fileRightPrice} = this.state;
+        const {localResource} = this.props;
+        this.props.fetchOwnerBalance(localResource.userId);
 
-        // console.log(this.state.ownerBalance);
+        const resourceId = this.state.id;
+        console.log('buyer', this.props.buyerResources);
+        const length = this.props.buyerResources.length;
+        var flag = true;
 
-        if (userBuyId !== userId) {
-            if (userBalance > readPrice) {
-                console.log("账户余额充足");
-                const restBalance = userBalance - readPrice;
-                console.log(restBalance, userBuyId, userId);
+        for (var i = 0; i < length; i++) {
+            // console.log(this.props.buyerResources[i].fileId);
+            if (resourceId == this.props.buyerResources[i].fileId) {
+                flag = false;
+                window.alert("您已购买过该资源，无需重复购买！")
+            }
+        }
 
-                //购买用户减去相应的金额
-                this.props.userSubBalance({
-                    userBuyId,
-                    restBalance
-                }).then(
-                    () => {
-                        if (this.succeed) {
-                            this.setState({succeed_1: true})
-                        }
-                    },
-                    (err) => err.response.json().then(({errors}) => {
-                        this.setState({errors, loading: false})
-                    })
-                );
+        if (flag) {
+            setTimeout(() => {
+                if (userBuyId !== userId) {
+                    if (userBalance > readPrice) {
+                        console.log("账户余额充足");
+                        const restBalance = userBalance - readPrice;
+                        console.log(restBalance, userBuyId, userId);
 
-                const ownerBalance = this.props.owner.balance;
-                console.log(userBalance, readPrice, ownerBalance);
-                const totalBalance = ownerBalance + readPrice;
-                console.log(totalBalance);
-                //资源拥有者增加相应的金额
-                this.props.userAddBalance({
-                    userId,
-                    totalBalance
-                }).then(
-                    () => {
-                        if (this.succeed) {
-                            this.setState({succeed_2: true})
-                        }
-                    },
-                    (err) => err.response.json().then(({errors}) => {
-                        this.setState({errors, loading: false})
-                    })
-                );
-
-                setTimeout(() => {
-                    if (this.state.succeed_1 && this.state.succeed_2) {
-                        this.props.updateBuyer({
-                            buyerId,
-                            id,
-                            fileTitle,
-                            fileImage,
-                            fileDescription,
-                            fileReadPrice,
-                            fileRightPrice
+                        //购买用户减去相应的金额
+                        this.props.userSubBalance({
+                            userBuyId,
+                            restBalance
                         }).then(
                             () => {
-                                this.props.history.push('/resources')
+                                if (this.succeed) {
+                                    this.setState({succeed_1: true})
+                                }
                             },
                             (err) => err.response.json().then(({errors}) => {
                                 this.setState({errors, loading: false})
                             })
-                        )
+                        );
+
+                        const ownerBalance = this.props.owner.balance;
+                        console.log(userBalance, readPrice, ownerBalance);
+                        const totalBalance = ownerBalance + readPrice;
+                        console.log(totalBalance);
+                        //资源拥有者增加相应的金额
+                        this.props.userAddBalance({
+                            userId,
+                            totalBalance
+                        }).then(
+                            () => {
+                                if (this.succeed) {
+                                    this.setState({succeed_2: true})
+                                }
+                            },
+                            (err) => err.response.json().then(({errors}) => {
+                                this.setState({errors, loading: false})
+                            })
+                        );
+
+                        setTimeout(() => {
+                            if (this.state.succeed_1 && this.state.succeed_2) {
+                                this.props.updateBuyer({
+                                    buyerId,
+                                    id,
+                                    fileTitle,
+                                    fileImage,
+                                    fileDescription,
+                                    fileReadPrice,
+                                    fileRightPrice
+                                }).then(
+                                    () => {
+                                        this.props.history.push('/resources')
+                                    },
+                                    (err) => err.response.json().then(({errors}) => {
+                                        this.setState({errors, loading: false})
+                                    })
+                                )
+                            }
+                        }, 500);
+
+                    } else {
+                        window.alert("账户余额不足，请充值！");
+                        this.props.history.push('/myWallet');
                     }
-                }, 1000);
 
-            } else {
-                window.alert("账户余额不足，请充值！");
-                this.props.history.push('/myWallet');
-            }
-
-        } else {
-            window.alert("这是您自己上传的资源，无需购买！");
+                } else {
+                    window.alert("这是您自己上传的资源，无需购买！");
+                }
+            }, 500);
         }
 
     };
@@ -186,58 +203,68 @@ class ResourceForm extends Component {
         const ownerPrice = this.state.fileRightPrice >> 0;
         const userBuyId = this.props.userLogin.user.id;
         const userId = this.state.userId;
+        const {localResource} = this.props;
+        this.props.fetchOwnerBalance(localResource.userId);
 
-        if (userBuyId !== userId) {
-            if (userBalance > ownerPrice) {
-                console.log("账户余额充足");
-                const restBalance = userBalance - ownerPrice;
-                console.log(restBalance, userBuyId, userId);
+        setTimeout(() => {
+            if (userBuyId !== userId) {
+                if (userBalance > ownerPrice) {
+                    console.log("账户余额充足");
+                    const restBalance = userBalance - ownerPrice;
+                    console.log(restBalance, userBuyId, userId);
 
-                //购买用户减去相应的金额
-                this.props.userSubBalance({
-                    userBuyId,
-                    restBalance
-                }).then(
-                    () => {
-                    },
-                    (err) => err.response.json().then(({errors}) => {
-                        this.setState({errors, loading: false})
-                    })
-                );
+                    //购买用户减去相应的金额
+                    this.props.userSubBalance({
+                        userBuyId,
+                        restBalance
+                    }).then(
+                        () => {
+                        },
+                        (err) => err.response.json().then(({errors}) => {
+                            this.setState({errors, loading: false})
+                        })
+                    );
 
-                const ownerBalance = this.props.owner.balance;
-                console.log(userBalance, ownerPrice, ownerBalance);
-                const totalBalance = ownerBalance + ownerPrice;
-                console.log(totalBalance);
-                //资源拥有者增加相应的金额
-                this.props.userAddBalance({
-                    userId,
-                    totalBalance
-                });
+                    const ownerBalance = this.props.owner.balance;
+                    console.log(userBalance, ownerPrice, ownerBalance);
+                    const totalBalance = ownerBalance + ownerPrice;
+                    console.log(totalBalance);
+                    //资源拥有者增加相应的金额
+                    this.props.userAddBalance({
+                        userId,
+                        totalBalance
+                    });
 
-                //修改资源所属id
-                const {id, fileTitle} = this.state;
-                this.props.updateResourceInfo({
-                    id,
-                    userId,
-                    fileTitle,
-                    userBuyId
-                });
+                    //修改资源所属id
+                    const {id, fileTitle} = this.state;
+                    this.props.updateResourceInfo({
+                        id,
+                        userId,
+                        fileTitle,
+                        userBuyId
+                    });
 
-                this.props.history.push('/resources')
+                    this.props.history.push('/resources')
+
+                } else {
+                    window.alert("账户余额不足，请充值！");
+                    this.props.history.push('/myWallet');
+                }
 
             } else {
-                window.alert("账户余额不足，请充值！");
-                this.props.history.push('/myWallet');
+                window.alert("这是您自己上传的资源，无需购买！");
             }
+        }, 1000)
 
-
-        } else {
-            window.alert("这是您自己上传的资源，无需购买！");
-        }
     };
 
     render() {
+        console.log('buyer', this.props.buyerResources);
+        const length = this.props.buyerResources.length;
+        for (var i = 0; i < length; i++) {
+            console.log(this.props.buyerResources[i].fileId);
+        }
+
         const form = (
             <div className="resouceform-container">
                 <div className="header">
@@ -294,6 +321,7 @@ const mapStateToProps = (state, props) => {
             user: state.user,
             owner: state.owner,
             userLogin: state.userLogin,
+            buyerResources: state.buyerResources,
             localResource: state.localResources.find(item => item.id.toString() === match.params.id.toString())
         };
     }
@@ -302,6 +330,7 @@ const mapStateToProps = (state, props) => {
         user: state.user,
         owner: state.owner,
         userLogin: state.userLogin,
+        buyerResources: null,
         localResource: null
     };
 };
@@ -313,5 +342,6 @@ export default connect(mapStateToProps, {
     userAddBalance,
     fetchOwnerBalance,
     updateResourceInfo,
-    updateBuyer
+    updateBuyer,
+    fetchBuyerResource
 })(ResourceForm);
