@@ -117,6 +117,7 @@ class ResourceTxPage extends Component {
             if (userBuyId !== userId) {
                 if (userBalance > ownerPrice) {
                     console.log('余额充足');
+                    //区块链上的所有权交易
                     this.props.updateBlockToken({
                         $class, resource, buyer
                     }).then(
@@ -127,6 +128,9 @@ class ResourceTxPage extends Component {
                             this.setState({errors, loading: false})
                         })
                     );
+
+
+
                 } else {
                     window.alert("账户余额不足，请充值！");
                     this.props.history.push('/myWallet');

@@ -11,7 +11,6 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:userId', (req, res) => {
-    console.log(req.params.userId);
     Buyer.forge()
         .where('buyerId', '=', req.params.userId)
         .fetchAll().then(buyResource => res.json({buyResources: buyResource}))

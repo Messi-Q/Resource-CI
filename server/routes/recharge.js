@@ -28,7 +28,6 @@ router.put('/:id', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-    console.log(req.params.id);
     User.forge()
         .where('id', '=', req.params.id)
         .fetch().then(owner => res.json({owner: owner}))
