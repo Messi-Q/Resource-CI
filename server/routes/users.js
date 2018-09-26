@@ -4,6 +4,7 @@ import User from '../models/user';
 let router = express.Router();
 
 router.get('/:id', (req, res) => {
+    console.log(req.params.id);
     User.forge()
         .where('id', '=', req.params.id)
         .fetch().then(user => res.json({user: user}))

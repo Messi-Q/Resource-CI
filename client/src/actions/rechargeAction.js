@@ -44,7 +44,7 @@ export const fetchBalance = (id) => {
 
 export const userSubBalance = (data) => {
   return dispatch => {
-      return fetch(`/api/user/${data.id}`,{
+      return fetch(`/api/localUser/${data.id}`,{
           method: 'put',
           body: JSON.stringify(data),
           headers: {
@@ -91,7 +91,7 @@ const OwnerBalanceFetched = (owner) => {
 
 export const fetchOwnerBalance = (id) => {
     return dispatch => {
-        return fetch(`/api/user/${id}`)
+        return fetch(`/api/localUser/${id}`)
             .then(res => res.json())
             .then(data => dispatch(OwnerBalanceFetched(data.owner)))
     }

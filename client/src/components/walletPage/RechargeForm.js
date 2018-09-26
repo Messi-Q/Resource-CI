@@ -20,7 +20,7 @@ class RechargeForm extends Component {
         const {user} = this.props.userLogin;
         console.log(user);
         console.log("userId", user.id);
-        console.log(this.props.user.balance);
+        console.log(this.props.localUser.balance);
     }
 
     handleChange = (e) => {
@@ -49,7 +49,7 @@ class RechargeForm extends Component {
         if (isValid) {
             const {username, balance} = this.state;
             console.log(this.state);
-            const restBalance = this.props.user.balance;
+            const restBalance = this.props.localUser.balance;
             console.log(restBalance, balance);
             const recharge = balance >> 0;
             const totalBalance = restBalance + recharge;
@@ -83,7 +83,7 @@ class RechargeForm extends Component {
     };
 
     render() {
-        console.log(this.props.user.balance);
+        console.log(this.props.localUser.balance);
         const form = (
 
             <div className=" upload-container">
@@ -146,7 +146,7 @@ class RechargeForm extends Component {
 const mapStateToProps = (state) => {
     return {
         userLogin: state.userLogin,
-        user: state.user
+        localUser: state.localUser
     };
 };
 

@@ -33,6 +33,6 @@ export default (
         <Route exact path="/allWebResources" component={requireLogin(AllWebResourcePage)}/>
         <Route path="/allWebResource/:id" component={requireLogin(AllWebResourceTxPage)}/>
         <Route path="/myWallet" component={requireLogin(MyWalletPage)}/>
-        <Route path="/user" component={requireLogin(RechargePage)}/>
+        <Route path="/userRecharge" component={requireLogin(RechargePage)}/>
     </div>
 )

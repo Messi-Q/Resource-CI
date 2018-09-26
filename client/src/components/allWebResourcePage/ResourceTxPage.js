@@ -109,6 +109,8 @@ class ResourceTxPage extends Component {
         const resource = "resource:org.demo.network.Resource#" + this.state.resourceId;
         const buyer = "resource:org.demo.network.Customer#" + userBuyId;
 
+        //获取
+
         this.props.fetchBlockUser(userId).then(
             () => {
                 this.setState({succeed: true})

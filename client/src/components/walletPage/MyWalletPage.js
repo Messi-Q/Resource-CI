@@ -5,7 +5,7 @@ import {fetchBalance} from '../../actions/rechargeAction'
 class MyWalletPage extends Component {
     state = {
         id: this.props.userLogin ? this.props.userLogin.id : '',
-        balance: this.props.user ? this.props.user.balance : '',
+        balance: this.props.localUser ? this.props.localUser.balance : '',
     };
 
     componentDidMount() {
@@ -24,15 +24,15 @@ class MyWalletPage extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         console.log('充值');
-        this.props.history.push('/localUser');
+        this.props.history.push('/userRecharge');
     };
 
     render() {
-        console.log(this.props.user);
+        console.log(this.props.localUser);
         return (
             <div className="container" align="center">
                 <form onSubmit={this.handleSubmit}>
-                    <p>余额：{this.props.user.balance}$</p>
+                    <p>余额：{this.props.localUser.balance}$</p>
                     <button className="btn btn-primary">充值</button>
                 </form>
             </div>
@@ -43,7 +43,7 @@ class MyWalletPage extends Component {
 const mapStateToProps = (state) => {
     return {
         userLogin: state.userLogin,
-        user: state.user
+        localUser: state.localUser
     };
 };
 
