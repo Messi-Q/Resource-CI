@@ -2,7 +2,12 @@ import React, {Component} from 'react';
 // import classnames from 'classnames';
 import {connect} from 'react-redux';
 import {fetchAllWebResource, fetchBlockUser, updateBlockToken} from '../../actions/allResourceActions';
-import {fetchBalance} from '../../actions/rechargeAction';
+import {
+    fetchBalance,
+    userAddBalance,
+    userSubBalance,
+    updateResourceInfo
+} from '../../actions/rechargeAction';
 import {Redirect} from "react-router-dom";
 
 class ResourceTxPage extends Component {
@@ -91,15 +96,15 @@ class ResourceTxPage extends Component {
         e.preventDefault();
         console.log(this.state);
 
+        //获取购买者信息
         console.log('Transaction_2');
         const userBalance = this.props.localUser.balance;
         const ownerPrice = this.state.ownershipPrice;
-        const userBuyId = 'A' + '-' + this.props.userLogin.user.username;
-        //const userId = this.state.userId;
+        const userBuyId = 'A' + '-' + this.props.userLogin.user.username;  //资源购买这ID
         console.log(userBuyId);
 
         //同步获取区块链用户信息
-        const owner = this.props.allWebResource.owner;
+        const owner = this.props.allWebResource.owner;  //资源所有者ID
         console.log(owner);
         const userId = owner.slice(35);  //截取到用户ID
         console.log(userId);
@@ -108,8 +113,6 @@ class ResourceTxPage extends Component {
         const $class = "org.demo.network.BuyOwnershipTransaction";
         const resource = "resource:org.demo.network.Resource#" + this.state.resourceId;
         const buyer = "resource:org.demo.network.Customer#" + userBuyId;
-
-        //获取
 
         this.props.fetchBlockUser(userId).then(
             () => {
@@ -122,66 +125,71 @@ class ResourceTxPage extends Component {
 
         setTimeout(() => {
             if (this.state.succeed) {
-            }
+                //获取资源原所有者的余额
+                console.log('token', this.props.blockUser.token);
 
-            if (userBuyId !== userId) {
-                if (userBalance > ownerPrice) {
-                    console.log('余额充足');
-                    //区块链上的所有权交易
-                    this.props.updateBlockToken({
-                        $class, resource, buyer
-                    }).then(
-                        () => {
-                            this.props.history.push('/resources')
-                        },
-                        (err) => err.response.json().then(({errors}) => {
-                            this.setState({errors, loading: false})
-                        })
-                    );
+                if (userBuyId !== userId) {
+                    if (userBalance > ownerPrice) {
+                        console.log('余额充足');
+                        //区块链上的所有权交易
+                        this.props.updateBlockToken({
+                            $class, resource, buyer
+                        }).then(
+                            () => {
+                                this.props.history.push('/resources')
+                            },
+                            (err) => err.response.json().then(({errors}) => {
+                                this.setState({errors, loading: false})
+                            })
+                        );
 
-                    //本地数据库同步更新
-                    const restBalance = userBalance - ownerPrice;
-                    console.log(restBalance, userBuyId, userId);
+                        //本地数据库同步更新
+                        const restBalance = userBalance - ownerPrice;
+                        console.log(restBalance, userBuyId, userId);
+                        const userBuyId_1 = this.props.userLogin.user.id;
 
-                    //购买用户减去相应的金额
-                    this.props.userSubBalance({
-                        userBuyId,
-                        restBalance
-                    }).then(
-                        () => {
-                        },
-                        (err) => err.response.json().then(({errors}) => {
-                            this.setState({errors, loading: false})
-                        })
-                    );
+                        //购买用户减去相应的金额
+                        this.props.userSubBalance({
+                            userBuyId_1,
+                            restBalance
+                        }).then(
+                            () => {
+                            },
+                            (err) => err.response.json().then(({errors}) => {
+                                this.setState({errors, loading: false})
+                            })
+                        );
 
-                    const ownerBalance = this.props.owner.balance;
-                    console.log(userBalance, ownerPrice, ownerBalance);
-                    const totalBalance = ownerBalance + ownerPrice;
-                    console.log(totalBalance);
+                        const ownerBalance = this.props.blockUser.token;
+                        console.log(userBalance, ownerBalance);
+                        const totalBalance = ownerBalance + ownerPrice;
+                        console.log(totalBalance);
+                        const ownerId = userId.slice(2);
+                        console.log(ownerId);
 
-                    //资源拥有者增加相应的金额
-                    this.props.userAddBalance({
-                        userId,
-                        totalBalance
-                    });
+                        //资源拥有者增加相应的金额
+                        this.props.userAddBalance({
+                            ownerId,
+                            totalBalance
+                        });
 
-                    //修改资源所属id
-                    const {id, fileTitle} = this.state;
-                    this.props.updateResourceInfo({
-                        id,
-                        userId,
-                        fileTitle,
-                        userBuyId
-                    });
+                        //TODO:修改资源所属id
+                        const {id, headline} = this.state;
+                        this.props.updateResourceInfo({
+                            id,
+                            ownerId,
+                            headline,
+                            userBuyId_1
+                        });
 
 
+                    } else {
+                        window.alert("账户余额不足，请充值！");
+                        this.props.history.push('/myWallet');
+                    }
                 } else {
-                    window.alert("账户余额不足，请充值！");
-                    this.props.history.push('/myWallet');
+                    window.alert("这是您自己上传的资源，无需购买！");
                 }
-            } else {
-                window.alert("这是您自己上传的资源，无需购买！");
             }
 
         }, 400);
@@ -263,5 +271,8 @@ export default connect(mapStateToProps, {
     fetchAllWebResource,
     fetchBlockUser,
     fetchBalance,
-    updateBlockToken
+    updateBlockToken,
+    userAddBalance,
+    userSubBalance,
+    updateResourceInfo
 })(ResourceTxPage);
