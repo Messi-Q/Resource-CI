@@ -23,7 +23,7 @@ export default (req, res, next) => {
                     }
                 ).fetch().then(user => {
                     if (!user) {
-                        res.status(404).json({error: "No such user"})
+                        res.status(404).json({error: "No such localUser"})
                     } else {
                         req.currentUser = user;
                         next();

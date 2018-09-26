@@ -101,8 +101,7 @@ export const updateAllWebResource = (data) => {
             headers: {
                 "Content-Type": "application/json"
             }
-        }).then(handleResponse)
-            .then();
+        })
     }
 };
 

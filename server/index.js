@@ -37,7 +37,7 @@ app.use('/api/download', download);
 app.use('/api/buyResources', buy);
 app.use('/api/buyResource', buy1);
 app.use('/api/buyerResource', buyer);
-app.use('/api/user', recharge);
+app.use('/api/localUser', recharge);
 app.use('/api/users', users);
 app.use('/api/owner', owner);
 app.use('/api/updateBuyer', updateBuyer);

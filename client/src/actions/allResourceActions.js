@@ -1,9 +1,15 @@
-import {SET_ALLWEB_RESOURCES, ADD_ALLWEB_RESOURCE, ALL_RESOURCE_FETCHED, ADD_RESOURCE_To_MYSQL} from '../constants';
+import {
+    SET_ALLWEB_RESOURCES,
+    ADD_ALLWEB_RESOURCE,
+    ALL_RESOURCE_FETCHED,
+    ADD_RESOURCE_To_MYSQL,
+    SET_BLOCK_USER
+} from '../constants';
 // import axios from "axios/index";
 import Config from '../utils/config';
 
 export const allResourceFetched = (allWebResource) => {
-    //console.log(allWebResource);
+    console.log('allWebResource', allWebResource);
     return {
         type: ALL_RESOURCE_FETCHED,
         allWebResource
@@ -61,8 +67,7 @@ export const saveResource = (resourceData) => {
             headers: {
                 "Content-Type": "application/json"
             }
-        }).then(handleResponse)
-            .then(data => dispatch(addAllWebResource(data)))
+        }).then(data => dispatch(addAllWebResource(data)))
             .catch(res => res.status(500).json({errors: {global: "something went wrong"}}));
     }
 };
@@ -85,7 +90,6 @@ export const saveResourceToMysql = (data) => {
                 "Content-Type": "application/json"
             }
         }).then(data => dispatch(addResourceToMysql(data.resource)))
-            .then(handleResponse)
     }
 };
 
@@ -98,22 +102,57 @@ export const uploadRequest = (file) => {
     }
 };
 
-const handleResponse = (response) => {
-    if (response.ok) {
-        return response.json();
-    } else {
-        let error = new Error(response.statusText);
-        error.response = response;
-        throw error;
-    }
-};
+// const handleResponse = (response) => {
+//     if (response.ok) {
+//         return response.json();
+//     } else {
+//         let error = new Error(response.statusText);
+//         error.response = response;
+//         throw error;
+//     }
+// };
 
 export const deleteWebResource = (resource) => {
-    const resourceId = 'A' + '-' + resource.fileTitle; //应改为站名+站内定位符
+    const resourceId = 'A' + '-' + resource.fileTitle;  //应改为站名+站内定位符
     console.log('resourceId', resourceId);
     return dispatch => {
         return fetch(`http://localhost:3000/api/Resource/${resourceId}`, {
             method: 'delete',
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+    }
+};
+
+export const setBlockUser = (blockUser) => {
+    console.log(blockUser);
+    return {
+        type: SET_BLOCK_USER,
+        blockUser
+    }
+};
+
+export const fetchBlockUser = (userId) => {
+    return dispatch => {
+        return fetch(`http://localhost:3000/api/Customer/${userId}`, {
+            method: 'get',
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(res => res.json())
+            .then(data => dispatch(setBlockUser(data)))
+    }
+};
+
+export const updateBlockToken = (data) => {
+    console.log(data);
+    this.config = new Config();
+    let cURL = this.config.restServer.httpURL + '/BuyOwnershipTransaction';
+    return dispatch => {
+        return fetch(cURL, {
+            method: 'post',
+            body: JSON.stringify(data),
             headers: {
                 "Content-Type": "application/json"
             }

@@ -23,7 +23,7 @@ class ResourceForm extends Component {
         fileReadPrice: this.props.localResource ? this.props.localResource.fileReadPrice : '',
         fileRightPrice: this.props.localResource ? this.props.localResource.fileRightPrice : '',
         file: this.props.localResource ? this.props.localResource.file : '',
-        balance: this.props.user ? this.props.user.balance : '',
+        balance: this.props.localUser ? this.props.localUser.balance : '',
         succeed_1: false,
         succeed_2: false,
         errors: {},
@@ -33,7 +33,7 @@ class ResourceForm extends Component {
 
     componentDidMount() {
         this.succeed = true;
-        const {match, localResource} = this.props;
+        const {match} = this.props;
         console.log(this.props);
         if (match.params.id) {  //所有路由的id参数
             this.props.fetchLocationResource(match.params.id);
@@ -95,7 +95,7 @@ class ResourceForm extends Component {
         e.preventDefault();
 
         console.log('Transaction_1');
-        const userBalance = this.props.user.balance;
+        const userBalance = this.props.localUser.balance;
         const readPrice = this.state.fileReadPrice >> 0;
         const userBuyId = this.props.userLogin.user.id;
         const userId = this.state.userId;
@@ -112,7 +112,7 @@ class ResourceForm extends Component {
 
         for (var i = 0; i < length; i++) {
             // console.log(this.props.buyerResources[i].fileId);
-            if (resourceId == this.props.buyerResources[i].fileId) {
+            if (resourceId === this.props.buyerResources[i].fileId) {
                 flag = false;
                 window.alert("您已购买过该资源，无需重复购买！")
             }
@@ -199,10 +199,11 @@ class ResourceForm extends Component {
         e.preventDefault();
 
         console.log('Transaction_2');
-        const userBalance = this.props.user.balance;
+        const userBalance = this.props.localUser.balance;
         const ownerPrice = this.state.fileRightPrice >> 0;
         const userBuyId = this.props.userLogin.user.id;
         const userId = this.state.userId;
+
         const {localResource} = this.props;
         this.props.fetchOwnerBalance(localResource.userId);
 
@@ -259,12 +260,6 @@ class ResourceForm extends Component {
     };
 
     render() {
-        console.log('buyer', this.props.buyerResources);
-        const length = this.props.buyerResources.length;
-        for (var i = 0; i < length; i++) {
-            console.log(this.props.buyerResources[i].fileId);
-        }
-
         const form = (
             <div className="resouceform-container">
                 <div className="header">
@@ -318,7 +313,7 @@ const mapStateToProps = (state, props) => {
     const {match} = props;
     if (match.params.id) {
         return {
-            user: state.user,
+            localUser: state.localUser,
             owner: state.owner,
             userLogin: state.userLogin,
             buyerResources: state.buyerResources,
@@ -327,7 +322,7 @@ const mapStateToProps = (state, props) => {
     }
 
     return {
-        user: state.user,
+        localUser: state.localUser,
         owner: state.owner,
         userLogin: state.userLogin,
         buyerResources: null,

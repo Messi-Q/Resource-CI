@@ -1,25 +1,35 @@
 import React, {Component} from 'react';
 // import classnames from 'classnames';
 import {connect} from 'react-redux';
-import {fetchAllWebResource} from '../../actions/allResourceActions';
+import {fetchAllWebResource, fetchBlockUser, updateBlockToken} from '../../actions/allResourceActions';
+import {fetchBalance} from '../../actions/rechargeAction';
 import {Redirect} from "react-router-dom";
 
 class ResourceTxPage extends Component {
     state = {
         resourceId: this.props.allWebResource ? this.props.allWebResource.resourceId : '',
-        headline: this.props.allWebResource ? this.props.allWebResource.fileTitle : '',
+        headline: this.props.allWebResource ? this.props.allWebResource.headline : '',
         coverUrl: this.props.allWebResource ? this.props.allWebResource.coverUrl : '',
         readPrice: this.props.allWebResource ? this.props.allWebResource.readPrice : '',
+        owner: this.props.allWebResource ? this.props.allWebResource.owner : '',
         ownershipPrice: this.props.allWebResource ? this.props.allWebResource.ownershipPrice : '',
         readCount: this.props.allWebResource ? this.props.allWebResource.readCount : '',
         liked: this.props.allWebResource ? this.props.allWebResource.liked : '',
         file: this.props.allWebResource ? this.props.allWebResource.file : '',
         errors: {},
+        succeed: false,
         loading: false,
         done: false
     };
 
     componentDidMount() {
+        setTimeout(() => {
+            const {user} = this.props.userLogin;
+            console.log("userId", user);
+            //获取购买者的余额
+            this.props.fetchBalance(user.id)
+        }, 200);
+
         const {match} = this.props;
         console.log(this.props);
         console.log(match.params.id);
@@ -34,6 +44,7 @@ class ResourceTxPage extends Component {
             headline: nextProps.allWebResource.headline,
             coverUrl: nextProps.allWebResource.coverUrl,
             readPrice: nextProps.allWebResource.readPrice,
+            owner: nextProps.allWebResource.owner,
             ownershipPrice: nextProps.allWebResource.ownershipPrice,
             readCount: nextProps.allWebResource.readCount,
             liked: nextProps.allWebResource.liked,
@@ -64,14 +75,68 @@ class ResourceTxPage extends Component {
 
     handleSubmit_1 = (e) => {
         e.preventDefault();
-
         console.log(this.state);
+
     };
 
     handleSubmit_2 = (e) => {
         e.preventDefault();
-
         console.log(this.state);
+
+        console.log('Transaction_2');
+        const userBalance = this.props.localUser.balance;
+        const ownerPrice = this.state.ownershipPrice;
+        const userBuyId = 'A' + '-' + this.props.userLogin.user.username;
+        //const userId = this.state.userId;
+        console.log(userBuyId);
+
+        //同步获取区块链用户信息
+        const owner = this.props.allWebResource.owner;
+        console.log(owner);
+        const userId = owner.slice(35);  //截取到用户ID
+        console.log(userId);
+
+        //更新区块链上购买信息
+        const $class = "org.demo.network.BuyOwnershipTransaction";
+        const resource = "resource:org.demo.network.Resource#" + this.state.resourceId;
+        const buyer = "resource:org.demo.network.Customer#" + userBuyId;
+
+        this.props.fetchBlockUser(userId).then(
+            () => {
+                this.setState({succeed: true})
+            },
+            (err) => err.response.json().then(({errors}) => {
+                this.setState({errors, loading: false})
+            })
+        );
+
+        setTimeout(() => {
+            if (this.state.succeed) {
+            }
+
+            if (userBuyId !== userId) {
+                if (userBalance > ownerPrice) {
+                    console.log('余额充足');
+                    this.props.updateBlockToken({
+                        $class, resource, buyer
+                    }).then(
+                        () => {
+                            this.props.history.push('/resources')
+                        },
+                        (err) => err.response.json().then(({errors}) => {
+                            this.setState({errors, loading: false})
+                        })
+                    );
+                } else {
+                    window.alert("账户余额不足，请充值！");
+                    this.props.history.push('/myWallet');
+                }
+            } else {
+                window.alert("这是您自己上传的资源，无需购买！");
+            }
+
+        }, 400);
+
     };
 
     render() {
@@ -128,12 +193,26 @@ class ResourceTxPage extends Component {
 const mapStateToProps = (state, props) => {
     const {match} = props;
     if (match.params.id) {
+        console.log('match', match);
         return {
-            allWebResource: state.allWebResources.find(item => item.resourceId === match.params.id)
+            allWebResource: state.allWebResources.find(item => item.resourceId.toString() === match.params.id),
+            userLogin: state.userLogin,
+            blockUser: state.blockUser,
+            localUser: state.localUser
         };
     }
 
-    return {allWebResource: null};
+    return {
+        userLogin: state.userLogin,
+        blockUser: state.blockUser,
+        localUser: state.localUser,
+        allWebResource: null
+    };
 };
 
-export default connect(mapStateToProps, {fetchAllWebResource})(ResourceTxPage);
+export default connect(mapStateToProps, {
+    fetchAllWebResource,
+    fetchBlockUser,
+    fetchBalance,
+    updateBlockToken
+})(ResourceTxPage);

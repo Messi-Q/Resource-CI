@@ -29,7 +29,7 @@ class SignupForm extends Component {
         e.preventDefault();
         console.log(this.state);
         this.setState({errors: {}, isLoading: true});
-        //axios.post('/api/users',{user:this.state});
+        //axios.post('/api/users',{localUser:this.state});
         //将用户信息注册在本站数据库中
         this.props.userSignupRequest(this.state).then(
             () => {
@@ -54,7 +54,7 @@ class SignupForm extends Component {
                 let errors = this.state.errors;
                 let invalid;
                 if (res.data.user) {
-                    errors[field] = "There is user with such " + field;
+                    errors[field] = "There is localUser with such " + field;
                     invalid = true;
                 } else {
                     errors[field] = '';

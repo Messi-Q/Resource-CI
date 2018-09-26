@@ -78,7 +78,7 @@ class ResourceForm extends Component {
             const ownershipPrice = fileRightPrice;
             const readCount = 0;
             const liked = 0;
-            const allWeb = 0;
+            // const allWeb = 0;
 
             this.setState({loading: true});
 

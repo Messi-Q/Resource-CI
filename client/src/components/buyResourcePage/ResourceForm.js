@@ -30,7 +30,7 @@ class ResourceForm extends Component {
         const {user} = this.props.userLogin;
         console.log("userId", user);
         //获取购买者的余额
-        //this.props.fetchBalance(user.id);
+        //this.props.fetchBalance(localUser.id);
         //获取资源所有者的余额
         //this.props.fetchOwnerBalance(testResources.userId);
     }
@@ -75,9 +75,9 @@ class ResourceForm extends Component {
         e.preventDefault();
 
         console.log('Transaction_1');
-        // const userBalance = this.props.user.balance;
+        // const userBalance = this.props.localUser.balance;
         // const readPrice = this.state.fileReadPrice >> 0;
-        // const userBuyId = this.props.userLogin.user.id;
+        // const userBuyId = this.props.userLogin.localUser.id;
         // const userId = this.state.userId;
         const {buyResource} = this.props;
         console.log(buyResource);

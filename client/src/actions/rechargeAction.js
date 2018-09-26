@@ -14,7 +14,7 @@ const handleResponse = (response) => {
 export const userRecharge = (data) => {
     console.log(data);
     return dispatch => {
-        return fetch('/api/user',{
+        return fetch('/api/localUser',{
             method: 'put',
             body: JSON.stringify(data),
             headers: {
@@ -24,12 +24,12 @@ export const userRecharge = (data) => {
     }
 };
 
-const balanceFetched = (user) => {
+const balanceFetched = (localUser) => {
     console.log('OK');
-    console.log(user);
+    console.log(localUser);
     return {
         type:BALANCE_FETCHED,
-        user
+        localUser
     }
 };
 

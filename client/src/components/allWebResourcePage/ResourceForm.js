@@ -68,7 +68,7 @@ class ResourceForm extends Component {
             const fileReadPrice = readPrice;
             const fileRightPrice = ownershipPrice;
             const resourceId = website + '-' + headline; //应改为站名+站内定位符
-            const allWeb = 1;  //全网可见
+            // const allWeb = 1;  //全网可见
 
             if (file) {
                 const formData = new FormData();
@@ -236,7 +236,6 @@ class ResourceForm extends Component {
 const mapStateToProps = (state) => {
     return {
         userLogin: state.userLogin,
-        user: state.user
     };
 };
 export default connect(mapStateToProps, {saveResource, uploadRequest, saveResourceToMysql})(ResourceForm);

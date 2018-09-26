@@ -24,7 +24,7 @@ class MyWalletPage extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         console.log('充值');
-        this.props.history.push('/user');
+        this.props.history.push('/localUser');
     };
 
     render() {

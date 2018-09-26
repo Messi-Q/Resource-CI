@@ -50,11 +50,11 @@ const validateInput = (data, otherValidations) => {
     }).fetch().then(user => {
         if (user) {
             if (user.get('email') === data.email) {
-                errors.amail = "There is user with such email"
+                errors.amail = "There is localUser with such email"
             }
 
             if (user.get('username') === data.username) {
-                errors.amail = "There is user with such username"
+                errors.amail = "There is localUser with such username"
             }
         }
 
