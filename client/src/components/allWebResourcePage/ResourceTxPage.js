@@ -16,6 +16,7 @@ class ResourceTxPage extends Component {
         readCount: this.props.allWebResource ? this.props.allWebResource.readCount : '',
         liked: this.props.allWebResource ? this.props.allWebResource.liked : '',
         file: this.props.allWebResource ? this.props.allWebResource.file : '',
+        balance: this.props.localUser ? this.props.localUser.balance : '',
         errors: {},
         succeed: false,
         loading: false,
@@ -28,6 +29,13 @@ class ResourceTxPage extends Component {
             console.log("userId", user);
             //获取购买者的余额
             this.props.fetchBalance(user.id)
+                .then(
+                    () => {
+                    },
+                    (err) => err.response.json().then(({errors}) => {
+                        this.setState({errors, loading: false})
+                    })
+                );
         }, 200);
 
         const {match} = this.props;
@@ -129,6 +137,41 @@ class ResourceTxPage extends Component {
                         })
                     );
 
+                    //本地数据库同步更新
+                    const restBalance = userBalance - ownerPrice;
+                    console.log(restBalance, userBuyId, userId);
+
+                    //购买用户减去相应的金额
+                    this.props.userSubBalance({
+                        userBuyId,
+                        restBalance
+                    }).then(
+                        () => {
+                        },
+                        (err) => err.response.json().then(({errors}) => {
+                            this.setState({errors, loading: false})
+                        })
+                    );
+
+                    const ownerBalance = this.props.owner.balance;
+                    console.log(userBalance, ownerPrice, ownerBalance);
+                    const totalBalance = ownerBalance + ownerPrice;
+                    console.log(totalBalance);
+
+                    //资源拥有者增加相应的金额
+                    this.props.userAddBalance({
+                        userId,
+                        totalBalance
+                    });
+
+                    //修改资源所属id
+                    const {id, fileTitle} = this.state;
+                    this.props.updateResourceInfo({
+                        id,
+                        userId,
+                        fileTitle,
+                        userBuyId
+                    });
 
 
                 } else {

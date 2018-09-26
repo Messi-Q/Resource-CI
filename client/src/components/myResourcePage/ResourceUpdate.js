@@ -16,6 +16,7 @@ class ResourceForm extends Component {
         fileDescription: this.props.resource ? this.props.resource.fileDescription : '',
         fileReadPrice: this.props.resource ? this.props.resource.fileReadPrice : '',
         fileRightPrice: this.props.resource ? this.props.resource.fileRightPrice : '',
+        hover: false,
         errors: {},
         loading: false,
         done: false
@@ -52,6 +53,18 @@ class ResourceForm extends Component {
         } else {
             this.setState({[e.target.name]: e.target.value})
         }
+    };
+
+    focus = () => {
+        this.setState({
+            hover: true
+        })
+    };
+
+    unFocus = () => {
+        this.setState({
+            hover: false
+        })
     };
 
     handleSubmit = (e) => {
@@ -126,11 +139,15 @@ class ResourceForm extends Component {
                             type="text"
                             name="fileTitle"
                             value={this.state.fileTitle}
-                            onChange={this.handleChange}
+                            // onChange={this.handleChange}
+                            onMouseLeave={this.unFocus}
+                            onMouseOver={this.focus}
                             className="uploadinput"
                             placeholder="Enter title"
+                            disabled="true"
                         />
                         <span>{this.state.errors.fileTitle}</span>
+                        <div className="color">{this.state.hover ? "不可编辑" : ""}</div>
                     </div>
 
                     <div className={classnames('form-group', {error: !!this.state.errors.fileImage})}>
@@ -221,4 +238,9 @@ const mapStateToProps = (state, props) => {
     };
 };
 
-export default connect(mapStateToProps, {fetchResource, updateResource, uploadRequest, updateAllWebResource})(ResourceForm);
+export default connect(mapStateToProps, {
+    fetchResource,
+    updateResource,
+    uploadRequest,
+    updateAllWebResource
+})(ResourceForm);
