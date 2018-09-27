@@ -146,10 +146,25 @@ export const fetchBlockUser = (userId) => {
     }
 };
 
-export const updateBlockToken = (data) => {
+export const updateBlockOwnerToken = (data) => {
     console.log(data);
     this.config = new Config();
     let cURL = this.config.restServer.httpURL + '/BuyOwnershipTransaction';
+    return dispatch => {
+        return fetch(cURL, {
+            method: 'post',
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+    }
+};
+
+export const updateBlockReadToken = (data) => {
+    console.log(data);
+    this.config = new Config();
+    let cURL = this.config.restServer.httpURL + '/BuyReadRightTransaction';
     return dispatch => {
         return fetch(cURL, {
             method: 'post',

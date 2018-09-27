@@ -14,7 +14,7 @@ const handleResponse = (response) => {
 export const userRecharge = (data) => {
     console.log(data);
     return dispatch => {
-        return fetch('/api/localUser',{
+        return fetch('/api/localUser', {
             method: 'put',
             body: JSON.stringify(data),
             headers: {
@@ -28,7 +28,7 @@ const balanceFetched = (localUser) => {
     console.log('OK');
     console.log(localUser);
     return {
-        type:BALANCE_FETCHED,
+        type: BALANCE_FETCHED,
         localUser
     }
 };
@@ -43,20 +43,20 @@ export const fetchBalance = (id) => {
 };
 
 export const userSubBalance = (data) => {
-  return dispatch => {
-      return fetch(`/api/localUser/${data.id}`,{
-          method: 'put',
-          body: JSON.stringify(data),
-          headers: {
-              "Content-Type": "application/json"
-          }
-      }).then(handleResponse)
-  }
+    return dispatch => {
+        return fetch(`/api/localUser/${data.id}`, {
+            method: 'put',
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(handleResponse)
+    }
 };
 
 export const userAddBalance = (data) => {
     return dispatch => {
-        return fetch(`/api/owner/${data.id}`,{
+        return fetch(`/api/owner/${data.id}`, {
             method: 'put',
             body: JSON.stringify(data),
             headers: {
@@ -84,7 +84,7 @@ const OwnerBalanceFetched = (owner) => {
     console.log('OK');
     console.log(owner);
     return {
-        type:OWNER_BALANCE_FETCHED,
+        type: OWNER_BALANCE_FETCHED,
         owner
     }
 };
@@ -99,7 +99,7 @@ export const fetchOwnerBalance = (id) => {
 
 export const updateResourceInfo = (data) => {
     return dispatch => {
-        return fetch(`/api/locationResources/${data.id}`,{
+        return fetch(`/api/locationResources/${data.id}`, {
             method: 'put',
             body: JSON.stringify(data),
             headers: {
