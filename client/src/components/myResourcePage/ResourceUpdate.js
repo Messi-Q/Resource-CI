@@ -83,7 +83,7 @@ class ResourceForm extends Component {
         if (isValid) {
             const {$class, id, userId, fileTitle, fileImage, fileDescription, fileReadPrice, fileRightPrice, website} = this.state;
             const userName = this.props.userLogin.user.username;
-            const resourceId = website + '-' + fileTitle; //应改为站名+站内定位符
+            const resourceId = website + '-' + id; //应改为站名+站内定位符
             const headline = fileTitle;
             const coverUrl = fileImage;
             const owner = "resource:org.demo.network.Customer#" + website + '-' + userName;

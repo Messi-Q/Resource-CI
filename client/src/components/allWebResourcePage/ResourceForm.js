@@ -16,6 +16,7 @@ class ResourceForm extends Component {
         ownershipPrice: '',
         file: '',
         errors: {},
+        succeed: false,
         loading: false,
         done: false
     };
@@ -67,7 +68,6 @@ class ResourceForm extends Component {
             const fileImage = coverUrl;
             const fileReadPrice = readPrice;
             const fileRightPrice = ownershipPrice;
-            const resourceId = website + '-' + headline; //应改为站名+站内定位符
             // const allWeb = 1;  //全网可见
 
             if (file) {
@@ -96,19 +96,36 @@ class ResourceForm extends Component {
                 fileDescription,
                 fileReadPrice,
                 fileRightPrice
-            });
-
-            //save to blockchain
-            this.props.saveResource({
-                $class, resourceId, headline, coverUrl, readPrice, ownershipPrice, owner, readCount, liked
-            }).then(  //then接收两个函数参数，第一个是成功之后执行，第二个是错误之后执行
+            }).then(
                 () => {
-                    this.setState({done: true})
+                    this.setState({succeed: true})
                 },
                 (err) => err.response.json().then(({errors}) => {
                     this.setState({errors, loading: false})
                 })
-            )
+            );
+
+            //save to blockChain
+            setTimeout(() => {
+                if (this.state.succeed) {
+
+                    const {mysqlResource} = this.props;
+                    console.log(mysqlResource);
+                    const resourceId = website + '-' + mysqlResource.id; //应改为站名+站内定位符
+                    console.log(resourceId);
+
+                    this.props.saveResource({
+                        $class, resourceId, headline, coverUrl, readPrice, ownershipPrice, owner, readCount, liked
+                    }).then(  //then接收两个函数参数，第一个是成功之后执行，第二个是错误之后执行
+                        () => {
+                            this.setState({done: true})
+                        },
+                        (err) => err.response.json().then(({errors}) => {
+                            this.setState({errors, loading: false})
+                        })
+                    )
+                }
+            }, 200);
         }
     };
 
@@ -236,6 +253,7 @@ class ResourceForm extends Component {
 const mapStateToProps = (state) => {
     return {
         userLogin: state.userLogin,
+        mysqlResource: state.mysqlResource
     };
 };
 export default connect(mapStateToProps, {saveResource, uploadRequest, saveResourceToMysql})(ResourceForm);

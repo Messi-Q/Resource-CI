@@ -72,11 +72,11 @@ export const saveResource = (resourceData) => {
     }
 };
 
-export const addResourceToMysql = (resource) => {
-    console.log(resource);
+export const addResourceToMysql = (mysqlResource) => {
+    console.log(mysqlResource);
     return {
         type: ADD_RESOURCE_To_MYSQL,
-        resource
+        mysqlResource
     }
 };
 
@@ -89,7 +89,8 @@ export const saveResourceToMysql = (data) => {
             headers: {
                 "Content-Type": "application/json"
             }
-        }).then(data => dispatch(addResourceToMysql(data.resource)))
+        }).then(res => res.json())
+            .then(data => dispatch(addResourceToMysql(data.resource)))
     }
 };
 
@@ -113,7 +114,7 @@ export const uploadRequest = (file) => {
 // };
 
 export const deleteWebResource = (resource) => {
-    const resourceId = 'A' + '-' + resource.fileTitle;  //应改为站名+站内定位符
+    const resourceId = 'A' + '-' + resource.id;  //应改为站名+站内定位符
     console.log('resourceId', resourceId);
     return dispatch => {
         return fetch(`http://localhost:3000/api/Resource/${resourceId}`, {

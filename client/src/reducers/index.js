@@ -7,6 +7,7 @@ import locationResources from './locationResources';
 import allWebResources from './allWebResources';
 import buyResources from './buyResources';
 import buyerResources from './buyerResources';
+import mysqlResource from './mysqlResource';
 import localUser from './localUser';
 import blockUser from './blockUser';
 import owner from './owner';
@@ -24,4 +25,5 @@ export default combineReducers({
     buyerResources: buyerResources,
     localResources: locationResources,
     allWebResources: allWebResources,
+    mysqlResource:mysqlResource,
 });

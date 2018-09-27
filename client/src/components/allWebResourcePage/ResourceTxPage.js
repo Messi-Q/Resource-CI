@@ -90,6 +90,8 @@ class ResourceTxPage extends Component {
         e.preventDefault();
         console.log(this.state);
 
+        console.log('Transaction_1');
+
     };
 
     handleSubmit_2 = (e) => {
@@ -100,21 +102,24 @@ class ResourceTxPage extends Component {
         console.log('Transaction_2');
         const userBalance = this.props.localUser.balance;
         const ownerPrice = this.state.ownershipPrice;
-        const userBuyId = 'A' + '-' + this.props.userLogin.user.username;  //资源购买这ID
-        console.log(userBuyId);
+        const userBuyId_1 = 'A' + '-' + this.props.userLogin.user.username;  //资源购买者ID
+        console.log(userBuyId_1);
 
         //同步获取区块链用户信息
         const owner = this.props.allWebResource.owner;  //资源所有者ID
         console.log(owner);
-        const userId = owner.slice(35);  //截取到用户ID
-        console.log(userId);
+        const ownerId = owner.slice(35);  //截取到用户ID
+        console.log(ownerId);
 
         //更新区块链上购买信息
         const $class = "org.demo.network.BuyOwnershipTransaction";
         const resource = "resource:org.demo.network.Resource#" + this.state.resourceId;
-        const buyer = "resource:org.demo.network.Customer#" + userBuyId;
+        const buyer = "resource:org.demo.network.Customer#" + userBuyId_1;
+        const resourceId = this.props.allWebResource.resourceId;
+        const id = resourceId.slice(2);
+        console.log(id);
 
-        this.props.fetchBlockUser(userId).then(
+        this.props.fetchBlockUser(ownerId).then(
             () => {
                 this.setState({succeed: true})
             },
@@ -128,7 +133,7 @@ class ResourceTxPage extends Component {
                 //获取资源原所有者的余额
                 console.log('token', this.props.blockUser.token);
 
-                if (userBuyId !== userId) {
+                if (userBuyId_1 !== ownerId) {
                     if (userBalance > ownerPrice) {
                         console.log('余额充足');
                         //区块链上的所有权交易
@@ -145,12 +150,12 @@ class ResourceTxPage extends Component {
 
                         //本地数据库同步更新
                         const restBalance = userBalance - ownerPrice;
-                        console.log(restBalance, userBuyId, userId);
-                        const userBuyId_1 = this.props.userLogin.user.id;
+                        console.log(restBalance, userBuyId_1, ownerId);
+                        const userBuyId = this.props.userLogin.user.id;
 
                         //购买用户减去相应的金额
                         this.props.userSubBalance({
-                            userBuyId_1,
+                            userBuyId,
                             restBalance
                         }).then(
                             () => {
@@ -164,24 +169,23 @@ class ResourceTxPage extends Component {
                         console.log(userBalance, ownerBalance);
                         const totalBalance = ownerBalance + ownerPrice;
                         console.log(totalBalance);
-                        const ownerId = userId.slice(2);
-                        console.log(ownerId);
+                        const userId = ownerId.slice(2);
+                        console.log(userId);
 
                         //资源拥有者增加相应的金额
                         this.props.userAddBalance({
-                            ownerId,
+                            userId,
                             totalBalance
                         });
 
-                        //TODO:修改资源所属id
-                        const {id, headline} = this.state;
+                        //修改资源所属id
+                        const fileTitle = this.state.headline;
                         this.props.updateResourceInfo({
                             id,
-                            ownerId,
-                            headline,
-                            userBuyId_1
+                            userId,
+                            fileTitle,
+                            userBuyId
                         });
-
 
                     } else {
                         window.alert("账户余额不足，请充值！");
