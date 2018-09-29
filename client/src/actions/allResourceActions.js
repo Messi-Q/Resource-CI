@@ -3,9 +3,9 @@ import {
     ADD_ALLWEB_RESOURCE,
     ALL_RESOURCE_FETCHED,
     ADD_RESOURCE_To_MYSQL,
-    SET_BLOCK_USER
+    SET_BLOCK_USER,
+    SET_OWNER_ID
 } from '../constants';
-// import axios from "axios/index";
 import Config from '../utils/config';
 
 export const allResourceFetched = (allWebResource) => {
@@ -173,5 +173,22 @@ export const updateBlockReadToken = (data) => {
                 "Content-Type": "application/json"
             }
         })
+    }
+};
+
+export const setOwnerId = (owner1) => {
+    console.log(owner1.id);
+    return {
+        type: SET_OWNER_ID,
+        owner1
+    }
+};
+
+export const fetchOwnerId = (id) => {
+    console.log(id);
+    return dispatch => {
+        return fetch(`/api/fetchOwnerId/${id}`)
+            .then(res => res.json())
+            .then(data => dispatch(setOwnerId(data.owner1)))
     }
 };

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import ResourceCard from "./ResourceCard";
 
 const ResourceList = ({allWebResources}) => {
-    // console.log(allWebResources);
+    //console.log(allWebResources);
     const emptyMessage = (
         <h2 align="center">There is no resources</h2>
     );

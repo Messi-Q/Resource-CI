@@ -11,6 +11,7 @@ import mysqlResource from './mysqlResource';
 import localUser from './localUser';
 import blockUser from './blockUser';
 import owner from './owner';
+import owner1 from './owner1';
 import userSignup from './userSignup';
 
 export default combineReducers({
@@ -19,6 +20,7 @@ export default combineReducers({
     blockUser: blockUser,
     localUser: localUser,
     owner: owner,
+    owner1: owner1,
     Customer: userSignup,
     resources: myResources,
     buyResources: buyResources,

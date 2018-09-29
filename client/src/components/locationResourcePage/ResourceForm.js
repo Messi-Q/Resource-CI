@@ -114,7 +114,7 @@ class ResourceForm extends Component {
             // console.log(this.props.buyerResources[i].fileId);
             if (resourceId === this.props.buyerResources[i].fileId) {
                 flag = false;
-                window.alert("您已购买过该资源，无需重复购买！")
+                window.alert("您已购买该资源，无需重复购买！")
             }
         }
 
@@ -161,6 +161,8 @@ class ResourceForm extends Component {
                         );
 
                         setTimeout(() => {
+                            console.log(buyerId, id, fileTitle, fileImage, fileDescription, fileReadPrice, fileRightPrice);
+
                             if (this.state.succeed_1 && this.state.succeed_2) {
                                 this.props.updateBuyer({
                                     buyerId,
@@ -187,7 +189,7 @@ class ResourceForm extends Component {
                     }
 
                 } else {
-                    window.alert("这是您自己上传的资源，无需购买！");
+                    window.alert("这是您自己的资源，无需购买！");
                 }
             }, 500);
         }

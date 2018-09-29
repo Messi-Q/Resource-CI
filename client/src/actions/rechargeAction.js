@@ -56,7 +56,7 @@ export const userSubBalance = (data) => {
 
 export const userAddBalance = (data) => {
     return dispatch => {
-        return fetch(`/api/owner/${data.id}`, {
+        return fetch(`/api/owner/${data.userId}`, {
             method: 'put',
             body: JSON.stringify(data),
             headers: {

@@ -118,7 +118,8 @@ class ResourceForm extends Component {
                         $class, resourceId, headline, coverUrl, readPrice, ownershipPrice, owner, readCount, liked
                     }).then(  //then接收两个函数参数，第一个是成功之后执行，第二个是错误之后执行
                         () => {
-                            this.setState({done: true})
+                            this.setState({done: true});
+                            this.props.history.push('/resources')
                         },
                         (err) => err.response.json().then(({errors}) => {
                             this.setState({errors, loading: false})

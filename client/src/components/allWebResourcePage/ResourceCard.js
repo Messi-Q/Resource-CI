@@ -17,7 +17,7 @@ const ResourceCard = ({allWebResource}) => {
             <div className="extra content">
                 <span className="price">阅读价：{allWebResource.readPrice}$</span>
                 <span className="right floated">
-                    <i className="heart outline like icon">10</i>
+                    <i className="heart outline like icon">{allWebResource.readCount}</i>
                 </span>
                 <br/>
                 <span className="price">所有价：{allWebResource.ownershipPrice}$</span>

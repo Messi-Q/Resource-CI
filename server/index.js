@@ -11,6 +11,7 @@ import allUpload from './routes/allUpload';
 import recharge from './routes/recharge';
 import users from './routes/users';
 import owner from './routes/owner';
+import owner1 from './routes/owner1';
 import updateBuyer from './routes/updateBuyer';
 import path from 'path';
 import buy from './routes/buy';
@@ -40,6 +41,7 @@ app.use('/api/buyerResource', buyer);
 app.use('/api/localUser', recharge);
 app.use('/api/users', users);
 app.use('/api/owner', owner);
+app.use('/api/fetchOwnerId', owner1);
 app.use('/api/updateBuyer', updateBuyer);
 
 app.listen(6060, () => console.log('Running on localhost:6060'));
