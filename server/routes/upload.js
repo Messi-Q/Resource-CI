@@ -33,6 +33,7 @@ router.post('/', upload.single('file'), (req, res, err) => {
     }
     console.dir(req.file);
     res.send({'ret_code': 0});
+    res.json({fileInfo:req.file});
 });
 
 export default router;

@@ -86,6 +86,7 @@ class ResourceForm extends Component {
                 this.props.uploadRequest(formData).then(  //then接收两个函数参数，第一个是成功之后执行，第二个是错误之后执行
                     () => {
                         console.log('上传成功');
+                        this.setState({loading: true});
                     },
                     (err) => err.response.json().then(({errors}) => {
                         this.setState({errors, loading: false})
@@ -95,8 +96,6 @@ class ResourceForm extends Component {
                 console.log('No files fetched');
                 return
             }
-
-            this.setState({loading: true});
 
             this.props.saveResource({
                 userId,
@@ -233,7 +232,7 @@ class ResourceForm extends Component {
 
         return (
             <div>
-                {this.state.done ? <Redirect to="/resources"/> : form}
+                {this.state.done ? <Redirect to="/confirm"/> : form}
             </div>
         );
     }

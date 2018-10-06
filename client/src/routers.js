@@ -16,6 +16,7 @@ import BuyResource from './components/buyResourcePage/ResourceForm';
 import MyWalletPage from './components/walletPage/MyWalletPage';
 import RechargePage from './components/walletPage/RechargeForm';
 import requireLogin from './utils/requireLogin';
+import ConfirmPage from './components/confirmationPage/ConfirmPage';
 
 export default (
     <div className="container">
@@ -34,5 +35,6 @@ export default (
         <Route path="/allWebResource/:id" component={requireLogin(AllWebResourceTxPage)}/>
         <Route path="/myWallet" component={requireLogin(MyWalletPage)}/>
         <Route path="/userRecharge" component={requireLogin(RechargePage)}/>
+        <Route path="/confirm" component={requireLogin(ConfirmPage)}/>
     </div>
 )

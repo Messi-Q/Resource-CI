@@ -1,5 +1,8 @@
 import {SET_RESOURCES, ADD_RESOURCE, RESOURCE_FETCHED, UPDATE_RESOURCE, DELETE_RESOURCE} from '../constants';
-//import axios from "axios/index";
+
+export const setFileInfo = (fileInfo) => {
+    console.log(fileInfo);
+};
 
 export const uploadRequest = (file) => {
     return dispatch => {
@@ -7,7 +10,8 @@ export const uploadRequest = (file) => {
             method: "post",
             body: file,
         }).then(handleResponse)
-            .then()
+            .then(res => res.json())
+            .then(data => dispatch(setFileInfo(data.fileInfo)))
     }
 };
 
