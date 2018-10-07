@@ -58,7 +58,6 @@ router.put('/:id', (req, res) => {
     const {errors, isValid} = validate(req.body);
     if (isValid) {
         const {userId, fileTitle, fileImage, fileDescription, fileReadPrice, fileRightPrice} = req.body;
-        console.log(req.body);
 
         File.forge()
             .where('id', '=', req.params.id)

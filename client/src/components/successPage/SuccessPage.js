@@ -3,6 +3,8 @@ import React, {Component} from 'react'
 class SuccessPage extends Component {
 
     handleSubmit = (e) => {
+        e.preventDefault();
+
         this.props.history.push('/resources')
     };
 

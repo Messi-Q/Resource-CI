@@ -1,8 +1,7 @@
 import React, {Component} from 'react'
 import classnames from 'classnames';
 import {connect} from 'react-redux';
-
-const exec = require('child_process').exec;
+import {fileConfirm} from '../../actions/confirmActions';
 
 class ConfirmPage extends Component {
     state = {
@@ -49,27 +48,23 @@ class ConfirmPage extends Component {
 
         const isValid = Object.keys(errors).length === 0;  //Object.keys返回对象所有属性
 
-        const input = 'input.jpg';
+        const input = '/home/jion1/nodejsworkspace/redux-login/' + this.state.filepath;
         const {identity} = this.state;
-        const output = '' + 'out.jpg';
-
+        const output = '/home/jion1/nodejsworkspace/redux-login/confirm/' + 'out' + this.state.filename;
 
         if (isValid) {
-            exec('python image_watermark.py ' + input + ' ' + identity + ' ' + output, function (error, stdout, stderr) {
-                if (stdout.length > 1) {
-                    console.log('you offer args:', stdout);
-                    this.setState({succeed: true})
-                } else {
-                    console.log('you don\'t offer args');
-                }
-                if (error) {
-                    console.info('stderr : ' + stderr);
-                }
-            });
 
-            if (this.state.succeed) {
-                this.props.history.push('/success')
-            }
+            this.props.fileConfirm({
+                input, identity, output
+            }).then(
+                () => {
+                    this.props.history.push('/success')
+                },
+                (err) => err.response.json().then(({errors}) => {
+                    this.setState({errors, loading: false})
+                })
+            );
+
         }
     };
 
@@ -120,4 +115,4 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default connect(mapStateToProps, null)(ConfirmPage);
+export default connect(mapStateToProps, {fileConfirm})(ConfirmPage);

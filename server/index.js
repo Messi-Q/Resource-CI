@@ -17,6 +17,7 @@ import path from 'path';
 import buy from './routes/buy';
 import buy1 from './routes/buy1';
 import buyer from './routes/buyer';
+import confirm from './routes/confirm';
 
 
 let app = express();
@@ -43,5 +44,6 @@ app.use('/api/users', users);
 app.use('/api/owner', owner);
 app.use('/api/fetchOwnerId', owner1);
 app.use('/api/updateBuyer', updateBuyer);
+app.use('/api/confirm', confirm);
 
 app.listen(6060, () => console.log('Running on localhost:6060'));
