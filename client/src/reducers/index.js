@@ -14,6 +14,7 @@ import owner from './owner';
 import owner1 from './owner1';
 import userSignup from './userSignup';
 import fileInfo from './fileInfo';
+import allWebFileInfo from './allWebFileInfo';
 
 export default combineReducers({
     userLogin,
@@ -25,6 +26,7 @@ export default combineReducers({
     Customer: userSignup,
     resources: myResources,
     fileInfo: fileInfo,
+    allWebFileInfo: allWebFileInfo,
     buyResources: buyResources,
     buyerResources: buyerResources,
     localResources: locationResources,

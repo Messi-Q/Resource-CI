@@ -5,8 +5,8 @@ import {fileConfirm} from '../../actions/confirmActions';
 
 class ConfirmPage extends Component {
     state = {
-        filename: this.props.fileInfo ? this.props.fileInfo.originalname : '',
-        filepath: this.props.fileInfo ? this.props.fileInfo.path : '',
+        filename: this.props.allWebFileInfo ? this.props.allWebFileInfo.originalname : '',
+        filepath: this.props.allWebFileInfo ? this.props.allWebFileInfo.path : '',
         identity: '',
         succeed: false,
         loading: false,
@@ -20,8 +20,8 @@ class ConfirmPage extends Component {
 
     componentWillReceiveProps(nextProps) {
         this.setState({
-            filename: nextProps.fileInfo.originalname,
-            filepath: nextProps.fileInfo.path,
+            filename: nextProps.allWebFileInfo.originalname,
+            filepath: nextProps.allWebFileInfo.path,
         });
     }
 
@@ -51,7 +51,9 @@ class ConfirmPage extends Component {
 
         const input = '/home/jion1/nodejsworkspace/redux-login/' + this.state.filepath;
         const {identity} = this.state;
-        const output = '/home/jion1/nodejsworkspace/redux-login/confirm/' + 'out' + this.state.filename;
+        const output = '/home/jion1/nodejsworkspace/redux-login/allWebConfirm/' + 'out' + this.state.filename;
+
+        console.log('allweb');
 
         if (isValid) {
 
@@ -118,7 +120,7 @@ class ConfirmPage extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        fileInfo: state.fileInfo
+        allWebFileInfo: state.allWebFileInfo
     }
 };
 

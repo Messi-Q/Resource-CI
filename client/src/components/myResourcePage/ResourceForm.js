@@ -78,7 +78,6 @@ class ResourceForm extends Component {
 
         if (isValid) {
             const {userId, fileTitle, fileImage, fileDescription, fileReadPrice, fileRightPrice, file} = this.state;
-            // const allWeb = 0;  //非全网可见
 
             if (file) {
                 const formData = new FormData();

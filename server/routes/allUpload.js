@@ -31,8 +31,10 @@ router.post('/', upload.single('file'), (req, res, err) => {
     if (err) {
         console.log(err)
     }
-    console.dir(req.file);
-    res.send({'ret_code': 0});
+    const allWebFileInfo = req.file;
+    console.log(allWebFileInfo);
+    res.json({allWebFileInfo: allWebFileInfo})
+    //res.send({'ret_code': 0});
 });
 
 router.use((req, res) => {

@@ -4,7 +4,8 @@ import {
     ALL_RESOURCE_FETCHED,
     ADD_RESOURCE_To_MYSQL,
     SET_BLOCK_USER,
-    SET_OWNER_ID
+    SET_OWNER_ID,
+    SET_ALLWEB_FILEINFO
 } from '../constants';
 import Config from '../utils/config';
 
@@ -94,24 +95,32 @@ export const saveResourceToMysql = (data) => {
     }
 };
 
+export const setAllWebFileInfo = (allWebFileInfo) => {
+    return {
+        type: SET_ALLWEB_FILEINFO,
+        allWebFileInfo
+    }
+};
+
 export const uploadRequest = (file) => {
     return dispatch => {
         return fetch('/api/allUpload', {
             method: "post",
             body: file,
-        })
+        }).then(handleResponse)
+            .then(data => dispatch(setAllWebFileInfo(data.allWebFileInfo)))
     }
 };
 
-// const handleResponse = (response) => {
-//     if (response.ok) {
-//         return response.json();
-//     } else {
-//         let error = new Error(response.statusText);
-//         error.response = response;
-//         throw error;
-//     }
-// };
+const handleResponse = (response) => {
+    if (response.ok) {
+        return response.json();
+    } else {
+        let error = new Error(response.statusText);
+        error.response = response;
+        throw error;
+    }
+};
 
 export const deleteWebResource = (resource) => {
     const resourceId = 'A' + '-' + resource.id;  //应改为站名+站内定位符

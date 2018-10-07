@@ -76,6 +76,26 @@ class ResourceForm extends Component {
                 this.props.uploadRequest(formData).then(  //then接收两个函数参数，第一个是成功之后执行，第二个是错误之后执行
                     () => {
                         console.log('上传成功');
+                        this.setState({loading: true});
+
+                        //save to local mysql, return fileId
+                        this.props.saveResourceToMysql({
+                            userId,
+                            fileTitle,
+                            fileImage,
+                            fileDescription,
+                            fileReadPrice,
+                            fileRightPrice,
+                            allWeb
+                        }).then(
+                            () => {
+                                this.setState({succeed: true})
+                            },
+                            (err) => err.response.json().then(({errors}) => {
+                                this.setState({errors, loading: false})
+                            })
+                        );
+
                     },
                     (err) => err.response.json().then(({errors}) => {
                         this.setState({errors, loading: false})
@@ -85,26 +105,6 @@ class ResourceForm extends Component {
                 console.log('No files fetched');
                 return
             }
-
-            this.setState({loading: true});
-
-            //save to local mysql, return fileId
-            this.props.saveResourceToMysql({
-                userId,
-                fileTitle,
-                fileImage,
-                fileDescription,
-                fileReadPrice,
-                fileRightPrice,
-                allWeb
-            }).then(
-                () => {
-                    this.setState({succeed: true})
-                },
-                (err) => err.response.json().then(({errors}) => {
-                    this.setState({errors, loading: false})
-                })
-            );
 
             //save to blockChain
             setTimeout(() => {
@@ -120,7 +120,6 @@ class ResourceForm extends Component {
                     }).then(  //then接收两个函数参数，第一个是成功之后执行，第二个是错误之后执行
                         () => {
                             this.setState({done: true});
-                            this.props.history.push('/resources')
                         },
                         (err) => err.response.json().then(({errors}) => {
                             this.setState({errors, loading: false})
@@ -246,7 +245,7 @@ class ResourceForm extends Component {
 
         return (
             <div>
-                {this.state.done ? <Redirect to="/allWebResources"/> : form}
+                {this.state.done ? <Redirect to="/allWebConfirm"/> : form}
             </div>
         );
     }

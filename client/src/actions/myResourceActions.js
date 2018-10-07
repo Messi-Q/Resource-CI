@@ -8,8 +8,6 @@ import {
 } from '../constants';
 
 export const setFileInfo = (fileInfo) => {
-    console.log(fileInfo);
-    console.log(fileInfo.path);
     return {
         type: SET_FILEINFO,
         fileInfo
