@@ -87,6 +87,22 @@ class ResourceForm extends Component {
                     () => {
                         console.log('上传成功');
                         this.setState({loading: true});
+
+                        this.props.saveResource({
+                            userId,
+                            fileTitle,
+                            fileImage,
+                            fileDescription,
+                            fileReadPrice,
+                            fileRightPrice,
+                        }).then(  //then接收两个函数参数，第一个是成功之后执行，第二个是错误之后执行
+                            () => {
+                                this.setState({done: true})
+                            },
+                            (err) => err.response.json().then(({errors}) => {
+                                this.setState({errors, loading: false})
+                            })
+                        )
                     },
                     (err) => err.response.json().then(({errors}) => {
                         this.setState({errors, loading: false})
@@ -94,24 +110,7 @@ class ResourceForm extends Component {
                 );
             } else {
                 console.log('No files fetched');
-                return
             }
-
-            this.props.saveResource({
-                userId,
-                fileTitle,
-                fileImage,
-                fileDescription,
-                fileReadPrice,
-                fileRightPrice,
-            }).then(  //then接收两个函数参数，第一个是成功之后执行，第二个是错误之后执行
-                () => {
-                    this.setState({done: true})
-                },
-                (err) => err.response.json().then(({errors}) => {
-                    this.setState({errors, loading: false})
-                })
-            )
         }
     };
 

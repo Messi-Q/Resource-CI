@@ -1,7 +1,19 @@
-import {SET_RESOURCES, ADD_RESOURCE, RESOURCE_FETCHED, UPDATE_RESOURCE, DELETE_RESOURCE} from '../constants';
+import {
+    SET_RESOURCES,
+    ADD_RESOURCE,
+    RESOURCE_FETCHED,
+    UPDATE_RESOURCE,
+    DELETE_RESOURCE,
+    SET_FILEINFO
+} from '../constants';
 
 export const setFileInfo = (fileInfo) => {
     console.log(fileInfo);
+    console.log(fileInfo.path);
+    return {
+        type: SET_FILEINFO,
+        fileInfo
+    }
 };
 
 export const uploadRequest = (file) => {
@@ -10,7 +22,6 @@ export const uploadRequest = (file) => {
             method: "post",
             body: file,
         }).then(handleResponse)
-            .then(res => res.json())
             .then(data => dispatch(setFileInfo(data.fileInfo)))
     }
 };
@@ -56,7 +67,7 @@ const handleResponse = (response) => {
 };
 
 const addResource = (resource) => {
-    console.log('resource',resource);
+    console.log('resource', resource);
     return {
         type: ADD_RESOURCE,
         resource

@@ -17,6 +17,7 @@ import MyWalletPage from './components/walletPage/MyWalletPage';
 import RechargePage from './components/walletPage/RechargeForm';
 import requireLogin from './utils/requireLogin';
 import ConfirmPage from './components/confirmationPage/ConfirmPage';
+import SuccessPage from './components/successPage/SuccessPage';
 
 export default (
     <div className="container">
@@ -36,5 +37,6 @@ export default (
         <Route path="/myWallet" component={requireLogin(MyWalletPage)}/>
         <Route path="/userRecharge" component={requireLogin(RechargePage)}/>
         <Route path="/confirm" component={requireLogin(ConfirmPage)}/>
+        <Route path="/success" component={requireLogin(SuccessPage)}/>
     </div>
 )

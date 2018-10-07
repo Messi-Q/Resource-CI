@@ -28,3 +28,4 @@ export const SET_BUYER_RESOURCES = 'SET_BUYER_RESOURCES';
 export const SET_BLOCK_USER = 'SET_BLOCK_USER';
 
 export const SET_OWNER_ID = 'SET_OWNER_ID';
+export const SET_FILEINFO = 'SET_FILEINFO';
