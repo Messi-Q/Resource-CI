@@ -9,6 +9,6 @@ Introduction
    
    TODO:
    1. Download the file from server
-   2. finish the transaction with the contratcts written by hyperledger composer
+  
    
    
