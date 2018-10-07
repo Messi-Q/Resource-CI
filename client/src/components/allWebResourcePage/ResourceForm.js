@@ -68,7 +68,7 @@ class ResourceForm extends Component {
             const fileImage = coverUrl;
             const fileReadPrice = readPrice;
             const fileRightPrice = ownershipPrice;
-            // const allWeb = 1;  //全网可见
+            const allWeb = 1;  //全网可见
 
             if (file) {
                 const formData = new FormData();
@@ -95,7 +95,8 @@ class ResourceForm extends Component {
                 fileImage,
                 fileDescription,
                 fileReadPrice,
-                fileRightPrice
+                fileRightPrice,
+                allWeb
             }).then(
                 () => {
                     this.setState({succeed: true})

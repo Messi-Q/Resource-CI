@@ -38,7 +38,7 @@ class ConfirmPage extends Component {
         }
     };
 
-    handleSubmit = (e) => {
+    handleSubmit1 = (e) => {
         e.preventDefault();
 
         let errors = {};
@@ -68,11 +68,16 @@ class ConfirmPage extends Component {
         }
     };
 
+    handleSubmit2 = (e) => {
+        e.preventDefault();
+
+        this.props.history.push('/resources')
+    };
+
     render() {
         return (
             <div className="container upload-container">
-                <form className={classnames('ui', 'form', {loading: this.state.loading})}
-                      onSubmit={this.handleSubmit}>
+                <form className={classnames('ui', 'form', {loading: this.state.loading})}>
 
                     <h1>Resource Confirmation</h1>
 
@@ -99,8 +104,9 @@ class ConfirmPage extends Component {
                         <span>{this.state.errors.identity}</span>
                     </div>
 
-                    <div className="form-group">
-                        <button className="btn btn-outline-primary btn-lg btn-block">Confirm</button>
+                    <div align="center">
+                        <button className="btn btn-outline-primary btn-lg" onSubmit={this.handleSubmit1}>Confirm</button>
+                        <button className="btn btn-outline-danger btn-lg" onSubmit={this.handleSubmit2}>Cancel</button>
                     </div>
 
                 </form>

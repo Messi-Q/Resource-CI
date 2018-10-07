@@ -1,6 +1,5 @@
 import express from 'express';
-import authenticate from '../middlewares/authenticate';
-import File from '../models/file1';
+import File from '../models/file';
 
 let router = express.Router();
 

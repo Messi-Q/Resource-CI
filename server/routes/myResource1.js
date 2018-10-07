@@ -1,4 +1,4 @@
-import File from "../models/file1";
+import File from "../models/file";
 import express from "express";
 
 let router = express.Router();
@@ -11,7 +11,7 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    const {userId, fileTitle, fileImage, fileDescription, fileReadPrice, fileRightPrice} = req.body;
+    const {userId, fileTitle, fileImage, fileDescription, fileReadPrice, fileRightPrice, allWeb} = req.body;
     console.log(req.body);
 
     return File.forge({
@@ -20,7 +20,8 @@ router.post('/', (req, res) => {
         fileImage: fileImage,
         fileDescription: fileDescription,
         fileReadPrice: fileReadPrice,
-        fileRightPrice: fileRightPrice
+        fileRightPrice: fileRightPrice,
+        allWeb: allWeb
     }, {hasTimestamps: true}).save()
         .then(resource => res.json({resource: resource}))
         .catch(err => res.status(500).json({errors: {global: "something went wrong!"}}));

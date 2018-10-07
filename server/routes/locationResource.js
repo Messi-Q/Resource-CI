@@ -1,10 +1,12 @@
 import express from 'express';
-import File from "../models/file1";
+import File from "../models/file";
 
 let router = express.Router();
 
 router.get('/', (req, res) => {
-    File.forge().fetchAll().then(resource => {
+    File.forge()
+        .where('allWeb', '=' ,0)
+        .fetchAll().then(resource => {
         res.json({resources: resource});
     }).catch(err => res.status(500).json({errors: {global: "something went wrong"}}));
 });
