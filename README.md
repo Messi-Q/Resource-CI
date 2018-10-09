@@ -15,7 +15,8 @@
   
   &emsp;&emsp;To deploy this application, you need to install the environment of [Hyperleger Composer](https://hyperledger.github.io/composer/latest/installing/installing-index).
   
-  &emsp;&emsp;
+  &emsp;&emsp;1.client端
+  &emsp;&emsp;2.server端
   
    
    
