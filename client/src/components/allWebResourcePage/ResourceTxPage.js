@@ -55,7 +55,7 @@ class ResourceTxPage extends Component {
         const {match} = this.props;
         console.log(this.props);
         console.log(match.params.id);
-        if (match.params.id) {  //所有路由的id参
+        if (match.params.id) {  //所有路由的id参数
             this.props.fetchAllWebResource(match.params.id);
         }
 

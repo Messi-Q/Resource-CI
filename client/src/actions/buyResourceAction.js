@@ -1,4 +1,6 @@
 import {SET_BUY_RESOURCES, BUY_RESOURCE_FETCHED, ADD_BUY_RESOURCE, SET_BUYER_RESOURCES} from "../constants";
+import Config from "../utils/config";
+import {setBlockUser} from "./allResourceActions";
 
 export const setBuyResources = (buyResources) => {
     console.log('test', buyResources);
@@ -37,8 +39,8 @@ export const fileDownloads = (id) => {
 
 export const buyResourceFetched = (buyResource) => {
     console.log(buyResource);
-    return{
-        type:BUY_RESOURCE_FETCHED,
+    return {
+        type: BUY_RESOURCE_FETCHED,
         buyResource
     }
 };
@@ -54,14 +56,14 @@ export const fetchBuyResources = (id) => {
 
 export const addBuyResource = (buyResource) => {
     console.log(buyResource);
-    return{
+    return {
         type: ADD_BUY_RESOURCE,
         buyResource
     }
 };
 
 export const updateBuyer = (data) => {
-    console.log(data);
+    console.log('data', data);
     return dispatch => {
         return fetch('/api/updateBuyer', {
             method: 'post',
@@ -76,16 +78,54 @@ export const updateBuyer = (data) => {
 
 export const setBuyerResources = (buyerResources) => {
     console.log('buyerResource', buyerResources);
-    return{
+    return {
         type: SET_BUYER_RESOURCES,
         buyerResources
     }
 };
 
 export const fetchBuyerResource = (id) => {
-  return dispatch => {
-      return fetch(`/api/buyerResource/${id}`)
-          .then(res => res.json())
-          .then(data => dispatch(setBuyerResources(data.buyerResources)))
-  }
+    return dispatch => {
+        return fetch(`/api/buyerResource/${id}`)
+            .then(res => res.json())
+            .then(data => dispatch(setBuyerResources(data.buyerResources)))
+    }
+};
+
+export const blockUserAddToken = (userData) => {
+    const userId = userData.blockUserId_owner;
+    const customer = {};
+    customer["$class"] = userData.$class;
+    customer["website"] = userData.website;
+    customer["token"] = userData.totalBalance;
+    customer["userId"] = userData.blockUserId_owner;
+
+    return dispatch => {
+        return fetch(`http://localhost:3000/api/Customer/${userId}`, {
+            method: 'put',
+            body: JSON.stringify(customer),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+    }
+};
+
+export const blockUserSubToken = (userData) => {
+    const userId = userData.blockUserId_buy;
+    const customer = {};
+    customer["$class"] = userData.$class;
+    customer["website"] = userData.website;
+    customer["token"] = userData.restBalance;
+    customer["userId"] = userData.blockUserId_buy;
+
+    return dispatch => {
+        return fetch(`http://localhost:3000/api/Customer/${userId}`, {
+            method: 'put',
+            body: JSON.stringify(customer),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+    }
 };

@@ -1,4 +1,4 @@
-import Buyer from "../models/Buy";
+import Buyer from "../models/Buyer";
 import express from "express";
 
 let router = express.Router();

@@ -1,6 +1,6 @@
 import express from 'express';
 import File from '../models/file';
-import Buyer from '../models/Buy';
+import Buyer from '../models/Buyer';
 
 let router = express.Router();
 

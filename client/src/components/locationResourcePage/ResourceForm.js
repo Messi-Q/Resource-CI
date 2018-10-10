@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {fetchLocationResource} from '../../actions/locationResourceActions';
-import {updateBuyer, fetchBuyerResource} from '../../actions/buyResourceAction';
+import {updateBuyer, fetchBuyerResource, blockUserAddToken, blockUserSubToken} from '../../actions/buyResourceAction';
 import {
     fetchBalance,
     userAddBalance,
@@ -15,6 +15,8 @@ import './ResourceForm.css';
 class ResourceForm extends Component {
     succeed = false;
     state = {
+        $class: "org.demo.network.Customer",
+        website: 'A',  //获取网站名
         id: this.props.localResource ? this.props.localResource.id : '',
         userId: this.props.localResource ? this.props.localResource.userId : '',
         fileTitle: this.props.localResource ? this.props.localResource.fileTitle : '',
@@ -101,7 +103,7 @@ class ResourceForm extends Component {
         const userId = this.state.userId;
         const {user} = this.props.userLogin;
         const buyerId = user.id;
-        const {id, fileTitle, fileImage, fileDescription, fileReadPrice, fileRightPrice} = this.state;
+        const {$class, website, id, fileTitle, fileImage, fileDescription, fileReadPrice, fileRightPrice} = this.state;
         const {localResource} = this.props;
         this.props.fetchOwnerBalance(localResource.userId);
 
@@ -111,7 +113,6 @@ class ResourceForm extends Component {
         var flag = true;
 
         for (var i = 0; i < length; i++) {
-            // console.log(this.props.buyerResources[i].fileId);
             if (resourceId === this.props.buyerResources[i].fileId) {
                 flag = false;
                 window.alert("您已购买该资源，无需重复购买！")
@@ -122,6 +123,12 @@ class ResourceForm extends Component {
             setTimeout(() => {
                 if (userBuyId !== userId) {
                     if (userBalance > readPrice) {
+                        //区块链上用户id
+                        const blockUserId_buy = website + '-' + this.props.localUser.username;
+                        console.log(blockUserId_buy);
+                        const blockUserId_owner = website + '-' + this.props.owner.username;
+                        console.log(blockUserId_owner);
+
                         console.log("账户余额充足");
                         const restBalance = userBalance - readPrice;
                         console.log(restBalance, userBuyId, userId);
@@ -135,6 +142,9 @@ class ResourceForm extends Component {
                                 if (this.succeed) {
                                     this.setState({succeed_1: true})
                                 }
+                                this.props.blockUserSubToken({
+                                    $class, website, blockUserId_buy, restBalance
+                                });
                             },
                             (err) => err.response.json().then(({errors}) => {
                                 this.setState({errors, loading: false})
@@ -154,11 +164,16 @@ class ResourceForm extends Component {
                                 if (this.succeed) {
                                     this.setState({succeed_2: true})
                                 }
+                                //同步更新区块链上用户的token
+                                this.props.blockUserAddToken({
+                                    $class, website, blockUserId_owner, totalBalance
+                                });
                             },
                             (err) => err.response.json().then(({errors}) => {
                                 this.setState({errors, loading: false})
                             })
                         );
+
 
                         setTimeout(() => {
                             console.log(buyerId, id, fileTitle, fileImage, fileDescription, fileReadPrice, fileRightPrice);
@@ -179,7 +194,7 @@ class ResourceForm extends Component {
                                     (err) => err.response.json().then(({errors}) => {
                                         this.setState({errors, loading: false})
                                     })
-                                )
+                                );
                             }
                         }, 500);
 
@@ -319,7 +334,8 @@ const mapStateToProps = (state, props) => {
             owner: state.owner,
             userLogin: state.userLogin,
             buyerResources: state.buyerResources,
-            localResource: state.localResources.find(item => item.id.toString() === match.params.id.toString())
+            localResource: state.localResources.find(item => item.id.toString() === match.params.id.toString()),
+            allWebResource: state.allWebResources.find(item => item.resourceId.toString() === match.params.id)
         };
     }
 
@@ -328,7 +344,8 @@ const mapStateToProps = (state, props) => {
         owner: state.owner,
         userLogin: state.userLogin,
         buyerResources: null,
-        localResource: null
+        localResource: null,
+        allWebResource: null
     };
 };
 
@@ -340,5 +357,7 @@ export default connect(mapStateToProps, {
     fetchOwnerBalance,
     updateResourceInfo,
     updateBuyer,
-    fetchBuyerResource
+    fetchBuyerResource,
+    blockUserAddToken,
+    blockUserSubToken
 })(ResourceForm);
