@@ -142,6 +142,7 @@ class ResourceForm extends Component {
                                 if (this.succeed) {
                                     this.setState({succeed_1: true})
                                 }
+                                //同步更新区块链上用户的token
                                 this.props.blockUserSubToken({
                                     $class, website, blockUserId_buy, restBalance
                                 });
@@ -220,6 +221,7 @@ class ResourceForm extends Component {
         const ownerPrice = this.state.fileRightPrice >> 0;
         const userBuyId = this.props.userLogin.user.id;
         const userId = this.state.userId;
+        const {$class, website} = this.state;
 
         const {localResource} = this.props;
         this.props.fetchOwnerBalance(localResource.userId);
@@ -227,6 +229,12 @@ class ResourceForm extends Component {
         setTimeout(() => {
             if (userBuyId !== userId) {
                 if (userBalance > ownerPrice) {
+                    //区块链上用户id
+                    const blockUserId_buy = website + '-' + this.props.localUser.username;
+                    console.log(blockUserId_buy);
+                    const blockUserId_owner = website + '-' + this.props.owner.username;
+                    console.log(blockUserId_owner);
+
                     console.log("账户余额充足");
                     const restBalance = userBalance - ownerPrice;
                     console.log(restBalance, userBuyId, userId);
@@ -237,6 +245,10 @@ class ResourceForm extends Component {
                         restBalance
                     }).then(
                         () => {
+                            //同步更新区块链上用户的token
+                            this.props.blockUserSubToken({
+                                $class, website, blockUserId_buy, restBalance
+                            });
                         },
                         (err) => err.response.json().then(({errors}) => {
                             this.setState({errors, loading: false})
@@ -251,7 +263,17 @@ class ResourceForm extends Component {
                     this.props.userAddBalance({
                         userId,
                         totalBalance
-                    });
+                    }).then(
+                        () => {
+                            //同步更新区块链上用户的token
+                            this.props.blockUserAddToken({
+                                $class, website, blockUserId_owner, totalBalance
+                            });
+                        },
+                        (err) => err.response.json().then(({errors}) => {
+                            this.setState({errors, loading: false})
+                        })
+                    );
 
                     //修改资源所属id
                     const {id, fileTitle} = this.state;
