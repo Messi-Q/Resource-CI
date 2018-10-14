@@ -78,6 +78,7 @@ class ResourceForm extends Component {
 
         if (isValid) {
             const {userId, fileTitle, fileImage, fileDescription, fileReadPrice, fileRightPrice, file} = this.state;
+            const fileName = file.name;
 
             if (file) {
                 const formData = new FormData();
@@ -94,6 +95,7 @@ class ResourceForm extends Component {
                             fileDescription,
                             fileReadPrice,
                             fileRightPrice,
+                            fileName
                         }).then(  //then接收两个函数参数，第一个是成功之后执行，第二个是错误之后执行
                             () => {
                                 this.setState({done: true})

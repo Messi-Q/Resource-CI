@@ -141,7 +141,7 @@ class ResourceTxPage extends Component {
 
         console.log('buyer', this.props.buyerResources);
         var length = 0;
-        if (this.props.buyerResources !== null ){
+        if (this.props.buyerResources !== null) {
             length = this.props.buyerResources.length;
         }
         var flag = true;
@@ -394,7 +394,6 @@ class ResourceTxPage extends Component {
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>

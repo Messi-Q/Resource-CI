@@ -1,6 +1,10 @@
-import {SET_BUY_RESOURCES, BUY_RESOURCE_FETCHED, ADD_BUY_RESOURCE, SET_BUYER_RESOURCES} from "../constants";
-import Config from "../utils/config";
-import {setBlockUser} from "./allResourceActions";
+import {
+    SET_BUY_RESOURCES,
+    BUY_RESOURCE_FETCHED,
+    ADD_BUY_RESOURCE,
+    SET_BUYER_RESOURCES,
+    SET_PIC_DOWNLOAD
+} from "../constants";
 
 export const setBuyResources = (buyResources) => {
     console.log('test', buyResources);
@@ -28,12 +32,43 @@ const handleResponse = (response) => {
     }
 };
 
-export const fileDownloads = (id) => {
+export const setPicDownLoad = (picDownload) => {
+    console.log(picDownload);
+    return {
+        type: SET_PIC_DOWNLOAD,
+        picDownload
+    }
+};
+
+export const picDownloads = (data) => {
     return dispatch => {
-        return fetch(`/api/download/${id}`, {
-            method: "get",
-        }).then(handleResponse)
-            .then()
+        return fetch(`/api/picDownload/${data.fileName}`)
+            .then(handleResponse)
+            .then(data => dispatch(setPicDownLoad(data.success)))
+    }
+};
+
+export const setVidDownLoad = (success) => {
+    console.log(success)
+};
+
+export const vidDownloads = (data) => {
+    return dispatch => {
+        return fetch(`/api/vidDownload/${data.fileName}`)
+            .then(res => res.json())
+            .then(data => dispatch(setVidDownLoad(data.success)))
+    }
+};
+
+export const setFileDownLoad = (success) => {
+    console.log(success)
+};
+
+export const fileDownloads = (data) => {
+    return dispatch => {
+        return fetch(`/api/fileDownload/${data.fileName}`)
+            .then(res => res.json())
+            .then(data => dispatch(setFileDownLoad(data.success)))
     }
 };
 

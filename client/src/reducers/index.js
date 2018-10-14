@@ -15,6 +15,7 @@ import owner1 from './owner1';
 import userSignup from './userSignup';
 import fileInfo from './fileInfo';
 import allWebFileInfo from './allWebFileInfo';
+import picDownload from './picDownload';
 
 export default combineReducers({
     userLogin,
@@ -31,5 +32,6 @@ export default combineReducers({
     buyerResources: buyerResources,
     localResources: locationResources,
     allWebResources: allWebResources,
-    mysqlResource:mysqlResource,
+    mysqlResource: mysqlResource,
+    picDownload: picDownload
 });

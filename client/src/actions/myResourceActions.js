@@ -15,6 +15,7 @@ export const setFileInfo = (fileInfo) => {
 };
 
 export const uploadRequest = (file) => {
+    console.log('file', file);
     return dispatch => {
         return fetch('/api/upload', {
             method: "post",

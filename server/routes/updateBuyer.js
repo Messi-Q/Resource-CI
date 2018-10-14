@@ -4,8 +4,7 @@ import Buyer from '../models/Buyer';
 let router = express.Router();
 
 router.post('/', (req, res) => {
-    const {buyerId, id, fileTitle, fileImage, fileDescription, fileReadPrice, fileRightPrice} = req.body;
-    console.log(buyerId, id, fileTitle, fileImage, fileDescription, fileReadPrice, fileRightPrice);
+    const {buyerId, id, fileTitle, fileImage, fileDescription, fileReadPrice, fileRightPrice, fileName} = req.body;
 
     return Buyer.forge({
         buyerId: buyerId,
@@ -14,7 +13,8 @@ router.post('/', (req, res) => {
         fileImage: fileImage,
         fileDescription: fileDescription,
         fileReadPrice: fileReadPrice,
-        fileRightPrice: fileRightPrice
+        fileRightPrice: fileRightPrice,
+        fileName: fileName
     }, {hasTimestamps: true}).save()
         .then(buyResource => res.json({buyResource: buyResource}))
         .catch(err => res.status(500).json({errors: {global: "something went wrong!"}}));

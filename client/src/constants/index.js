@@ -30,3 +30,5 @@ export const SET_BLOCK_USER = 'SET_BLOCK_USER';
 export const SET_OWNER_ID = 'SET_OWNER_ID';
 export const SET_FILEINFO = 'SET_FILEINFO';
 export const SET_ALLWEB_FILEINFO = 'SET_ALLWEB_FILEINFO';
+
+export const SET_PIC_DOWNLOAD = 'SET_PIC_DOWNLOAD';

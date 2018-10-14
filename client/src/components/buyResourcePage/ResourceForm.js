@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 // import classnames from 'classnames';
 import {connect} from 'react-redux';
 import {fetchBuyResources} from '../../actions/buyResourceAction';
-import {fileDownloads} from '../../actions/buyResourceAction';
+import {picDownloads, vidDownloads, fileDownloads} from '../../actions/buyResourceAction';
+import {fileConfirm} from '../../actions/confirmActions';
 import {Redirect} from "react-router-dom";
 import './ResourceForm.css';
 
@@ -15,6 +16,7 @@ class ResourceForm extends Component {
         fileDescription: this.props.buyResource ? this.props.buyResource.fileDescription : '',
         fileReadPrice: this.props.buyResource ? this.props.buyResource.fileReadPrice : '',
         fileRightPrice: this.props.buyResource ? this.props.buyResource.fileRightPrice : '',
+        fileName: this.props.buyResource ? this.props.buyResource.fileName : '',
         file: this.props.buyResource ? this.props.buyResource.file : '',
         balance: this.props.user ? this.props.user.balance : '',
         errors: {},
@@ -44,6 +46,7 @@ class ResourceForm extends Component {
             fileDescription: nextProps.buyResource.fileDescription,
             fileReadPrice: nextProps.buyResource.fileReadPrice,
             fileRightPrice: nextProps.buyResource.fileRightPrice,
+            fileName: nextProps.buyResource.fileName,
             file: nextProps.buyResource.file,
             balance: nextProps.balance
         })
@@ -70,19 +73,63 @@ class ResourceForm extends Component {
         }
     };
 
-    //阅读权的交易
+    //下载
     handleSubmit = (e) => {
         e.preventDefault();
 
-        console.log('Transaction_1');
-        // const userBalance = this.props.localUser.balance;
-        // const readPrice = this.state.fileReadPrice >> 0;
-        // const userBuyId = this.props.userLogin.localUser.id;
-        // const userId = this.state.userId;
-        const {buyResource} = this.props;
-        console.log(buyResource);
+        console.log('DownLoad');
+        const {fileName} = this.state;
+        console.log('fileName', fileName);
 
-        this.props.fileDownloads(buyResource.id);
+        const index = fileName.indexOf("."); //得到"."在第几位
+        const name = fileName.substring(index); //截断"."之前的，得到后缀
+
+        if (name === ".bmp" || name === ".png" || name === ".gif" || name === ".jpg" || name === ".jpeg") {
+            this.props.picDownloads({fileName})
+                .then(
+                    () => {
+                        console.log('下载成功');
+                        const input = this.props.picDownload.downloadPath;
+                        const identity = this.props.userLogin.user.username;
+                        const output = this.props.picDownload.confirmPath + 'confirm-' + this.props.picDownload.downloadName;
+
+                        this.props.fileConfirm({
+                            input, identity, output
+                        }).then(
+                            () => {
+                                this.props.history.push('/success')
+                            },
+                            (err) => err.response.json().then(({errors}) => {
+                                this.setState({errors, loading: false})
+                            })
+                        );
+
+                    },
+                    (err) => err.response.json().then(({errors}) => {
+                        this.setState({errors, loading: false})
+                    })
+                )
+        } else if (name === ".mp4" || name === ".rmvb" || name === ".avi" || name === ".ts") {
+            this.props.vidDownloads({fileName})
+                .then(
+                    () => {
+                        console.log('下载成功')
+                    },
+                    () => {
+                        console.log('下载失败')
+                    }
+                )
+        } else {
+            this.props.fileDownloads({fileName})
+                .then(
+                    () => {
+                        console.log('下载成功')
+                    },
+                    () => {
+                        console.log('下载失败')
+                    }
+                )
+        }
 
     };
 
@@ -111,7 +158,7 @@ class ResourceForm extends Component {
                                             ReadPrice：{this.state.fileReadPrice}
                                             <button className="ui teal right floated basic button buy-button"
                                                     onClick={this.handleSubmit}>
-                                                <i className="shop icon"></i>Downloads</button>
+                                                <i className="shop icon"></i>Download</button>
                                         </span>
                                     <br/><br/>
                                 </div>
@@ -137,6 +184,7 @@ const mapStateToProps = (state, props) => {
             user: state.user,
             owner: state.owner,
             userLogin: state.userLogin,
+            picDownload: state.picDownload,
             buyResource: state.buyResources.find(item => item.id.toString() === match.params.id.toString())
         };
     }
@@ -145,8 +193,15 @@ const mapStateToProps = (state, props) => {
         user: state.user,
         owner: state.owner,
         userLogin: state.userLogin,
+        picDownload: state.picDownload,
         buyResource: null
     };
 };
 
-export default connect(mapStateToProps, {fetchBuyResources, fileDownloads})(ResourceForm);
+export default connect(mapStateToProps, {
+    fetchBuyResources,
+    picDownloads,
+    vidDownloads,
+    fileDownloads,
+    fileConfirm
+})(ResourceForm);

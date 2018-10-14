@@ -5,7 +5,9 @@ import login from './routes/login';
 import resource from './routes/myResource';
 import myResource from './routes/myResource1';
 import resources from './routes/locationResource';
-import download from './routes/download';
+import fileDownload from './routes/fileDownload';
+import picDownload from './routes/picDownload';
+import vidDownload from './routes/vidDownload';
 import upload from './routes/upload';
 import allUpload from './routes/allUpload';
 import recharge from './routes/recharge';
@@ -22,7 +24,6 @@ import confirm from './routes/confirm';
 
 let app = express();
 app.use(bodyParser.json());
-app.use('/api/download', express.static(path.join(__dirname, 'download')));
 
 app.get('/', (req, res) => {
     res.send('hello!!!')
@@ -35,7 +36,9 @@ app.use('/api/myResources', resource);
 app.use('/api/myResource', myResource);
 app.use('/api/locationResources', resources);
 app.use('/api/allUpload', allUpload);
-app.use('/api/download', download);
+app.use('/api/fileDownload', fileDownload);
+app.use('/api/picDownload', picDownload);
+app.use('/api/vidDownload', vidDownload);
 app.use('/api/buyResources', buy);
 app.use('/api/buyResource', buy1);
 app.use('/api/buyerResource', buyer);

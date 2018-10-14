@@ -24,7 +24,7 @@ class ResourceForm extends Component {
         fileDescription: this.props.localResource ? this.props.localResource.fileDescription : '',
         fileReadPrice: this.props.localResource ? this.props.localResource.fileReadPrice : '',
         fileRightPrice: this.props.localResource ? this.props.localResource.fileRightPrice : '',
-        file: this.props.localResource ? this.props.localResource.file : '',
+        fileName: this.props.localResource ? this.props.localResource.fileName : '',
         balance: this.props.localUser ? this.props.localUser.balance : '',
         succeed_1: false,
         succeed_2: false,
@@ -66,6 +66,7 @@ class ResourceForm extends Component {
             fileDescription: nextProps.localResource.fileDescription,
             fileReadPrice: nextProps.localResource.fileReadPrice,
             fileRightPrice: nextProps.localResource.fileRightPrice,
+            fileName: nextProps.localResource.fileName,
             file: nextProps.localResource.file,
             balance: nextProps.balance
         })
@@ -103,7 +104,7 @@ class ResourceForm extends Component {
         const userId = this.state.userId;
         const {user} = this.props.userLogin;
         const buyerId = user.id;
-        const {$class, website, id, fileTitle, fileImage, fileDescription, fileReadPrice, fileRightPrice} = this.state;
+        const {$class, website, id, fileTitle, fileImage, fileDescription, fileReadPrice, fileRightPrice, fileName} = this.state;
         const {localResource} = this.props;
         this.props.fetchOwnerBalance(localResource.userId);
 
@@ -177,8 +178,6 @@ class ResourceForm extends Component {
 
 
                         setTimeout(() => {
-                            console.log(buyerId, id, fileTitle, fileImage, fileDescription, fileReadPrice, fileRightPrice);
-
                             if (this.state.succeed_1 && this.state.succeed_2) {
                                 this.props.updateBuyer({
                                     buyerId,
@@ -187,7 +186,8 @@ class ResourceForm extends Component {
                                     fileImage,
                                     fileDescription,
                                     fileReadPrice,
-                                    fileRightPrice
+                                    fileRightPrice,
+                                    fileName
                                 }).then(
                                     () => {
                                         this.props.history.push('/resources')
