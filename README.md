@@ -18,9 +18,12 @@
   &emsp;&emsp;Front-end development mainly uses the react framework.This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
   You will find some information on how to perform common tasks [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).<br>
   To install this repo and find out more about the sample applications, run (from the directory -- client):
+  
+  
+  
   ```
-  npm install (Install related dependencies)
-  npm start (start the react)
+    npm install (Install related dependencies)
+    npm start (start the react)
   
   ```
   
