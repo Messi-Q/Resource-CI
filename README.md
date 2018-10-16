@@ -31,6 +31,7 @@
   ### &emsp;&emsp;2.server端
   
   &emsp;&emsp;Backend development mainly uses the express framework.
+  
   To open the server and find out more about the sample applications, run (from the directory -- server):
   
   
@@ -40,6 +41,6 @@
     npm start (start the server)
   
   ```
-  
+   This will open the server, as well as the connection of mysql.
    
    
