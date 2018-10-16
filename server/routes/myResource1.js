@@ -11,7 +11,7 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    const {userId, fileTitle, fileImage, fileDescription, fileReadPrice, fileRightPrice, allWeb} = req.body;
+    const {userId, fileTitle, fileImage, fileDescription, fileReadPrice, fileRightPrice, fileName, allWeb} = req.body;
     console.log(req.body);
 
     return File.forge({
@@ -21,6 +21,7 @@ router.post('/', (req, res) => {
         fileDescription: fileDescription,
         fileReadPrice: fileReadPrice,
         fileRightPrice: fileRightPrice,
+        fileName: fileName,
         allWeb: allWeb
     }, {hasTimestamps: true}).save()
         .then(resource => res.json({resource: resource}))

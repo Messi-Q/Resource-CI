@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import classnames from 'classnames';
 import {connect} from 'react-redux';
-import {saveResource, uploadRequest, saveResourceToMysql} from '../../actions/allResourceActions';
+import {saveResource, uploadRequest, saveResourceToMysql, fetchAllWebResource} from '../../actions/allResourceActions';
 import {Redirect} from "react-router-dom";
 import './ResourceForm.css';
 
@@ -14,12 +14,19 @@ class ResourceForm extends Component {
         fileDescription: '',
         readPrice: '',
         ownershipPrice: '',
-        file: '',
+        file: this.props.allWebResource ? this.props.allWebResource.file : '',
         errors: {},
         succeed: false,
         loading: false,
         done: false
     };
+
+    componentDidMount() {
+        const {match} = this.props;
+        if (match.params.id) {  //所有路由的id参数
+            this.props.fetchAllWebResource(match.params.id);
+        }
+    }
 
     changeFiles = (e) => {
         const file = e.target.files[0];
@@ -58,6 +65,7 @@ class ResourceForm extends Component {
         if (isValid) {
             const {$class, headline, coverUrl, fileDescription, readPrice, ownershipPrice, file, website} = this.state;
             // owner/resourceId/readCount/liked is automatically added
+            console.log(this.props);
             const userName = this.props.userLogin.user.username;
             const userId = this.props.userLogin.user.id;
             const owner = "resource:org.demo.network.Customer#" + website + '-' + userName;
@@ -68,6 +76,7 @@ class ResourceForm extends Component {
             const fileImage = coverUrl;
             const fileReadPrice = readPrice;
             const fileRightPrice = ownershipPrice;
+            const fileName = file.name;  //文件名
             const allWeb = 1;  //全网可见
 
             if (file) {
@@ -86,10 +95,11 @@ class ResourceForm extends Component {
                             fileDescription,
                             fileReadPrice,
                             fileRightPrice,
+                            fileName,
                             allWeb
                         }).then(
                             () => {
-                                this.setState({succeed: true})
+                                this.setState({succeed: true});
                             },
                             (err) => err.response.json().then(({errors}) => {
                                 this.setState({errors, loading: false})
@@ -116,7 +126,15 @@ class ResourceForm extends Component {
                     console.log(resourceId);
 
                     this.props.saveResource({
-                        $class, resourceId, headline, coverUrl, readPrice, ownershipPrice, owner, readCount, liked
+                        $class,
+                        resourceId,
+                        headline,
+                        coverUrl,
+                        readPrice,
+                        ownershipPrice,
+                        owner,
+                        readCount,
+                        liked
                     }).then(  //then接收两个函数参数，第一个是成功之后执行，第二个是错误之后执行
                         () => {
                             this.setState({done: true});
@@ -126,7 +144,8 @@ class ResourceForm extends Component {
                         })
                     )
                 }
-            }, 200);
+            }, 400);
+
         }
     };
 
@@ -251,10 +270,25 @@ class ResourceForm extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, props) => {
+    const {match} = props;
+    if (match.params.id) {
+        return {
+            userLogin: state.userLogin,
+            mysqlResource: state.mysqlResource,
+            allWebResource: state.allWebResources.find(item => item.resourceId.toString() === match.params.id)
+        };
+    }
+
     return {
         userLogin: state.userLogin,
+        allWebResource: null,
         mysqlResource: state.mysqlResource
     };
 };
-export default connect(mapStateToProps, {saveResource, uploadRequest, saveResourceToMysql})(ResourceForm);
+export default connect(mapStateToProps, {
+    saveResource,
+    uploadRequest,
+    saveResourceToMysql,
+    fetchAllWebResource
+})(ResourceForm);
