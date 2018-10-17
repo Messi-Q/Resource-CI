@@ -15,7 +15,6 @@ export const setFileInfo = (fileInfo) => {
 };
 
 export const uploadRequest = (file) => {
-    console.log('file', file);
     return dispatch => {
         return fetch('/api/upload', {
             method: "post",
@@ -66,7 +65,6 @@ const handleResponse = (response) => {
 };
 
 const addResource = (resource) => {
-    console.log('resource', resource);
     return {
         type: ADD_RESOURCE,
         resource
@@ -74,7 +72,6 @@ const addResource = (resource) => {
 };
 
 export const saveResource = (data) => {
-    console.log(data);
     return dispatch => {
         return fetch('/api/myResources', {
             method: 'post',
@@ -127,7 +124,6 @@ export const resourceDeleted = (resourceId) => {
 };
 
 export const deleteResource = (resource) => {
-    console.log('resource', resource);
     return dispatch => {
         return fetch(`/api/myResources/${resource.id}`, {
             method: 'delete',

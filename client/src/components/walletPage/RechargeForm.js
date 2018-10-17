@@ -48,12 +48,9 @@ class RechargeForm extends Component {
 
         if (isValid) {
             const {username, balance} = this.state;
-            console.log(this.state);
             const restBalance = this.props.localUser.balance;
-            console.log(restBalance, balance);
             const recharge = balance >> 0;
             const totalBalance = restBalance + recharge;
-            console.log(username, totalBalance);
 
             this.setState({loading: true});
 
@@ -74,7 +71,6 @@ class RechargeForm extends Component {
             const rechargeToken = recharge;
             const userId = website + '-' + username;
             const customer = "resource:org.demo.network.Customer#" + userId;
-            console.log(userId, rechargeToken);
             this.props.rechargeBlockchain({
                 $class, customer, rechargeToken
             })
@@ -83,7 +79,6 @@ class RechargeForm extends Component {
     };
 
     render() {
-        console.log(this.props.localUser.balance);
         const form = (
 
             <div className=" upload-container">

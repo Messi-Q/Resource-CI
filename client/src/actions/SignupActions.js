@@ -3,7 +3,6 @@ import Config from '../utils/config';
 import {SET_USER} from "../constants";
 
 export const setUser = (Customer) => {
-    console.log(Customer);
     return {
         type: SET_USER,
         Customer
@@ -11,7 +10,6 @@ export const setUser = (Customer) => {
 };
 
 export const userSignupRequest = (userData) => {
-    console.log(userData);
     return dispatch => {
         return fetch('/api/register', {
             method: 'post',

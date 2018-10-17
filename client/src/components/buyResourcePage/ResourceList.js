@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import ResourceCard from './ResourceCard';
 
 const ResourceList = ({buyResources}) => {
-    console.log(buyResources);
     const emptyMessage = (
         <h2 align="center">There is no resources</h2>
     );

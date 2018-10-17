@@ -25,8 +25,6 @@ class LoginForm extends Component {
         const {$class, website, token} = this.state;
         const userName = this.props.Customer.username;
         const userId = website + '-' + userName;
-        console.log(userId, $class, website, token);
-        console.log(this.props);
         this.props.userSignupBlockchain({
             $class, website, token, userId
         })
@@ -70,7 +68,6 @@ class LoginForm extends Component {
 
     render() {
         const {identifier, password, errors, isLoading} = this.state;
-        // console.dir(this.state);
 
         return (
             <form onSubmit={this.onSubmit} className="loginform">

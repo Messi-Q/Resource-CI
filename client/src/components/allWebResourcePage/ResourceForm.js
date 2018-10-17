@@ -65,7 +65,6 @@ class ResourceForm extends Component {
         if (isValid) {
             const {$class, headline, coverUrl, fileDescription, readPrice, ownershipPrice, file, website} = this.state;
             // owner/resourceId/readCount/liked is automatically added
-            console.log(this.props);
             const userName = this.props.userLogin.user.username;
             const userId = this.props.userLogin.user.id;
             const owner = "resource:org.demo.network.Customer#" + website + '-' + userName;

@@ -30,11 +30,7 @@ class ResourceForm extends Component {
             this.props.fetchBuyResources(match.params.id);
         }
         const {user} = this.props.userLogin;
-        console.log("userId", user);
-        //获取购买者的余额
-        //this.props.fetchBalance(localUser.id);
-        //获取资源所有者的余额
-        //this.props.fetchOwnerBalance(testResources.userId);
+        console.log(user)
     }
 
     componentWillReceiveProps(nextProps) {
@@ -79,7 +75,6 @@ class ResourceForm extends Component {
 
         console.log('DownLoad');
         const {fileName} = this.state;
-        console.log('fileName', fileName);
 
         const index = fileName.indexOf("."); //得到"."在第几位
         const name = fileName.substring(index); //截断"."之前的，得到后缀

@@ -17,7 +17,6 @@ class ResourcePage extends Component {
     }
 
     render() {
-        // console.log(this.props.allWebResources);
         return (
             <div>
                 <div className="container mb-3">

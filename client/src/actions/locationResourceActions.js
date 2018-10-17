@@ -1,7 +1,6 @@
 import {SET_ALL_RESOURCES, LOCATION_RESOURCE_FETCHED} from '../constants';
 
 export const setAllResources = (localResources) => {
-    console.log(localResources);
     return {
         type: SET_ALL_RESOURCES,
         localResources
@@ -17,7 +16,6 @@ export const fetchAllResources = () => {
 };
 
 export const locationResourceFetched = (localResource) => {
-    console.log('local', localResource);
     return {
         type: LOCATION_RESOURCE_FETCHED,
         localResource

@@ -27,13 +27,11 @@ class SignupForm extends Component {
 
     onSubmit = (e) => {
         e.preventDefault();
-        console.log(this.state);
         this.setState({errors: {}, isLoading: true});
         //axios.post('/api/users',{localUser:this.state});
         //将用户信息注册在本站数据库中
         this.props.userSignupRequest(this.state).then(
             () => {
-                console.log(this.props);
                 this.props.addFlashMessage({
                     type: "success",
                     text: "You signed up successfully welcome"

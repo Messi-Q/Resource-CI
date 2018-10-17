@@ -109,7 +109,6 @@ class ResourceForm extends Component {
         this.props.fetchOwnerBalance(localResource.userId);
 
         const resourceId = this.state.id;
-        console.log('buyer', this.props.buyerResources);
         const length = this.props.buyerResources.length;
         var flag = true;
 
@@ -126,13 +125,10 @@ class ResourceForm extends Component {
                     if (userBalance > readPrice) {
                         //区块链上用户id
                         const blockUserId_buy = website + '-' + this.props.localUser.username;
-                        console.log(blockUserId_buy);
                         const blockUserId_owner = website + '-' + this.props.owner.username;
-                        console.log(blockUserId_owner);
 
                         console.log("账户余额充足");
                         const restBalance = userBalance - readPrice;
-                        console.log(restBalance, userBuyId, userId);
 
                         //购买用户减去相应的金额
                         this.props.userSubBalance({
@@ -154,9 +150,7 @@ class ResourceForm extends Component {
                         );
 
                         const ownerBalance = this.props.owner.balance;
-                        console.log(userBalance, readPrice, ownerBalance);
                         const totalBalance = ownerBalance + readPrice;
-                        console.log(totalBalance);
                         //资源拥有者增加相应的金额
                         this.props.userAddBalance({
                             userId,

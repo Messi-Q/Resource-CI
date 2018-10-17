@@ -101,31 +101,25 @@ class ResourceTxPage extends Component {
 
     handleSubmit_1 = (e) => {
         e.preventDefault();
-        console.log(this.state);
 
         //获取购买者信息
         console.log('Transaction_1');
         const userBalance = this.props.localUser.balance;
         const readPrice = this.state.readPrice;
         const userBuyId_1 = 'A' + '-' + this.props.userLogin.user.username;  //资源购买者ID
-        console.log(userBuyId_1);
         const {user} = this.props.userLogin;
         const buyerId = user.id;
 
         //同步获取区块链
         const owner = this.props.allWebResource.owner;  //资源所有者ID
-        console.log(owner);
         const ownerId = owner.slice(35);  //截取到用户ID
-        console.log(ownerId);
 
         //更新区块链上购买信息
         const $class = "org.demo.network.BuyReadRightTransaction";
         const resource = "resource:org.demo.network.Resource#" + this.state.resourceId;
         const buyer = "resource:org.demo.network.Customer#" + userBuyId_1;
         const resourceId = this.props.allWebResource.resourceId;
-        console.log(resourceId);
         const id = parseInt(resourceId.slice(2));
-        console.log(id);
 
         //获取资源所有者的id
         this.props.fetchOwnerId(id);
@@ -189,11 +183,8 @@ class ResourceTxPage extends Component {
                         );
 
                         const ownerBalance = this.props.blockUser.token;
-                        console.log(userBalance, ownerBalance);
                         const totalBalance = ownerBalance + readPrice;
-                        console.log(totalBalance);
                         const userId = this.props.owner1.userId;
-                        console.log(userId);
                         //资源拥有者增加相应的金额
                         this.props.userAddBalance({
                             userId,
@@ -214,7 +205,6 @@ class ResourceTxPage extends Component {
                             const fileDescription = "There are the description of resources";
                             const fileReadPrice = this.state.readPrice;
                             const fileRightPrice = this.state.ownershipPrice;
-                            console.log(buyerId, id, fileTitle, fileImage, fileDescription, fileReadPrice, fileRightPrice);
 
                             if (this.state.succeed_1 && this.state.succeed_2) {
                                 this.props.updateBuyer({
@@ -256,22 +246,17 @@ class ResourceTxPage extends Component {
         const userBalance = this.props.localUser.balance;
         const ownerPrice = this.state.ownershipPrice;
         const userBuyId_1 = 'A' + '-' + this.props.userLogin.user.username;  //资源购买者ID
-        console.log(userBuyId_1);
 
         //同步获取区块链用户信息
         const owner = this.props.allWebResource.owner;  //资源所有者ID
-        console.log(owner);
         const ownerId = owner.slice(35);  //截取到用户ID
-        console.log(ownerId);
 
         //更新区块链上购买信息
         const $class = "org.demo.network.BuyOwnershipTransaction";
         const resource = "resource:org.demo.network.Resource#" + this.state.resourceId;
         const buyer = "resource:org.demo.network.Customer#" + userBuyId_1;
         const resourceId = this.props.allWebResource.resourceId;
-        console.log(resourceId);
-        const id = resourceId.slice(2);
-        console.log(id);  //数据库中的资源id;
+        const id = resourceId.slice(2);  //数据库中的资源id;
 
         //获取资源所有者的id
         this.props.fetchOwnerId(id);
@@ -307,7 +292,6 @@ class ResourceTxPage extends Component {
 
                         //本地数据库同步更新
                         const restBalance = userBalance - ownerPrice;
-                        console.log(restBalance, userBuyId_1, ownerId);
                         const userBuyId = this.props.userLogin.user.id;
 
                         //购买用户减去相应的金额
@@ -323,11 +307,8 @@ class ResourceTxPage extends Component {
                         );
 
                         const ownerBalance = this.props.blockUser.token;
-                        console.log(userBalance, ownerBalance);
                         const totalBalance = ownerBalance + ownerPrice;
-                        console.log(totalBalance);
                         const userId = this.props.owner1.userId;
-                        console.log(userId);
 
                         //资源拥有者增加相应的金额
                         this.props.userAddBalance({

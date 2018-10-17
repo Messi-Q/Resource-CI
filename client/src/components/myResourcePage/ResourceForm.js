@@ -22,7 +22,6 @@ class ResourceForm extends Component {
 
     componentDidMount() {
         const {match} = this.props;
-        console.log('userId', this.state.userId);
         if (match.params.id) {  //所有路由的id参数
             console.log("id", match.params.id);
             this.props.fetchResource(match.params.id);

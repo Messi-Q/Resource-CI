@@ -10,7 +10,6 @@ import {
 import Config from '../utils/config';
 
 export const allResourceFetched = (allWebResource) => {
-    console.log('allWebResource', allWebResource);
     return {
         type: ALL_RESOURCE_FETCHED,
         allWebResource
@@ -19,8 +18,6 @@ export const allResourceFetched = (allWebResource) => {
 
 export const fetchAllWebResource = (id) => {
     this.config = new Config();
-    let cURL = this.config.restServer.httpURL + '/Resource';
-    console.log(cURL);
     return dispatch => {
         return fetch(`http://localhost:3000/api/Resource/${id}`)
             .then(res => res.json())
@@ -41,7 +38,6 @@ export const fetchAllWebResources = () => {
     // let ResourceCard = {};
     this.config = new Config();
     let cURL = this.config.restServer.httpURL + '/Resource';
-    console.log(cURL);
     return dispatch => {
         return fetch(cURL)
             .then(res => res.json())
@@ -51,7 +47,6 @@ export const fetchAllWebResources = () => {
 };
 
 export const addAllWebResource = (allWebResource) => {
-    console.log(allWebResource);
     return {
         type: ADD_ALLWEB_RESOURCE,
         allWebResource
@@ -74,7 +69,6 @@ export const saveResource = (resourceData) => {
 };
 
 export const addResourceToMysql = (mysqlResource) => {
-    console.log(mysqlResource);
     return {
         type: ADD_RESOURCE_To_MYSQL,
         mysqlResource
@@ -82,7 +76,6 @@ export const addResourceToMysql = (mysqlResource) => {
 };
 
 export const saveResourceToMysql = (data) => {
-    console.log(data);
     return dispatch => {
         return fetch('/api/myResource', {
             method: 'post',
@@ -124,7 +117,6 @@ const handleResponse = (response) => {
 
 export const deleteWebResource = (resource) => {
     const resourceId = 'A' + '-' + resource.id;  //应改为站名+站内定位符
-    console.log('resourceId', resourceId);
     return dispatch => {
         return fetch(`http://localhost:3000/api/Resource/${resourceId}`, {
             method: 'delete',
@@ -136,7 +128,6 @@ export const deleteWebResource = (resource) => {
 };
 
 export const setBlockUser = (blockUser) => {
-    console.log(blockUser);
     return {
         type: SET_BLOCK_USER,
         blockUser
@@ -156,7 +147,6 @@ export const fetchBlockUser = (userId) => {
 };
 
 export const updateBlockOwnerToken = (data) => {
-    console.log(data);
     this.config = new Config();
     let cURL = this.config.restServer.httpURL + '/BuyOwnershipTransaction';
     return dispatch => {
@@ -171,7 +161,6 @@ export const updateBlockOwnerToken = (data) => {
 };
 
 export const updateBlockReadToken = (data) => {
-    console.log(data);
     this.config = new Config();
     let cURL = this.config.restServer.httpURL + '/BuyReadRightTransaction';
     return dispatch => {
@@ -186,7 +175,6 @@ export const updateBlockReadToken = (data) => {
 };
 
 export const setOwnerId = (owner1) => {
-    console.log(owner1.id);
     return {
         type: SET_OWNER_ID,
         owner1
@@ -194,7 +182,6 @@ export const setOwnerId = (owner1) => {
 };
 
 export const fetchOwnerId = (id) => {
-    console.log(id);
     return dispatch => {
         return fetch(`/api/fetchOwnerId/${id}`)
             .then(res => res.json())

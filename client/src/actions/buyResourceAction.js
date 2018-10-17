@@ -7,7 +7,6 @@ import {
 } from "../constants";
 
 export const setBuyResources = (buyResources) => {
-    console.log('test', buyResources);
     return {
         type: SET_BUY_RESOURCES,
         buyResources
@@ -33,7 +32,6 @@ const handleResponse = (response) => {
 };
 
 export const setPicDownLoad = (picDownload) => {
-    console.log(picDownload);
     return {
         type: SET_PIC_DOWNLOAD,
         picDownload
@@ -73,7 +71,6 @@ export const fileDownloads = (data) => {
 };
 
 export const buyResourceFetched = (buyResource) => {
-    console.log(buyResource);
     return {
         type: BUY_RESOURCE_FETCHED,
         buyResource
@@ -81,7 +78,6 @@ export const buyResourceFetched = (buyResource) => {
 };
 
 export const fetchBuyResources = (id) => {
-    console.log(id);
     return dispatch => {
         return fetch(`/api/buyResource/${id}`)
             .then(res => res.json())
@@ -90,7 +86,6 @@ export const fetchBuyResources = (id) => {
 };
 
 export const addBuyResource = (buyResource) => {
-    console.log(buyResource);
     return {
         type: ADD_BUY_RESOURCE,
         buyResource
@@ -98,7 +93,6 @@ export const addBuyResource = (buyResource) => {
 };
 
 export const updateBuyer = (data) => {
-    console.log('data', data);
     return dispatch => {
         return fetch('/api/updateBuyer', {
             method: 'post',
@@ -112,7 +106,6 @@ export const updateBuyer = (data) => {
 };
 
 export const setBuyerResources = (buyerResources) => {
-    console.log('buyerResource', buyerResources);
     return {
         type: SET_BUYER_RESOURCES,
         buyerResources

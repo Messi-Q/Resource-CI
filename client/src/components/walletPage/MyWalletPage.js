@@ -10,8 +10,6 @@ class MyWalletPage extends Component {
 
     componentDidMount() {
         const {user} = this.props.userLogin;
-        console.log("userId", user);
-        console.log(this.props);
         this.props.fetchBalance(user.id);
     }
 
@@ -28,7 +26,6 @@ class MyWalletPage extends Component {
     };
 
     render() {
-        console.log(this.props.localUser);
         return (
             <div className="container" align="center">
                 <form onSubmit={this.handleSubmit}>

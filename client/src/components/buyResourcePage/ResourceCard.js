@@ -4,7 +4,6 @@ import {Link} from 'react-router-dom';
 import './ResourceCard.css';
 
 const ResourceCard = ({resource}) => {
-    console.log('ddd', resource);
 
     return (
         //  <Link className="resource-card" to={`locationResource/${resource.id}`}>

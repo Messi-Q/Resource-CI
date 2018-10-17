@@ -12,7 +12,6 @@ const handleResponse = (response) => {
 };
 
 export const userRecharge = (data) => {
-    console.log(data);
     return dispatch => {
         return fetch('/api/localUser', {
             method: 'put',
@@ -25,8 +24,6 @@ export const userRecharge = (data) => {
 };
 
 const balanceFetched = (localUser) => {
-    console.log('OK');
-    console.log(localUser);
     return {
         type: BALANCE_FETCHED,
         localUser
@@ -34,7 +31,6 @@ const balanceFetched = (localUser) => {
 };
 
 export const fetchBalance = (id) => {
-    console.log('123', id);
     return dispatch => {
         return fetch(`/api/users/${id}`)
             .then(res => res.json())
@@ -81,8 +77,6 @@ export const rechargeBlockchain = (data) => {
 };
 
 const OwnerBalanceFetched = (owner) => {
-    console.log('OK');
-    console.log(owner);
     return {
         type: OWNER_BALANCE_FETCHED,
         owner
