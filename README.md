@@ -13,7 +13,7 @@
   
   &emsp;&emsp;To deploy this application, you need to install the environment of [Hyperleger Composer](https://hyperledger.github.io/composer/latest/installing/installing-index).
   
-  ### &emsp;&emsp;1.client端
+  ### &emsp;&emsp;1.Client
   
   &emsp;&emsp;Front-end development mainly uses the react framework.This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
   You will find some information on how to perform common tasks [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).<br>
@@ -28,7 +28,7 @@
   ```
   This will open the main page, as well as Playground(http://localhost:8080) and the REST server(http://localhost:3000).
   
-  ### &emsp;&emsp;2.server端
+  ### &emsp;&emsp;2.Server
   
   &emsp;&emsp;Backend development mainly uses the express framework.
   
