@@ -1,0 +1,124 @@
+
+基于概念：改变真实的DOM状态远比改变一个JavaScript对象的花销要大得多。
+Virtual DOM是一个映射真实DOM的JavaScript对象，如果需要改变任何元素的状态，那么是先在Virtual DOM上进行改变，而不是直接改变真实的DOM；当有变化产生时，一个新的Virtual DOM对象会被创建并计算新旧Virtual DOM之间的差别。之后这些差别会应用在真实的DOM上。
+
+Vue宣称可以更快地计算出Virtual DOM的差异，这是由于它在渲染过程中，会跟踪每一个组件的依赖关系，不需要重新渲染整个组件树。
+而对于React而言，每当应用的状态被改变时，全部子组件都会重新渲染。当然，这可以通过shouldComponentUpdate这个生命周期方法来进行控制，但Vue将此视为默认的优化。
+
+React 只会更新必要的部分
+值得注意的是 React DOM 首先会比较元素内容先后的不同，而在渲染过程中只会更新改变了的部分。
+
+
+1、在标签内部的注释需要花括号
+2、在标签外的的注释不能使用花括号
+注释需要写在花括号中，实例如下：{/*注释...*/}
+
+由于 JSX 就是 JavaScript，一些标识符像 class 和 for 不建议作为 XML 属性名。作为替代，React DOM 使用 className 和 htmlFor 来做对应的属性。
+
+
+React入门容易出错的地方：代码中嵌套多个 HTML 标签，需要使用一个标签元素包裹它。
+通过 style 添加内联样式的时候，容易犯的错误:错误style = {fontSize:12}  正确style = {{fontSize:12}}
+
+注意，原生 HTML 元素名以小写字母开头，而自定义的 React 类名以大写字母开头，比如 HelloMessage 不能写成 helloMessage。除此之外还需要注意组件类只能包含一个顶层标签，否则也会报错。
+
+在 React 应用程序中，组件是有状态还是无状态被认为是可能随时间而变化的组件的实现细节。
+我们可以在有状态组件中使用无状态组件，也可以在无状态组件中使用有状态组件。
+
+state 和 props 主要的区别在于 props 是不可变的，而 state 可以根据与用户交互来改变。这就是为什么有些容器组件需要定义 state 来更新和修改数据。 而子组件只能通过 props 来传递数据。
+
+React 事件绑定属性的命名采用驼峰式写法，而不是小写。
+如果采用 JSX 的语法你需要传入一个函数作为事件处理函数，而不是一个字符串(DOM 元素的写法)。
+
+当你在 map() 方法的内部调用元素时，你最好随时记得为每一个元素加上一个独一无二的 key。
+
+这么做有时可以使你的代码更清晰，但有时这种风格也会被滥用。就像在 JavaScript 中一样，何时需要为了可读性提取出一个变量，这完全取决于你。但请记住，如果一个 map() 嵌套了太多层级，那你就可以提取出组件。
+
+React 组件 API
+设置状态：setState
+替换状态：replaceState
+设置属性：setProps
+替换属性：replaceProps
+强制更新：forceUpdate
+获取DOM节点：findDOMNode
+判断组件挂载状态：isMounted
+
+React 组件生命周期
+组件的生命周期可分成三个状态：
+Mounting：已插入真实 DOM
+Updating：正在被重新渲染
+Unmounting：已移出真实 DOM
+
+React AJAX
+React 组件的数据可以通过 componentDidMount 方法中的 Ajax 来获取，当从服务端获取数据时可以将数据存储在 state 中，再用 this.setState 方法重新渲染 UI。
+当使用异步加载数据时，在组件卸载前使用 componentWillUnmount 来取消未完成的请求。
+
+React 支持一种非常特殊的属性 Ref ，可以用来绑定到 render() 输出的任何组件上。
+这个特殊的属性允许引用 render() 返回的相应的支撑实例（ backing instance ）。
+
+// Correct
+this.setState((prevState, props) => ({
+  counter: prevState.counter + props.increment
+}));
+// Correct
+this.setState(function(prevState, props) {
+  return {
+    counter: prevState.counter + props.increment
+  };
+});
+相同的意思
+
+react有3种写法：ES5、ES6、无状态组件的方法；
+1.在无需state，即不处理用户的输入，组件的所有的数据都是依赖props传入；
+2.不需要用到生命周期函数。
+好处：
+不需要声明类，可以避免大量的披屋extends或者constructor这样的代码；
+不需要显示声明this关键字，在ES6的类声明中往往需要将函数的this关键字绑定到当前作用域，而因为函数式声明的特性，不需要再强制绑定；
+语法更简洁，占内存更小。
+ES6写法：
+import React, { Component } from 'react';
+
+class Header extends Component {
+  render() {
+    let content = "";
+    if (true) {
+        content = "hello!";
+    }
+
+    return (
+      <div className="container">
+        <div className="row"></div>
+          <div className="col"></div>
+            <h1>Header!!</h1>
+            {content}
+            { true ? "hello":"world"}
+      </div>
+    );
+  }
+}
+
+export default Header;
+
+无状态组件写法：
+const Header = (props) => {
+    return(
+        <div className="container">
+        <div className="row">
+        <div className="col-xs-1 col-xs-offset-11">
+        <h1>Header</h1>
+        </div>
+        </div>
+        </div>
+    );
+}
+
+export default Header;
+
+
+
+
+
+
+
+
+
+
