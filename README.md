@@ -41,6 +41,6 @@
     npm start (start the server)
   
   ```
-   This will open the server, as well as the connection of mysql.
+   This will open the server, as well as the connection of mysql.  
    
    
