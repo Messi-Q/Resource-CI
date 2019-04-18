@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-// import classnames from 'classnames';
 import {connect} from 'react-redux';
 import {
     fetchAllWebResource,
@@ -8,6 +7,7 @@ import {
     updateBlockReadToken,
     fetchOwnerId
 } from '../../actions/allResourceActions';
+import { fetchLocationResource } from '../../actions/locationResourceActions';
 import {updateBuyer, fetchBuyerResource} from '../../actions/buyResourceAction';
 import {
     fetchBalance,
@@ -19,15 +19,14 @@ import {Redirect} from "react-router-dom";
 
 class ResourceTxPage extends Component {
     state = {
-        resourceId: this.props.allWebResource ? this.props.allWebResource.resourceId : '',
-        headline: this.props.allWebResource ? this.props.allWebResource.headline : '',
-        coverUrl: this.props.allWebResource ? this.props.allWebResource.coverUrl : '',
-        readPrice: this.props.allWebResource ? this.props.allWebResource.readPrice : '',
-        owner: this.props.allWebResource ? this.props.allWebResource.owner : '',
-        ownershipPrice: this.props.allWebResource ? this.props.allWebResource.ownershipPrice : '',
+        resourceId: this.props.allWebResource ? this.props.allWebResource.id : '',
+        headline: this.props.allWebResource ? this.props.allWebResource.fileTitle : '',
+        coverUrl: this.props.allWebResource ? this.props.allWebResource.fileImage : '',
+        readPrice: this.props.allWebResource ? this.props.allWebResource.fileReadPrice : '',
+        owner: this.props.allWebResource ? this.props.allWebResource.userId : '',
+        ownershipPrice: this.props.allWebResource ? this.props.allWebResource.fileRightPrice : '',
         readCount: this.props.allWebResource ? this.props.allWebResource.readCount : '',
-        liked: this.props.allWebResource ? this.props.allWebResource.liked : '',
-        file: this.props.allWebResource ? this.props.allWebResource.file : '',
+        fileName: this.props.allWebResource ? this.props.allWebResource.fileName : '',
         balance: this.props.localUser ? this.props.localUser.balance : '',
         errors: {},
         succeed: false,
@@ -53,8 +52,6 @@ class ResourceTxPage extends Component {
         }, 200);
 
         const {match} = this.props;
-        console.log(this.props);
-        console.log(match.params.id);
         if (match.params.id) {  //所有路由的id参数
             this.props.fetchAllWebResource(match.params.id);
         }
@@ -66,15 +63,15 @@ class ResourceTxPage extends Component {
 
     componentWillReceiveProps(nextProps) {
         this.setState({
-            resourceId: nextProps.allWebResource.resourceId,
-            headline: nextProps.allWebResource.headline,
-            coverUrl: nextProps.allWebResource.coverUrl,
-            readPrice: nextProps.allWebResource.readPrice,
-            owner: nextProps.allWebResource.owner,
-            ownershipPrice: nextProps.allWebResource.ownershipPrice,
+            resourceId: nextProps.allWebResource.id,
+            headline: nextProps.allWebResource.fileTitle,
+            coverUrl: nextProps.allWebResource.fileImage,
+            readPrice: nextProps.allWebResource.fileReadPrice,
+            owner: nextProps.allWebResource.userId,
+            ownershipPrice: nextProps.allWebResource.fileRightPrice,
             readCount: nextProps.allWebResource.readCount,
-            liked: nextProps.allWebResource.liked,
-            file: nextProps.allWebResource.file
+            fileName: nextProps.allWebResource.fileName,
+            balance: nextProps.balance
         });
     }
 
@@ -106,20 +103,20 @@ class ResourceTxPage extends Component {
         console.log('Transaction_1');
         const userBalance = this.props.localUser.balance;
         const readPrice = this.state.readPrice;
-        const userBuyId_1 = 'A' + '-' + this.props.userLogin.user.username;  //资源购买者ID
+        const userBuyId_1 = "A-" + this.props.userLogin.user.id;  //资源购买者ID
         const {user} = this.props.userLogin;
         const buyerId = user.id;
 
         //同步获取区块链
-        const owner = this.props.allWebResource.owner;  //资源所有者ID
-        const ownerId = owner.slice(35);  //截取到用户ID
+        const owner = this.state.owner;  //资源所有者ID
+        const ownerId = 'A-' + owner;  //截取到用户ID
 
         //更新区块链上购买信息
         const $class = "org.demo.network.BuyReadRightTransaction";
-        const resource = "resource:org.demo.network.Resource#" + this.state.resourceId;
+        const resource = "resource:org.demo.network.Resource#A-" + this.state.id;
         const buyer = "resource:org.demo.network.Customer#" + userBuyId_1;
-        const resourceId = this.props.allWebResource.resourceId;
-        const id = parseInt(resourceId.slice(2));
+        const id = this.props.allWebResource.id;
+        // const id = parseInt(resourceId.slice(2), 10);
 
         //获取资源所有者的id
         this.props.fetchOwnerId(id);
@@ -133,7 +130,7 @@ class ResourceTxPage extends Component {
             })
         );
 
-        console.log('buyer', this.props.buyerResources);
+        console.log('buyerResources', this.props.buyerResources);
         var length = 0;
         if (this.props.buyerResources !== null) {
             length = this.props.buyerResources.length;
@@ -142,7 +139,7 @@ class ResourceTxPage extends Component {
 
         for (var i = 0; i < length; i++) {
             // console.log(this.props.buyerResources[i].fileId);
-            if (resourceId === this.props.buyerResources[i].fileId) {
+            if (id === this.props.buyerResources[i].fileId) {
                 flag = false;
                 window.alert("您已购买该资源，无需重复购买！")
             }
@@ -205,6 +202,7 @@ class ResourceTxPage extends Component {
                             const fileDescription = "There are the description of resources";
                             const fileReadPrice = this.state.readPrice;
                             const fileRightPrice = this.state.ownershipPrice;
+                            const fileName = this.state.fileName;
 
                             if (this.state.succeed_1 && this.state.succeed_2) {
                                 this.props.updateBuyer({
@@ -214,7 +212,8 @@ class ResourceTxPage extends Component {
                                     fileImage,
                                     fileDescription,
                                     fileReadPrice,
-                                    fileRightPrice
+                                    fileRightPrice,
+                                    fileName
                                 }).then(
                                     () => {
                                         this.props.history.push('/resources')
@@ -245,18 +244,18 @@ class ResourceTxPage extends Component {
         console.log('Transaction_2');
         const userBalance = this.props.localUser.balance;
         const ownerPrice = this.state.ownershipPrice;
-        const userBuyId_1 = 'A' + '-' + this.props.userLogin.user.username;  //资源购买者ID
+        const userBuyId_1 = "A-" + this.props.userLogin.user.id;  //资源购买者ID
 
         //同步获取区块链用户信息
         const owner = this.props.allWebResource.owner;  //资源所有者ID
-        const ownerId = owner.slice(35);  //截取到用户ID
+        const ownerId = "A-" + owner;  //截取到用户ID
 
         //更新区块链上购买信息
         const $class = "org.demo.network.BuyOwnershipTransaction";
-        const resource = "resource:org.demo.network.Resource#" + this.state.resourceId;
+        const resource = "resource:org.demo.network.Resource#" + this.state.id;
         const buyer = "resource:org.demo.network.Customer#" + userBuyId_1;
-        const resourceId = this.props.allWebResource.resourceId;
-        const id = resourceId.slice(2);  //数据库中的资源id;
+        const id = this.props.allWebResource.id;
+        // const id = resourceId.slice(2);  //数据库中的资源id;
 
         //获取资源所有者的id
         this.props.fetchOwnerId(id);
@@ -393,7 +392,8 @@ const mapStateToProps = (state, props) => {
     if (match.params.id) {
         console.log('match', match);
         return {
-            allWebResource: state.allWebResources.find(item => item.resourceId.toString() === match.params.id),
+            allWebResource: state.allWebResources.find(item => item.id.toString() === match.params.id),
+            localResource: state.localResources.find(item => item.id.toString() === match.params.id.toString()),
             userLogin: state.userLogin,
             blockUser: state.blockUser,
             localUser: state.localUser,
@@ -408,6 +408,7 @@ const mapStateToProps = (state, props) => {
         localUser: state.localUser,
         owner1: state.owner1,
         allWebResource: null,
+        localResource: null,
         buyerResources: null
     };
 };
@@ -423,5 +424,6 @@ export default connect(mapStateToProps, {
     updateResourceInfo,
     fetchOwnerId,
     updateBuyer,
-    fetchBuyerResource
+    fetchBuyerResource,
+    fetchLocationResource
 })(ResourceTxPage);

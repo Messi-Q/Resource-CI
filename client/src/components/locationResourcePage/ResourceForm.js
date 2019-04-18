@@ -67,7 +67,6 @@ class ResourceForm extends Component {
             fileReadPrice: nextProps.localResource.fileReadPrice,
             fileRightPrice: nextProps.localResource.fileRightPrice,
             fileName: nextProps.localResource.fileName,
-            file: nextProps.localResource.file,
             balance: nextProps.balance
         })
     }
@@ -351,7 +350,7 @@ const mapStateToProps = (state, props) => {
             userLogin: state.userLogin,
             buyerResources: state.buyerResources,
             localResource: state.localResources.find(item => item.id.toString() === match.params.id.toString()),
-            allWebResource: state.allWebResources.find(item => item.resourceId.toString() === match.params.id)
+            allWebResource: state.allWebResources.find(item => item.id.toString() === match.params.id)
         };
     }
 

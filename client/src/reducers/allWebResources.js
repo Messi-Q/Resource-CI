@@ -10,10 +10,10 @@ const allWebResources = (state = [], action = {}) => {
                 action.allWebResource
             ];
         case ALL_RESOURCE_FETCHED:
-            const index = state.findIndex(item => item.resourceId === action.allWebResource.resourceId);
+            const index = state.findIndex(item => item.id === action.allWebResource.id);
             if (index >= 0) {
                 return state.map(item => {  //循环本地的state
-                    if (item.resourceId === action.allWebResource.resourceId) return action.allWebResource;
+                    if (item.id === action.allWebResource.id) return action.allWebResource;
                     return item;
                 })
             } else {

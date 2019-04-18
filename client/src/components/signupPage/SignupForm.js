@@ -64,7 +64,8 @@ class SignupForm extends Component {
     };
 
     render() {
-        const {errors} = this.state;
+        const {errors, username, email, password, passwordConfirm, isLoading, invalid} = this.state;
+
         return (
             <form onSubmit={this.onSubmit} className="signupform">
                 <h1 className="signup">Sign up</h1>
@@ -73,7 +74,7 @@ class SignupForm extends Component {
                     <label className="control-label">Username</label>
 
                     <input
-                        value={this.state.username}
+                        value={username}
                         onChange={this.onChange}
                         type="text"
                         name="username"
@@ -88,7 +89,7 @@ class SignupForm extends Component {
                     <label className="control-label">Email</label>
 
                     <input
-                        value={this.state.email}
+                        value={email}
                         onChange={this.onChange}
                         type="email"
                         name="email"
@@ -103,7 +104,7 @@ class SignupForm extends Component {
                     <label className="control-label">Password</label>
 
                     <input
-                        value={this.state.password}
+                        value={password}
                         onChange={this.onChange}
                         type="password"
                         name="password"
@@ -117,7 +118,7 @@ class SignupForm extends Component {
                     <label className="control-label">Password confirm</label>
 
                     <input
-                        value={this.state.passwordConfirm}
+                        value={passwordConfirm}
                         onChange={this.onChange}
                         type="password"
                         name="passwordConfirm"
@@ -128,7 +129,7 @@ class SignupForm extends Component {
                 </div>
 
                 <div className="form-group">
-                    <button disabled={this.state.isLoading || this.state.invalid}
+                    <button disabled={isLoading || invalid}
                             className="btn btn-outline-primary btn-lg btn-block btnsignup">
                         Sign up
                     </button>

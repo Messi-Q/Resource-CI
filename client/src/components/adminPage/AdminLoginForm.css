@@ -1,0 +1,20 @@
+.loginform {
+    padding-bottom: 200px;
+}
+
+.login {
+    text-align: center;
+}
+
+.control-label {
+    font-size: 20px;
+    padding-bottom: 10px;
+}
+
+.form-control {
+    padding-bottom: 10px;
+}
+
+.btnlogin {
+    margin-top: 10px;
+}

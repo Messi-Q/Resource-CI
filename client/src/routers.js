@@ -40,5 +40,6 @@ export default (
         <Route path="/confirm" component={requireLogin(ConfirmPage)}/>
         <Route path="/allWebConfirm" component={requireLogin(AllWebConfirmPage)}/>
         <Route path="/success" component={requireLogin(SuccessPage)}/>
+        <Route path="/admin" component={requireLogin(SuccessPage)}/>
     </div>
 )

@@ -19,8 +19,6 @@ class RechargeForm extends Component {
     componentDidMount() {
         const {user} = this.props.userLogin;
         console.log(user);
-        console.log("userId", user.id);
-        console.log(this.props.localUser.balance);
     }
 
     handleChange = (e) => {
@@ -51,7 +49,6 @@ class RechargeForm extends Component {
             const restBalance = this.props.localUser.balance;
             const recharge = balance >> 0;
             const totalBalance = restBalance + recharge;
-
             this.setState({loading: true});
 
             this.props.userRecharge({
@@ -68,8 +65,9 @@ class RechargeForm extends Component {
 
             //recharge on blockchain
             const {$class, website} = this.state;
+            const {user} = this.props.userLogin;
             const rechargeToken = recharge;
-            const userId = website + '-' + username;
+            const userId = website + '-' + user.id;
             const customer = "resource:org.demo.network.Customer#" + userId;
             this.props.rechargeBlockchain({
                 $class, customer, rechargeToken

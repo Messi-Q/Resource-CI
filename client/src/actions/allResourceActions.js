@@ -10,6 +10,7 @@ import {
 import Config from '../utils/config';
 
 export const allResourceFetched = (allWebResource) => {
+    console.log("allWebResource", allWebResource);
     return {
         type: ALL_RESOURCE_FETCHED,
         allWebResource
@@ -17,17 +18,15 @@ export const allResourceFetched = (allWebResource) => {
 };
 
 export const fetchAllWebResource = (id) => {
-    this.config = new Config();
     return dispatch => {
-        return fetch(`http://localhost:3000/api/Resource/${id}`)
+        return fetch(`/api/allWebResources/${id}`)
             .then(res => res.json())
-            .then(data => dispatch(allResourceFetched(data)))
-            .catch(res => res.status(500).json({errors: {global: "something went wrong"}}));
+            .then(data => dispatch(allResourceFetched(data.resource)))
     }
 };
 
 export const setAllResources = (allWebResources) => {
-    //console.log(allWebResources);
+    console.log(allWebResources);
     return {
         type: SET_ALLWEB_RESOURCES,
         allWebResources
@@ -35,14 +34,10 @@ export const setAllResources = (allWebResources) => {
 };
 
 export const fetchAllWebResources = () => {
-    // let ResourceCard = {};
-    this.config = new Config();
-    let cURL = this.config.restServer.httpURL + '/Resource';
     return dispatch => {
-        return fetch(cURL)
+        return fetch('/api/allWebResources')
             .then(res => res.json())
-            .then(data => dispatch(setAllResources(data)))
-            .catch(res => res.status(500).json({errors: {global: "something went wrong"}}));
+            .then(data => dispatch(setAllResources(data.resources)))
     }
 };
 
@@ -116,7 +111,9 @@ const handleResponse = (response) => {
 };
 
 export const deleteWebResource = (resource) => {
-    const resourceId = 'A' + '-' + resource.id;  //应改为站名+站内定位符
+    const resourceId = "A" +
+        "-" +
+        resource.id;  //应改为站名+站内定位符
     return dispatch => {
         return fetch(`http://localhost:3000/api/Resource/${resourceId}`, {
             method: 'delete',

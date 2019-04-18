@@ -5,6 +5,7 @@ import login from './routes/login';
 import resource from './routes/myResource';
 import myResource from './routes/myResource1';
 import resources from './routes/locationResource';
+import allWebResources from './routes/allWebResource'
 import fileDownload from './routes/fileDownload';
 import picDownload from './routes/picDownload';
 import vidDownload from './routes/vidDownload';
@@ -15,12 +16,10 @@ import users from './routes/users';
 import owner from './routes/owner';
 import owner1 from './routes/owner1';
 import updateBuyer from './routes/updateBuyer';
-import path from 'path';
 import buy from './routes/buy';
 import buy1 from './routes/buy1';
 import buyer from './routes/buyer';
 import confirm from './routes/confirm';
-
 
 let app = express();
 app.use(bodyParser.json());
@@ -35,6 +34,7 @@ app.use('/api/upload', upload);
 app.use('/api/myResources', resource);
 app.use('/api/myResource', myResource);
 app.use('/api/locationResources', resources);
+app.use('/api/allWebResources', allWebResources);
 app.use('/api/allUpload', allUpload);
 app.use('/api/fileDownload', fileDownload);
 app.use('/api/picDownload', picDownload);

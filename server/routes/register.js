@@ -76,6 +76,7 @@ router.get('/:identifier', (req, res) => {
 });
 
 router.post('/', (req, res) => {
+    console.log(req.body);
     validateInput(req.body, commonValidateInput).then(({errors, isValid}) => {
         if (isValid) {
             const {username, password, email} = req.body;
@@ -90,7 +91,7 @@ router.post('/', (req, res) => {
         } else {
             res.status(400).json(errors);
         }
-    });
+    })
 });
 
 export default router;

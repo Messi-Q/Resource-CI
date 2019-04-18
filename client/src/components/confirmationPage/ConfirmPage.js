@@ -51,7 +51,9 @@ class ConfirmPage extends Component {
 
         const input = '/home/jion1/nodejsworkspace/redux-login/' + this.state.filepath;
         const {identity} = this.state;
-        const output = '/home/jion1/nodejsworkspace/redux-login/confirm/' + 'out' + this.state.filename;
+        const output = "/home/jion1/nodejsworkspace/redux-login/confirm/" +
+            "out" +
+            this.state.filename;
 
         if (isValid) {
 

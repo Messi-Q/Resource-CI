@@ -29,8 +29,6 @@ class ResourceForm extends Component {
         if (match.params.id) {  //所有路由的id参数
             this.props.fetchBuyResources(match.params.id);
         }
-        const {user} = this.props.userLogin;
-        console.log(user)
     }
 
     componentWillReceiveProps(nextProps) {

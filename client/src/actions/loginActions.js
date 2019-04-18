@@ -18,7 +18,6 @@ export const loginRequest = (data) => {
 
             localStorage.setItem('jwtToken',token);
             setAuthorizationToken(token);
-            console.log(jwtDecode(token));
             dispatch(setCurrentUser(jwtDecode(token)))
         });
     }

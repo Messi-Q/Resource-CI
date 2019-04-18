@@ -19,10 +19,10 @@ class SignupPage extends Component {
         return (
             <div className="row">
                 <div className="col-md-3"></div>
-                <div className="col-md-6">
-                    <SignupForm isUserExists={isUserExists} addFlashMessage={addFlashMessage}
-                                userSignupRequest={userSignupRequest} userSignupBlockchain={userSignupBlockchain}/>
-                </div>
+                    <div className="col-md-6">
+                        <SignupForm isUserExists={isUserExists} addFlashMessage={addFlashMessage}
+                                    userSignupRequest={userSignupRequest} userSignupBlockchain={userSignupBlockchain}/>
+                    </div>
                 <div className="col-md-3"></div>
             </div>
         );
