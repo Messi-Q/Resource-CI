@@ -1,6 +1,6 @@
-# Resource Confirmation Project Based on Blockchain
+# Resource Confirmation and Infringement Tracking ![GitHub stars](https://img.shields.io/github/stars/Messi-Q/React-Resource-confirmation-Infringement.svg?style=plastic) ![GitHub forks](https://img.shields.io/github/forks/Messi-Q/React-Resource-confirmation-Infringement.svg?color=blue&style=plastic) ![License](https://img.shields.io/github/license/Messi-Q/React-Resource-confirmation-Infringement.svg?color=blue&style=plastic)
+
 ## Introduction
-   
    &emsp;&emsp;This application aims to implement a website about resource uploading,trading,confirming and so on. Users can upload and download files(pictures,pdf,video are available) and purchase ownership and read-rights of the resources in the website; the ownership of the file can confirm the file and confirm the right to use the method of adding [watermark](https://github.com/Messi-Q/python-watermark).
    
    &emsp;&emsp;The website uses [react](https://reactjs.org/)+[redux](http://www.redux.org.cn/) to implement the front page and logic, the server uses the [nodejs](https://nodejs.org/en/)+[express](http://expressjs.com/) framework, the database uses [mysql](https://www.mysql.com/)(mongodb is also possible); the [JWT](https://jwt.io/introduction/) (json web token) tool is used to store the browser after user logs in.
