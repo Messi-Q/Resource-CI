@@ -49,7 +49,7 @@
    ```
    Peng Qian, Zhenguang Liu, Xun Wang, Jianhai Chen, Bei Wang, Roger Zimmermann. 
    Digital Resource Rights Confirmation and Infringement Tracking Based on Smart Contracts. 
-   CCIS 2019. Best Paper Runner-up Award.
+   IEEE CCIS 2019. Best Paper Runner-up Award.
    ```
    
    
